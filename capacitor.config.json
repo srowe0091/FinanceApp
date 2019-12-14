@@ -1,0 +1,8 @@
+{
+  "appId": "com.finances.app",
+  "appName": "finances",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
