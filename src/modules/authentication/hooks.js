@@ -27,8 +27,6 @@ export const useInitializeAuth = () => {
     }
   }, [])
 
-  console.log(state)
-
   const handleLogin = useCallback(
     (email, password) =>
       fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
