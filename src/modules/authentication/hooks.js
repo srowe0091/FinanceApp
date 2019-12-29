@@ -1,5 +1,5 @@
-import { useCallback, useContext } from 'react'
-import useToggle from 'react-use/lib/useToggle'
+import { useState, useCallback, useContext, useEffect } from 'react'
+import set from 'lodash/fp/set'
 
 import { AuthContext } from './context'
 
@@ -10,14 +10,28 @@ const checkErrors = response => {
   return response.text()
 }
 
-
 export const useInitializeAuth = () => {
-  const [isLoading, handleLoading] = useToggle(false)
-  const [isAuthenticated, handleAuthentication] = useToggle(false)
+  const [state, handleState] = useState({ isLoading: true, isAuthenticated: false })
+
+  useEffect(() => {
+    const _sessionId = localStorage.getItem('session')
+    if (_sessionId) {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
+        headers: { Authorization: _sessionId }
+      })
+        .then(checkErrors)
+        .then(() => handleState({ isLoading: false, isAuthenticated: true }))
+        .catch(() => handleState(set('isLoading')(false)))
+    } else {
+      handleState(set('isLoading')(false))
+    }
+  }, [])
+
+  console.log(state)
 
   const handleLogin = useCallback(
     (email, password) =>
-      fetch('http://localhost:9000/authenticate', {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         headers: {
@@ -27,29 +41,27 @@ export const useInitializeAuth = () => {
       .then(checkErrors)
       .then(sessionId => {
         localStorage.setItem('session', sessionId)
-        handleAuthentication()
+        handleState({ isLoading: false, isAuthenticated: true })
       }),
-    [handleAuthentication]
+    []
   )
 
   const handleLogout = useCallback(
-    () => {
-      fetch('http://localhost:9000/authenticate', {
+    () =>
+      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
         method: 'DELETE',
         headers: { Authorization: localStorage.getItem('session') }
       })
-        .then(checkErrors)
-        .then(() => {
-          localStorage.removeItem('session')
-          handleAuthentication()
-        })
-    },
-    [handleAuthentication]
+      .then(checkErrors)
+      .then(() => {
+        localStorage.removeItem('session')
+        handleState(set('isAuthenticated')(false))
+      }),
+    []
   )
 
   return {
-    isLoading,
-    isAuthenticated,
+    ...state,
     handleLogin,
     handleLogout
   }
