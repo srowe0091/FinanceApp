@@ -35,13 +35,13 @@ const LoginView = ({ history }) => {
   const submitHandler = useCallback(({ email, password }) => {
     setStatus(null)
     return handleLogin(email, password)
-      // .then(() => history.replace(routes.home))
+      .then(() => history.replace(routes.home))
       .catch(err => setStatus(textMappings[err.status] || err.message))
   }, [handleLogin, history])
 
-  // if (isAuthenticated) {
-  //   return <Redirect to={routes.home} />
-  // }
+  if (isAuthenticated) {
+    return <Redirect to={routes.home} />
+  }
   
   return (
     <IonPage>
