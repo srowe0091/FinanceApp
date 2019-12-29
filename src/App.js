@@ -17,7 +17,7 @@ import Home from 'modules/authentication/views/LoginView'
 const token = "8glroz4NbRaH3QKch0RQMBXnkrDWrqVbeqzMaBUFbrhbRYf6cd2I31FBpya25FI9Rve4GTLY27ruFES4d3Im8N3lGeR/UCR+RFffGKVOiiZiTeR6oKkwkdGJTvBRwJNWKCNYN6af0X2AEqnDDEQm1r/uF68wIuQXDTrpnvADg0o="
 
 const client = new ApolloClient({
-  uri: 'http://localhost:9000/graphql',
+  uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
   request: (operation) => {
     operation.setContext({
       headers: {
