@@ -1,24 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { createUseStyles } from 'react-jss'
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
+const useTransactionStyles = createUseStyles({
+  transaction: {
+    marginBottom: 16,
+    padding: 12,
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderRadius: 8,
+    backgroundColor: 'var(--white)'
+  }
+})
 
 export const TransactionEntry = ({ key, amount, description }) => {
+  const classes = useTransactionStyles()
   return (
-    <Box
-      key={key}
-      mb={2}
-      p={1.5}
-      display="flex"
-      justifyContent="space-between"
-      boxShadow={2}
-      borderRadius="8px"
-      bgcolor="white">
-      <Typography>{description}</Typography>
+    <div key={key}  className={classes.transaction}>
+      <p>{description}</p>
 
-      <Typography>${(amount / 100).toFixed(2)}</Typography>
-    </Box>
+      <p>${(amount / 100).toFixed(2)}</p>
+    </div>
   )
 }
 
