@@ -1,6 +1,11 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** font **/

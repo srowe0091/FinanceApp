@@ -52,6 +52,7 @@ const LoginView = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
+
                 <Input
                   name="password"
                   type="password"
