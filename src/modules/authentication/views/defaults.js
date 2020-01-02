@@ -6,7 +6,7 @@ export const useStyles = createUseStyles({
     '--background': `url(${bgd}) top / 170% 159% no-repeat`
   },
   form: {
-    padding: '0 2rem',
+    padding: '2rem',
     margin: '2rem 3.5rem 0',
     display: 'flex',
     flexDirection: 'column',
@@ -16,8 +16,7 @@ export const useStyles = createUseStyles({
   logo: {
     width: '100px',
     alignSelf: 'center',
-    marginTop: 40,
-    marginBottom: 40,
+    marginBottom: 60,
     borderRadius: '20px',
     // boxShadow: theme.shadows[3]
   },
