@@ -1,42 +1,29 @@
-import React, { createElement } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { IonInput } from '@ionic/react'
+import { createUseStyles } from 'react-jss'
 
-import { makeStyles } from '@material-ui/core/styles'
-import FormControl from '@material-ui/core/FormControl'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    '& fieldset': {
-      borderRadius: '50px',
-    },
-    '& .MuiSvgIcon-root': {
-      marginRight: theme.spacing(1)
-    }
-  },
+const useInputStyles = createUseStyles({
   input: {
-    paddingTop: theme.spacing(.5),
-    paddingBottom: theme.spacing(.5),
-    boxShadow: theme.shadows[2],
-    borderRadius: '50px',
-    backgroundColor: theme.palette.common.white,
+    '--color': 'var(--white)',
+    '--padding-end': '10px',
+    '--padding-start': '10px',
+    '--padding-top': '10px',
+    '--padding-bottom': '10px',
+    '--background': 'var(--alpha)',
+    '--placeholder-color': 'var(--gray7)',
+    marginBottom: 10
   }
-}))
+})
 
-export const Input = ({ icon, error, ...field }) => {
-  const classes = useStyles()
+export const Input = ({ onChange, onBlur, ...rest }) => {
+  const classes = useInputStyles()
   return (
-    <FormControl fullWidth variant="filled" margin="dense" error={!!error} className={classes.container}>
-      <OutlinedInput
-        className={classes.input}
-        startAdornment={createElement(icon, { color: error ? 'error' : 'primary' })}
-        {...field}
-      />
-    </FormControl>
+    <IonInput className={classes.input} onIonBlur={onBlur} onIonChange={onChange} {...rest} />
   )
 }
 
 Input.propTypes = {
-  icon: PropTypes.elementType,
-  error: PropTypes.string
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired
 }

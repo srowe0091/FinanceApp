@@ -1,36 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
+import { createUseStyles } from 'react-jss'
+import { IonButton, IonSpinner } from '@ionic/react'
 
-import { makeStyles } from '@material-ui/core/styles'
-import { CircularProgress, Button as MaterialButton } from '@material-ui/core'
-
-const useStyles = makeStyles(theme => ({
+const useStyles = createUseStyles({
   loading: {
-    marginTop: '-12px',
-    marginLeft: '-12px',
+    width: 24,
+    height: 24,
+    marginTop: -12,
+    marginLeft: -12,
     top: '50%',
     left: '50%',
     position: 'absolute'
   },
   button: {
-    borderRadius: '50px',
-    position: 'relative',
-    padding: theme.spacing(1.5)
+    position: 'relative'
   }
-}))
+})
 
 export const Button = ({ children, className, loading, ...props }) => {
   const classes = useStyles()
   return (
-      <MaterialButton
-        fullWidth
-        className={clsx(classes.button, className)}
-        {...props}
-      >
-        {children}
-        {loading && <CircularProgress size={24} className={classes.loading} />}
-      </MaterialButton>
+    <IonButton
+      expand="full"
+      shape="round"
+      className={clsx(classes.button)}
+      {...props}
+    >
+      {children}
+      {loading && <IonSpinner className={classes.loading} />}
+    </IonButton>
   )
 }
 

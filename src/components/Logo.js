@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import clsx from 'clsx'
+import { createUseStyles } from 'react-jss'
 
 import logoJpg from 'media/logo.jpg'
 
-const useStyles = makeStyles({
+const useStyles = createUseStyles({
   logo: {
     width: '100%'
   }
@@ -12,8 +13,9 @@ const useStyles = makeStyles({
 
 export const Logo = ({ className }) => {
   const classes = useStyles()
+  const _className = useMemo(() => clsx(className, classes.logo), [classes, className])
   return (
-    <img className={`${classes.logo} ${className}`} src={logoJpg} alt="logo" />
+    <img className={_className} src={logoJpg} alt="logo" />
   )
 }
 

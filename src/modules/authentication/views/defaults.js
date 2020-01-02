@@ -1,32 +1,33 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { createUseStyles } from 'react-jss'
 import bgd from 'media/logo_background.png'
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = createUseStyles({
+  wrapper: {
+    '--background': `url(${bgd}) top / 170% 159% no-repeat`
+  },
+  form: {
+    padding: '0 2rem',
+    margin: '2rem 3.5rem 0',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '1rem',
+    backgroundColor: 'rgba(0, 0, 0, .3)'
+  },
   logo: {
     width: '100px',
     alignSelf: 'center',
-    marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    marginTop: 40,
+    marginBottom: 40,
     borderRadius: '20px',
-    boxShadow: theme.shadows[3]
+    // boxShadow: theme.shadows[3]
   },
   actionButton: {
-    left: theme.spacing(4),
-    right: theme.spacing(4),
-    bottom: theme.spacing(3),
+    left: 32,
+    right: 32,
+    bottom: 24,
     position: 'absolute'
   },
-  wrapper: {
-    padding: theme.spacing(0, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    height: '350px',
-    background: `url(${bgd})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat'
-  },
   errorStatus: {
-    marginTop: theme.spacing(5),
     textTransform: 'uppercase'
   }
-}))
+})
