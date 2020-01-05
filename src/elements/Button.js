@@ -15,7 +15,8 @@ const useStyles = createUseStyles({
     position: 'absolute'
   },
   button: {
-    position: 'relative'
+    position: 'relative',
+    '--border-radius': 'var(--borderRadius)'
   }
 })
 
@@ -25,7 +26,7 @@ export const Button = ({ children, className, loading, ...props }) => {
     <IonButton
       expand="full"
       shape="round"
-      className={clsx(classes.button)}
+      className={clsx(className, classes.button)}
       {...props}
     >
       {children}
@@ -41,7 +42,5 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
-  type: 'button',
-  color: "primary",
-  variant: "contained"
+  type: 'button'
 }

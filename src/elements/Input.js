@@ -3,18 +3,19 @@ import PropTypes from 'prop-types'
 import { IonInput } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
-const useInputStyles = createUseStyles({
+const useInputStyles = createUseStyles(theme => ({
   input: {
     '--color': 'var(--white)',
-    '--padding-end': '10px',
-    '--padding-start': '10px',
-    '--padding-top': '10px',
-    '--padding-bottom': '10px',
+    '--padding-end': theme.spacing(1.25),
+    '--padding-start': theme.spacing(1.25),
+    '--padding-top': theme.spacing(1.25),
+    '--padding-bottom': theme.spacing(1.25),
     '--background': 'var(--alpha)',
     '--placeholder-color': 'var(--gray7)',
-    marginBottom: 10
+    borderRadius: 'var(--borderRadius)',
+    marginBottom: theme.spacing(2)
   }
-})
+}))
 
 export const Input = ({ onChange, onBlur, ...rest }) => {
   const classes = useInputStyles()
