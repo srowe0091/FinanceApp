@@ -1,32 +1,28 @@
 import { createUseStyles } from 'react-jss'
 import bgd from 'media/logo_background.png'
 
-export const useStyles = createUseStyles({
+export const useStyles = createUseStyles(theme => ({
   wrapper: {
-    '--background': `url(${bgd}) top / 170% 159% no-repeat`
+    '--background': `url(${bgd}) top / 170% 160% no-repeat`
   },
   form: {
-    padding: '2rem',
-    margin: '2rem 3.5rem 0',
+    padding: theme.spacing(2.5),
+    margin: theme.spacing(4, 5, 0),
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: '1rem',
-    backgroundColor: 'rgba(0, 0, 0, .3)'
+    borderRadius: 'var(--borderRadius)',
+    backgroundColor: 'var(--alpha)'
   },
   logo: {
-    width: '100px',
+    width: '85px',
     alignSelf: 'center',
-    marginBottom: 60,
-    borderRadius: '20px',
-    // boxShadow: theme.shadows[3]
-  },
-  actionButton: {
-    left: 32,
-    right: 32,
-    bottom: 24,
-    position: 'absolute'
+    marginBottom: theme.spacing(6),
+    borderRadius: '20px'
   },
   errorStatus: {
     textTransform: 'uppercase'
+  },
+  button: {
+    marginTop: '2rem'
   }
-})
+}))

@@ -66,16 +66,15 @@ const LoginView = ({ history }) => {
                   <p align="center" variant="subtitle2" className={classes.errorStatus}>{status}</p>
                 </IonText>
 
-                <div className={classes.actionButton}>
-                  <Button
-                    type="submit"
-                    onClick={handleSubmit}
-                    disabled={isSubmitting || !isValid}
-                    loading={isSubmitting}
-                  >
-                    Login
-                  </Button>
-                </div>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  loading={isSubmitting}
+                  disabled={isSubmitting || !isValid}
+                  className={classes.button}
+                >
+                  Login
+                </Button>
               </form>
             )}
           </Formik>
