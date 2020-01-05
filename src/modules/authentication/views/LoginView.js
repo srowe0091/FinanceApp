@@ -10,7 +10,7 @@ import { Logo } from 'components'
 import { Input, Button } from 'elements'
 import { useStyles } from './defaults'
 import routes from 'routes'
-import textMappings from 'util/textMappings'
+import { textMappings } from 'utils'
 
 const LoginSchema = yup.object().shape({
   email: yup.string().email('Invalid Email Address').required(),
