@@ -9,7 +9,7 @@ import routes from 'routes'
 const Menu = () => (
   <IonMenu contentId="main">
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar color="primary">
         <IonTitle>Menu</IonTitle>
       </IonToolbar>
     </IonHeader>
@@ -37,7 +37,7 @@ export const AuthorizedRoute = ({ path, component }) => {
       {props => (
         <>
           <Menu />
-          <IonPage id="main" color="primary">
+          <IonPage id="main">
             {createElement(component, props)}
           </IonPage>
         </>

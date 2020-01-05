@@ -1,12 +1,15 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, IonButtons } from '@ionic/react'
 import React from 'react'
 
 const Home = () => {
   return (
-    <IonPage>
+    <>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Ionic Blank</IonTitle>
+        <IonToolbar color="primary">
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -19,7 +22,7 @@ const Home = () => {
           will be your guide.
         </p>
       </IonContent>
-    </IonPage>
+    </>
   )
 }
 
