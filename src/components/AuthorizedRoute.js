@@ -1,29 +1,12 @@
 import React, { createElement } from 'react'
 import PropTypes from 'prop-types'
-import { IonPage, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem } from '@ionic/react'
+import { IonPage } from '@ionic/react'
 import { Route, Redirect } from 'react-router-dom'
 
-import { useAuthentication } from 'modules/authentication/hooks'
 import routes from 'routes'
-
-const Menu = () => (
-  <IonMenu contentId="main">
-    <IonHeader>
-      <IonToolbar color="primary">
-        <IonTitle>Menu</IonTitle>
-      </IonToolbar>
-    </IonHeader>
-    <IonContent>
-      <IonList>
-        <IonItem>Menu Item</IonItem>
-        <IonItem>Menu Item</IonItem>
-        <IonItem>Menu Item</IonItem>
-        <IonItem>Menu Item</IonItem>
-        <IonItem>Menu Item</IonItem>
-      </IonList>
-    </IonContent>
-  </IonMenu>
-)
+import { DrawerMenu } from 'modules/drawer'
+import { useAuthentication } from 'modules/authentication'
+import { PAGE_ID } from 'utils'
 
 export const AuthorizedRoute = ({ path, component }) => {
   const { isAuthenticated } = useAuthentication()
@@ -36,8 +19,8 @@ export const AuthorizedRoute = ({ path, component }) => {
     <Route path={path}>
       {props => (
         <>
-          <Menu />
-          <IonPage id="main">
+          <DrawerMenu />
+          <IonPage id={PAGE_ID}>
             {createElement(component, props)}
           </IonPage>
         </>
