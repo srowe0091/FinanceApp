@@ -24,6 +24,9 @@ http://ionicframework.com/docs/theming/ */
   --darkGray: #262626;
   --alpha: rgba(0, 0, 0, .55);
 
+  /** variables **/
+  --borderRadius: 6px;
+
   /** primary **/
   --ion-color-primary: #02B25F;
   --ion-color-primary-rgb: 2, 178, 95;
