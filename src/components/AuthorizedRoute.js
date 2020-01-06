@@ -4,7 +4,6 @@ import { IonPage } from '@ionic/react'
 import { Route, Redirect } from 'react-router-dom'
 
 import routes from 'routes'
-import { DrawerMenu } from 'modules/drawer'
 import { useAuthentication } from 'modules/authentication'
 import { PAGE_ID } from 'utils'
 
@@ -18,12 +17,9 @@ export const AuthorizedRoute = ({ path, component }) => {
   return (
     <Route path={path}>
       {props => (
-        <>
-          <DrawerMenu />
-          <IonPage id={PAGE_ID}>
-            {createElement(component, props)}
-          </IonPage>
-        </>
+        <IonPage id={PAGE_ID}>
+          {createElement(component, props)}
+        </IonPage>
       )}
     </Route>
   )

@@ -11,8 +11,10 @@ import { AuthProvider } from 'modules/authentication/context'
 
 import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
+import ProfileView from 'modules/profile/views/ProfileView'
 
 import { AuthorizedRoute } from 'components'
+import { DrawerMenu } from 'modules/drawer'
 import theme from './styles/theme'
 
 const client = new ApolloClient({
@@ -32,8 +34,10 @@ const App = () => (
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <IonReactRouter>
+            <DrawerMenu />
             <IonRouterOutlet>
               <AuthorizedRoute path={routes.home} component={HomeView} />
+              <AuthorizedRoute path={routes.profile} component={ProfileView} />
               <Route path={routes.login} component={LoginView} />
               <Redirect exact from="/" to={routes.login} />
             </IonRouterOutlet>

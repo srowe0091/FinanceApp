@@ -6,6 +6,7 @@ import App from './App'
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/structure.css'
 import '@ionic/react/css/normalize.css'
+/* CSS theme variable for Ionic components */
 import './styles/theme.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))
