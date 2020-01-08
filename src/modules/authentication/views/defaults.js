@@ -10,8 +10,8 @@ export const useStyles = createUseStyles(theme => ({
     margin: theme.spacing(4, 5, 0),
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: 'var(--borderRadius)',
-    backgroundColor: 'var(--alpha)'
+    borderRadius: '20px',
+    backgroundColor: 'var(--alpha5)'
   },
   logo: {
     width: '85px',

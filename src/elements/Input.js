@@ -10,7 +10,7 @@ const useInputStyles = createUseStyles(theme => ({
     '--padding-start': theme.spacing(1.25),
     '--padding-top': theme.spacing(1.25),
     '--padding-bottom': theme.spacing(1.25),
-    '--background': 'var(--alpha)',
+    '--background': 'var(--alpha5)',
     '--placeholder-color': 'var(--gray7)',
     borderRadius: 'var(--borderRadius)',
     marginBottom: theme.spacing(2)

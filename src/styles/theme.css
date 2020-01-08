@@ -12,8 +12,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-font-family: "Ubuntu";
 
   /** colors **/
-  --white: #fff;
-  --black: #000;
+  --white: #ffffff;
+  --black: #000000;
   --gray1: #F8F8F8;
   --gray2: #F0F0F0;
   --gray3: #ECECEC;
@@ -21,8 +21,10 @@ http://ionicframework.com/docs/theming/ */
   --gray5: #BEBEBE;
   --gray6: #9C9C9C;
   --gray7: #6d6d6d;
-  --darkGray: #262626;
-  --alpha: rgba(0, 0, 0, .55);
+  --themeGray1: #2d2f38;
+  --themeGray2: #202129;
+  --alpha0: rgba(0, 0, 0, 0);
+  --alpha5: rgba(0, 0, 0, .5);
 
   /** variables **/
   --borderRadius: 6px;
@@ -36,8 +38,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: #06A080;
-  --ion-color-secondary-rgb: 6, 120, 128;
+  --ion-color-secondary: #4947d6;
+  --ion-color-secondary-rgb: 73, 71, 214;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
   --ion-color-secondary-shade: #0bb8cc;

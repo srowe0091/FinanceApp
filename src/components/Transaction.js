@@ -9,14 +9,16 @@ const useTransactionStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
     borderRadius: 8,
-    backgroundColor: 'var(--white)'
+    color: 'var(--white)',
+    backgroundColor: 'var(--themeGray1)',
+    boxShadow: '0px 2px 5px -2px var(--black)'
   }
 })
 
 export const TransactionEntry = ({ key, amount, description }) => {
   const classes = useTransactionStyles()
   return (
-    <div key={key}  className={classes.transaction}>
+    <div key={key} className={classes.transaction}>
       <p>{description}</p>
 
       <p>${(amount / 100).toFixed(2)}</p>
