@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { IonContent, IonText } from '@ionic/react'
+import { IonContent, IonText, IonRefresher, IonRefresherContent  } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { format } from 'date-fns'
 
@@ -41,6 +41,13 @@ const useHomeViewStyles = createUseStyles({
   },
   transactions: {
     margin: '2rem 1rem 0'
+  },
+  refresher: {
+    position: 'fixed',
+    backgroundColor: 'var(--themeGray1)',
+    '& .spinner-circular, & .refresher-pulling-icon': {
+      color: 'var(--white)'
+    }
   }
 })
 
@@ -48,10 +55,18 @@ const Home = () => {
   const classes = useHomeViewStyles()
   const [toolbarStyle, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
+  const onRefresh = useCallback(e => {
+    setTimeout(() => {
+      e.detail.complete()
+    }, 2000)
+  }, [])
   return (
-    <div>
+    <>
       <Toolbar translucent color={toolbarStyle ? 'primary' : null} />
       <IonContent className={classes.content} fullscreen scrollEvents onIonScroll={scrollHandler}>
+        <IonRefresher className={classes.refresher} pullMax={300} slot="fixed" onIonRefresh={onRefresh}>
+          <IonRefresherContent refreshingSpinner="circular"></IonRefresherContent>
+        </IonRefresher>
         <div className={classes.top} />
 
         <div className={classes.card}>
@@ -70,7 +85,7 @@ const Home = () => {
           {data.map(TransactionEntry)}
         </div>
       </IonContent>
-    </div>
+    </>
   )
 }
 
