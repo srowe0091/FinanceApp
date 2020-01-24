@@ -102,9 +102,17 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-tint: #f5f6f9;
 }
 
+.ion-page {
+  background-color: var(--themeGray1);
+}
+
 .md {
   --ion-toolbar-background: transparent;
-  --ion-toolbar-color: #fff;
+  --ion-toolbar-color: var(--white);
+}
+
+*[color="textSecondary"] {
+  color: var(--gray6);
 }
 
 p {
@@ -128,8 +136,12 @@ p[variant="subtitle2"] {
 }
 
 p[variant="caption"] {
-  font-size: .75rem;
+  font-size: .70rem;
   line-height: 1.66;
+}
+
+p[display="inline"] {
+  display: inline-block;
 }
 
 h1 {
