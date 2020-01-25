@@ -78,8 +78,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-danger-tint: #f25454;
 
   /** dark **/
-  --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34, 34, 34;
+  --ion-color-dark: #202129;
+  --ion-color-dark-rgb: 32, 33, 41;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
   --ion-color-dark-shade: #1e2023;
@@ -113,6 +113,10 @@ http://ionicframework.com/docs/theming/ */
 
 *[color="textSecondary"] {
   color: var(--gray6);
+}
+
+*[color="textPrimary"] {
+  color: var(--black);
 }
 
 p {

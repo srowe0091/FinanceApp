@@ -39,6 +39,6 @@ const shadows = [
 ];
 
 export default {
-  spacing: (...size) => size.map(s => s * 8 + 'px').join(' '),
+  spacing: (...size) => size.map(s => s === 'auto' ? 'auto' : s * 8 + 'px').join(' '),
   shadows
 }
