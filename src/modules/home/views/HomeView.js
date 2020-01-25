@@ -1,16 +1,19 @@
 import React, { useCallback, useState } from 'react'
-import { IonContent, IonText, IonRefresher, IonRefresherContent  } from '@ionic/react'
+import { IonContent, IonText, IonRefresher, IonRefresherContent, IonFab, IonFabButton, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { format } from 'date-fns'
 
+import { add } from 'ionicons/icons'
+
 import { TransactionEntry, Toolbar } from 'components'
+import routes from 'routes'
 
 import data from './data.json'
 
-const useHomeViewStyles = createUseStyles({
+const useHomeViewStyles = createUseStyles(theme => ({
   top: {
     width: '100%',
-    height: '190px',
+    height: theme.spacing(20),
     top: 0,
     position: 'absolute',
     background: 'linear-gradient(140deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%)',
@@ -18,20 +21,17 @@ const useHomeViewStyles = createUseStyles({
       content: '""',
       display: 'block',
       width: '100%',
-      height: '90px',
+      height: theme.spacing(12),
       background: 'linear-gradient(to bottom, var(--alpha0) 0%, var(--themeGray2) 100%)',
       position: 'absolute',
       bottom: '-1px'
     }
   },
-  content: {
-    '--background': 'var(--themeGray2)'
-  },
   card: {
     textAlign: 'center',
     width: '80%',
-    height: '150px',
-    margin: '1rem auto 0',
+    height: theme.spacing(18),
+    margin: theme.spacing(2, 'auto', 0),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
@@ -40,7 +40,8 @@ const useHomeViewStyles = createUseStyles({
     borderRadius: '20px',
   },
   transactions: {
-    margin: '2rem 1rem 0'
+    margin: theme.spacing(4, 2, 0),
+    paddingBottom: theme.spacing(7)
   },
   refresher: {
     position: 'fixed',
@@ -49,7 +50,7 @@ const useHomeViewStyles = createUseStyles({
       color: 'var(--white)'
     }
   }
-})
+}))
 
 const Home = () => {
   const classes = useHomeViewStyles()
@@ -63,20 +64,20 @@ const Home = () => {
   return (
     <>
       <Toolbar translucent color={toolbarStyle ? 'primary' : null} />
-      <IonContent className={classes.content} fullscreen scrollEvents onIonScroll={scrollHandler}>
+      <IonContent color="dark" fullscreen scrollEvents onIonScroll={scrollHandler}>
         <IonRefresher className={classes.refresher} pullMax={300} slot="fixed" onIonRefresh={onRefresh}>
           <IonRefresherContent refreshingSpinner="circular"></IonRefresherContent>
         </IonRefresher>
         <div className={classes.top} />
 
         <div className={classes.card}>
-          <IonText>
+          <IonText color="textPrimary">
             <p>{format(new Date(), 'EEEE, MMM dd, yyyy')}</p>
           </IonText>
-          <IonText>
+          <IonText color="textPrimary">
             <h2><strong>$257.95</strong></h2>
           </IonText>
-          <IonText>
+          <IonText color="textPrimary">
             <p>3 days left</p>
           </IonText>
         </div>
@@ -85,6 +86,11 @@ const Home = () => {
           {data.map(TransactionEntry)}
         </div>
       </IonContent>
+      <IonFab vertical="bottom" horizontal="end" slot="fixed">
+        <IonFabButton routerLink={routes.newTransaction} >
+          <IonIcon icon={add} />
+        </IonFabButton>
+      </IonFab>
     </>
   )
 }
