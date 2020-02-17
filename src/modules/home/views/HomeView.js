@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from 'react'
-import { IonContent, IonText, IonRefresher, IonRefresherContent, IonFab, IonFabButton, IonIcon } from '@ionic/react'
+import { IonContent, IonText, IonRefresher, IonRefresherContent, IonFab, IonFabButton, IonIcon, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
-import { format } from 'date-fns'
+import { useQuery } from '@apollo/react-hooks'
+import map from 'lodash/fp/map'
 
 import { add } from 'ionicons/icons'
 
-import { TransactionEntry, Toolbar } from 'components'
+import { TransactionEntry, Toolbar, FullPageLoader } from 'components'
 import routes from 'routes'
-
-import data from './data.json'
+import { UserTransactions } from 'modules/transaction'
+import { formatDate } from 'utils/normalizer'
 
 const useHomeViewStyles = createUseStyles(theme => ({
   top: {
@@ -42,13 +43,6 @@ const useHomeViewStyles = createUseStyles(theme => ({
   transactions: {
     margin: theme.spacing(4, 2, 0),
     paddingBottom: theme.spacing(7)
-  },
-  refresher: {
-    position: 'fixed',
-    backgroundColor: 'var(--themeGray1)',
-    '& .spinner-circular, & .refresher-pulling-icon': {
-      color: 'var(--white)'
-    }
   }
 }))
 
@@ -56,23 +50,27 @@ const Home = () => {
   const classes = useHomeViewStyles()
   const [toolbarStyle, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
-  const onRefresh = useCallback(e => {
-    setTimeout(() => {
-      e.detail.complete()
-    }, 2000)
-  }, [])
+  const { data, loading, refetch } = useQuery(UserTransactions)
+  const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
+
+  useIonViewWillEnter(() => refetch())
+
+  if (loading) {
+    return <FullPageLoader />
+  }
+
   return (
     <>
       <Toolbar translucent color={toolbarStyle ? 'primary' : null} />
       <IonContent color="dark" fullscreen scrollEvents onIonScroll={scrollHandler}>
-        <IonRefresher className={classes.refresher} pullMax={300} slot="fixed" onIonRefresh={onRefresh}>
-          <IonRefresherContent refreshingSpinner="circular"></IonRefresherContent>
+        <IonRefresher slot="fixed" onIonRefresh={onRefresh}>
+          <IonRefresherContent />
         </IonRefresher>
         <div className={classes.top} />
 
         <div className={classes.card}>
           <IonText color="textPrimary">
-            <p>{format(new Date(), 'EEEE, MMM dd, yyyy')}</p>
+            <p>{formatDate(new Date(), 'dddd, MMM D, YYYY')}</p>
           </IonText>
           <IonText color="textPrimary">
             <h2><strong>$257.95</strong></h2>
@@ -83,7 +81,7 @@ const Home = () => {
         </div>
 
         <div className={classes.transactions}>
-          {data.map(TransactionEntry)}
+          {map(t => <TransactionEntry key={t._id} {...t} />)(data.transactions)}
         </div>
       </IonContent>
       <IonFab vertical="bottom" horizontal="end" slot="fixed">
