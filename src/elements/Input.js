@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { IonInput } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
@@ -17,14 +18,15 @@ const useInputStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Input = ({ onChange, onBlur, ...rest }) => {
+export const Input = ({ className, onChange, onBlur, ...rest }) => {
   const classes = useInputStyles()
   return (
-    <IonInput className={classes.input} onIonBlur={onBlur} onIonChange={onChange} {...rest} />
+    <IonInput className={clsx(className, classes.input)} onIonBlur={onBlur} onIonChange={onChange} {...rest} />
   )
 }
 
 Input.propTypes = {
+  className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 }

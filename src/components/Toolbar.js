@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { IonHeader, IonMenuButton, IonToolbar, IonButtons } from '@ionic/react'
+import { IonHeader, IonMenuButton, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
-const useToolbarStyles = createUseStyles({
+const useToolbarStyles = createUseStyles(theme => ({
   '@keyframes fadeIn': {
     from: { backgroundColor: 'var(--alpha0)' },
     to: { backgroundColor: 'var(--ion-color-primary)' }
@@ -21,17 +21,21 @@ const useToolbarStyles = createUseStyles({
     backgroundColor: color => color ? 'var(--ion-color-primary)' : null,
     animationName: color => color ? '$fadeIn' : '$fadeOut',
     animationDuration: '350ms'
+  },
+  icon: {
+    margin: theme.spacing(0, 1)
   }
-})
+}))
 
-export const Toolbar = ({ translucent, color }) => {
+export const Toolbar = ({ translucent, color, title, back }) => {
   const classes = useToolbarStyles(color)
   return (
     <IonHeader className={classes.header}>
       <IonToolbar className={classes.toolbar} translucent={translucent}>
-        <IonButtons slot="start">
-          <IonMenuButton />
+        <IonButtons className={classes.icon} slot="start">
+          {back ? <IonBackButton /> : <IonMenuButton />}
         </IonButtons>
+        {title && <IonTitle>{title}</IonTitle>}
       </IonToolbar>
     </IonHeader>
   )
@@ -39,5 +43,7 @@ export const Toolbar = ({ translucent, color }) => {
 
 Toolbar.propTypes = {
   translucent: PropTypes.bool,
-  color: PropTypes.string
+  color: PropTypes.string,
+  title: PropTypes.string,
+  back: PropTypes.bool
 }
