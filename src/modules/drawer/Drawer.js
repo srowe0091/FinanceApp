@@ -1,30 +1,15 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { menuController } from '@ionic/core'
 import { IonMenu, IonContent, IonList, IonItem, IonLabel, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
+import has from 'lodash/fp/has'
+import filter from 'lodash/fp/filter'
 
 import { home, person, settings} from 'ionicons/icons'
 
 import routes from 'routes'
 import { PAGE_ID } from 'utils'
-
-const drawerLinks = [
-  {
-    icon: home,
-    label: 'Home',
-    route: routes.home
-  },
-  {
-    icon: person,
-    label: 'Profile',
-    route: routes.profile
-  },
-  {
-    icon: settings,
-    label: 'Admin',
-    route: routes.admin
-  }
-]
+import { useUser } from 'modules/authentication'
 
 const useDrawerMenuStyles = createUseStyles(theme => ({
   icon: {
@@ -34,8 +19,31 @@ const useDrawerMenuStyles = createUseStyles(theme => ({
 
 export const DrawerMenu = () => {
   const classes = useDrawerMenuStyles()
-
+  const { role } = useUser()
   const closeDrawer = useCallback(() => menuController.close(), [])
+  const drawerLinks = useMemo(() => {
+    const links = [
+      {
+        icon: home,
+        label: 'Home',
+        route: routes.home
+      },
+      {
+        icon: person,
+        label: 'Profile',
+        route: routes.profile
+      },
+      {
+        icon: settings,
+        label: 'Admin',
+        route: routes.admin,
+        condition: role === 'ADMIN'
+      }
+    ]
+    return filter(link => has('condition')(link) ? link.condition : true)(links)
+  }, [role])
+
+
 
   return (
     <IonMenu contentId={PAGE_ID}>

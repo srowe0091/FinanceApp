@@ -12,7 +12,6 @@ const checkErrors = response => {
 
 export const useInitializeAuth = () => {
   const [state, handleState] = useState({ isLoading: true, isAuthenticated: false })
-
   useEffect(() => {
     const _sessionId = localStorage.getItem('session')
     if (_sessionId) {
@@ -20,7 +19,7 @@ export const useInitializeAuth = () => {
         headers: { Authorization: _sessionId }
       })
         .then(checkErrors)
-        .then(() => handleState({ isLoading: false, isAuthenticated: true }))
+        .then(session => handleState({ isLoading: false, isAuthenticated: true, user: JSON.parse(session) }))
         .catch(() => handleState(set('isLoading')(false)))
     } else {
       handleState(set('isLoading')(false))
@@ -37,9 +36,10 @@ export const useInitializeAuth = () => {
         }
       })
       .then(checkErrors)
-      .then(sessionId => {
-        localStorage.setItem('session', sessionId)
-        handleState({ isLoading: false, isAuthenticated: true })
+      .then(session => {
+        const _session = JSON.parse(session)
+        localStorage.setItem('session', _session.sessionId)
+        handleState({ isLoading: false, isAuthenticated: true, user: _session })
       }),
     []
   )
@@ -71,18 +71,6 @@ export const useAuthentication = () => {
 }
 
 export const useUser = () => {
-  // const { isAuthenticated } = useContext(AuthContext)
-  // const user = useMemo(() => {
-  //   if (isAuthenticated) {
-  //     const _userAttribute = Parse.User.current()
-  //     return {
-  //       email: _userAttribute.get('email'),
-  //       isAdmin: _userAttribute.get('isAdmin'),
-  //       dueDate: _userAttribute.get('dueDate'),
-  //       allowance: _userAttribute.get('allowance')
-  //     }
-  //   }
-  //   return null
-  // }, [isAuthenticated])
-  // return user
+  const { user } = useContext(AuthContext)
+  return user
 }
