@@ -11,7 +11,7 @@ const checkErrors = response => {
 }
 
 export const useInitializeAuth = () => {
-  const [state, handleState] = useState({ isLoading: true, isAuthenticated: false })
+  const [state, handleState] = useState({ isLoading: true, isAuthenticated: false, user: {} })
   useEffect(() => {
     const _sessionId = localStorage.getItem('session')
     if (_sessionId) {
