@@ -4,14 +4,19 @@ import { IonPage } from '@ionic/react'
 import { Route, Redirect } from 'react-router-dom'
 
 import routes from 'routes'
-import { useAuthentication } from 'modules/authentication'
+import { useAuthentication, useUser } from 'modules/authentication'
 import { PAGE_ID } from 'utils'
 
-export const AuthorizedRoute = ({ path, component }) => {
+export const AuthorizedRoute = ({ path, admin, component }) => {
   const { isAuthenticated } = useAuthentication()
+  const { role } = useUser()
 
   if (!isAuthenticated) {
     return <Redirect to={routes.login} />
+  }
+
+  if (admin && role !== 'ADMIN') {
+    return <Redirect to={routes.home} />
   }
 
   return (
@@ -27,5 +32,6 @@ export const AuthorizedRoute = ({ path, component }) => {
 
 AuthorizedRoute.propTypes = {
   path: PropTypes.string,
+  admin: PropTypes.bool,
   component: PropTypes.elementType
 }
