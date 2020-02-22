@@ -45,7 +45,7 @@ const LoginView = ({ history }) => {
           <Logo className={classes.logo} />
           <Formik onSubmit={submitHandler} validationSchema={LoginSchema} initialValues={initialValues} validateOnMount>
             {({ handleSubmit, handleChange, handleBlur, errors, isSubmitting, isValid }) => (
-              <form>
+              <form onSubmit={handleSubmit}>
                 <Input
                   name="email"
                   placeholder="Email Address"
@@ -68,7 +68,6 @@ const LoginView = ({ history }) => {
 
                 <Button
                   type="submit"
-                  onClick={handleSubmit}
                   loading={isSubmitting}
                   disabled={isSubmitting || !isValid}
                   className={classes.button}
