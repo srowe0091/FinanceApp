@@ -14,7 +14,7 @@ import { formatDate } from 'utils/normalizer'
 const useHomeViewStyles = createUseStyles(theme => ({
   top: {
     width: '100%',
-    height: theme.spacing(20),
+    height: theme.spacing(30),
     top: 0,
     position: 'absolute',
     background: 'linear-gradient(140deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%)',
