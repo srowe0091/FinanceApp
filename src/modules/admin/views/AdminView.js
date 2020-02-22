@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { IonContent, IonText, useIonViewWillLeave } from '@ionic/react'
+import { IonContent, IonText, IonRefresher, IonRefresherContent, useIonViewWillLeave, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import get from 'lodash/fp/get'
@@ -42,12 +42,13 @@ const Admin = ({ history }) => {
     variables: { transactionIds },
     onCompleted: () => history.push(routes.home)
   })
-  const { data, loading } = useQuery(GroupTransactions)
+  const { data, loading, refetch } = useQuery(GroupTransactions)
   const checkboxClick = useCallback(id => e => handleIds(_ids => e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids)), [])
-
+  const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const transactions = useMemo(() => groupBy('owner')(get('admin.groupTransactions')(data)), [data])
 
   useIonViewWillLeave(() => handleIds([]))
+  useIonViewWillEnter(() => refetch())
 
   if (loading) {
     return <FullPageLoader />
@@ -55,8 +56,11 @@ const Admin = ({ history }) => {
 
   return (
     <>
-      <Toolbar color="primary" />
+      <Toolbar color="primary" title="Pay Transactions" />
       <IonContent color="dark">
+        <IonRefresher slot="fixed" onIonRefresh={onRefresh}>
+          <IonRefresherContent />
+        </IonRefresher>
         <div className={classes.wrapper}>
           <div className={classes.transactions}>
             {Object.keys(transactions).map(email => (
@@ -68,7 +72,7 @@ const Admin = ({ history }) => {
               </Fragment>
             ))}
           </div>
-          <Button type="button" className={classes.button} disabled={ptLoading} loading={ptLoading} onClick={payTransaction}>Pay</Button>
+          <Button type="button" className={classes.button} disabled={ptLoading || !transactionIds.length} loading={ptLoading} onClick={payTransaction}>Pay</Button>
         </div>
       </IonContent>
     </>
