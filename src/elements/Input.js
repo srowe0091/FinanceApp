@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
-import { IonInput } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
 const useInputStyles = createUseStyles(theme => ({
   input: {
-    '--color': 'var(--white)',
-    '--padding-end': theme.spacing(1.25),
-    '--padding-start': theme.spacing(1.25),
-    '--padding-top': theme.spacing(1.25),
-    '--padding-bottom': theme.spacing(1.25),
-    '--background': 'var(--alpha5)',
-    '--placeholder-color': 'var(--gray7)',
+    width: '100%',
+    color: 'var(--white)',
+    outline: 'none',
+    border: 'none',
+    background: 'var(--black)',
+    '&::placeholder': {
+      color: 'var(--gray7)',
+      opacity: .5
+    },
+    padding: theme.spacing(1.25),
     borderRadius: 'var(--borderRadius)',
     marginBottom: theme.spacing(2)
   }
@@ -21,12 +23,36 @@ const useInputStyles = createUseStyles(theme => ({
 export const Input = ({ className, onChange, onBlur, ...rest }) => {
   const classes = useInputStyles()
   return (
-    <IonInput className={clsx(className, classes.input)} onIonBlur={onBlur} onIonChange={onChange} {...rest} />
+    <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
   )
 }
 
 Input.propTypes = {
   className: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired
+}
+
+export const MaskedInput = ({ className, onChange, onBlur, format, defaultValue, ...rest }) => {
+  const classes = useInputStyles()
+  const [value, updateValue] = useState(format(defaultValue)[0])
+
+  const _onChange = useCallback(e => {
+    const [_ui, _value] = format(e.target.value)
+    updateValue(_ui)
+    e.target.value = _value
+    onChange(e)
+  }, [onChange, format])
+
+  return (
+    <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={_onChange} value={value} {...rest} />
+  )
+}
+
+MaskedInput.propTypes = {
+  className: PropTypes.string,
+  defaultValue: PropTypes.any,
+  format: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 }
