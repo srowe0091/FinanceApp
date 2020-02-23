@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import { menuController } from '@ionic/core'
 import { IonMenu, IonContent, IonItem, IonLabel, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom"
 import has from 'lodash/fp/has'
 import filter from 'lodash/fp/filter'
 

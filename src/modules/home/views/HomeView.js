@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react'
-import { IonContent, IonText, IonRefresher, IonRefresherContent, IonFab, IonFabButton, IonIcon, useIonViewWillEnter } from '@ionic/react'
+import { IonContent, IonText, IonFab, IonFabButton, IonIcon, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
 import map from 'lodash/fp/map'
 
 import { add } from 'ionicons/icons'
 
-import { TransactionEntry, Toolbar, FullPageLoader } from 'components'
+import { TransactionEntry, Toolbar, FullPageLoader, PullToRefresh } from 'components'
 import routes from 'routes'
 import { UserTransactions } from 'modules/transaction'
 import { formatDate } from 'utils/normalizer'
@@ -63,9 +63,7 @@ const Home = () => {
     <>
       <Toolbar translucent color={toolbarStyle ? 'primary' : null} />
       <IonContent color="dark" fullscreen scrollEvents onIonScroll={scrollHandler}>
-        <IonRefresher slot="fixed" onIonRefresh={onRefresh}>
-          <IonRefresherContent />
-        </IonRefresher>
+        <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.top} />
 
         <div className={classes.card}>

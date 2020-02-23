@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { IonContent, IonText, IonRefresher, IonRefresherContent, useIonViewWillLeave, useIonViewWillEnter } from '@ionic/react'
+import { IonContent, IonText, useIonViewWillLeave, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import get from 'lodash/fp/get'
@@ -11,7 +11,7 @@ import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
 
 import { Button } from 'elements'
-import { Toolbar, TransactionEntry, FullPageLoader } from 'components'
+import { Toolbar, TransactionEntry, FullPageLoader, PullToRefresh } from 'components'
 import routes from 'routes'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 
@@ -58,9 +58,7 @@ const Admin = ({ history }) => {
     <>
       <Toolbar color="primary" title="Pay Transactions" />
       <IonContent color="dark">
-        <IonRefresher slot="fixed" onIonRefresh={onRefresh}>
-          <IonRefresherContent />
-        </IonRefresher>
+        <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.wrapper}>
           <div className={classes.transactions}>
             {Object.keys(transactions).map(email => (
