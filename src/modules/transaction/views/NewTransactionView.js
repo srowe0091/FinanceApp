@@ -4,10 +4,11 @@ import { IonContent } from '@ionic/react'
 import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
+import * as yup from 'yup'
 import replace from 'lodash/fp/replace'
 
 import { Toolbar } from 'components'
-import { Input, Button } from 'elements'
+import { Input, Button, MaskedInput, Checkbox } from 'elements'
 import { NewTransaction } from '../transaction.gql'
 
 const useNewTransactionViewStyles = createUseStyles(theme => ({
@@ -15,7 +16,10 @@ const useNewTransactionViewStyles = createUseStyles(theme => ({
     height: '100%',
     margin: theme.spacing(0, 2),
     paddingTop: theme.spacing(2),
-    position: 'relative'
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   button: {
     left: 0,
@@ -29,11 +33,15 @@ const useNewTransactionViewStyles = createUseStyles(theme => ({
   }
 }))
 
-const initialValues = { amount: "$0.00" }
+const initialValues = { amount: 0, description: '', group: false }
 
-const formatInput = cb => e => {
-  const number = parseInt(replace(/\D/g)('')(e.target.value), '10') / 100
-  cb(e.target.name, `$${number.toFixed(2)}`)
+const TransactionSchema = yup.object().shape({
+  amount: yup.number().moreThan(0).required()
+})
+
+const formatInput = value => {
+  const number = parseInt(replace(/\D/g)('')(value), '10') / 100
+  return [`$${number.toFixed(2)}`, number]
 }
 
 const Home = ({ history }) => {
@@ -44,7 +52,7 @@ const Home = ({ history }) => {
       variables: {
         input: {
           amount: parseInt(replace(/\D/g)('')(values.amount), '10'),
-          description: values.description
+          ...values
         }
       }
     })
@@ -55,12 +63,13 @@ const Home = ({ history }) => {
     <>
       <Toolbar back color='primary' title="New Transaction" />
       <IonContent color="dark">
-        <Formik onSubmit={onSubmit} initialValues={initialValues}>
-          {({ handleSubmit, handleChange, values, handleBlur, setFieldValue }) => (
+        <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
+          {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
             <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">
-              <Input className={classes.moneyInput} placeholder="0.00" name="amount" value={values.amount} onBlur={handleBlur} onChange={formatInput(setFieldValue)} />
+              <MaskedInput className={classes.moneyInput} name="amount" format={formatInput} defaultValue={0} onBlur={handleBlur} onChange={handleChange} />
               <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
-              <Button type="submit" className={classes.button} disabled={loading} loading={loading}>Submit</Button>
+              <Checkbox label="Group Transaction" name="group" checked={values.group} onChange={handleChange} />
+              <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>Submit</Button>
             </form>
           )}
         </Formik>
