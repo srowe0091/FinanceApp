@@ -1,4 +1,5 @@
 import { useState, useCallback, useContext, useEffect } from 'react'
+import { useApolloClient } from '@apollo/react-hooks'
 import set from 'lodash/fp/set'
 
 import { AuthContext } from './context'
@@ -12,6 +13,7 @@ const checkErrors = response => {
 
 export const useInitializeAuth = () => {
   const [state, handleState] = useState({ isLoading: true, isAuthenticated: false, user: {} })
+  const client = useApolloClient()
   useEffect(() => {
     const _sessionId = localStorage.getItem('session')
     if (_sessionId) {
@@ -51,11 +53,12 @@ export const useInitializeAuth = () => {
         headers: { Authorization: localStorage.getItem('session') }
       })
       .then(checkErrors)
+      .then(() => client.clearStore())
       .then(() => {
         localStorage.removeItem('session')
         handleState(set('isAuthenticated')(false))
       }),
-    []
+    [client]
   )
 
   return {
