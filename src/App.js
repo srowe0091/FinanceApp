@@ -12,8 +12,9 @@ import { AuthProvider } from 'modules/authentication/context'
 import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
 import AdminView from 'modules/admin/views/AdminView'
-import ProfileView from 'modules/profile/views/ProfileView'
+import UserView from 'modules/user/views/UserView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
+import LabView from 'modules/lab/views/LabView'
 
 import { AuthorizedRoute } from 'components'
 import { DrawerMenu } from 'modules/drawer'
@@ -40,8 +41,9 @@ const App = () => (
             <IonRouterOutlet>
               <AuthorizedRoute path={routes.home} component={HomeView} />
               <AuthorizedRoute path={routes.admin} component={AdminView} admin />
-              <AuthorizedRoute path={routes.profile} component={ProfileView} />
+              <AuthorizedRoute path={routes.profile} component={UserView} />
               <AuthorizedRoute path={routes.newTransaction} component={NewTransactionView} />
+              <AuthorizedRoute path={routes.lab} component={LabView} />
               <Route path={routes.login} component={LoginView} />
               <Redirect exact from="/" to={routes.login} />
             </IonRouterOutlet>
