@@ -56,7 +56,7 @@ const Admin = ({ history }) => {
 
   return (
     <>
-      <Toolbar color="primary" title="Pay Transactions" />
+      <Toolbar color="medium" title="Pay Transactions" />
       <IonContent color="dark">
         <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.wrapper}>

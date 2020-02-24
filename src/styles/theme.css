@@ -24,6 +24,7 @@ http://ionicframework.com/docs/theming/ */
   --themeGray1: #2d2f38;
   --themeGray2: #202129;
   --alpha0: rgba(0, 0, 0, 0);
+  --alpha25: rgba(0, 0, 0, .25);
   --alpha5: rgba(0, 0, 0, .5);
 
   /** variables **/
@@ -89,12 +90,12 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-dark-tint: #3A3B43;
 
   /** medium **/
-  --ion-color-medium: #989aa2;
-  --ion-color-medium-rgb: 152, 154, 162;
+  --ion-color-medium: #2d2f38;
+  --ion-color-medium-rgb: 45, 47, 56;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #86888f;
-  --ion-color-medium-tint: #a2a4ab;
+  --ion-color-medium-shade: #14161F;
+  --ion-color-medium-tint: #474952;
 
   /** light **/
   --ion-color-light: #f4f5f8;

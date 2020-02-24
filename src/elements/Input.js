@@ -10,13 +10,17 @@ const useInputStyles = createUseStyles(theme => ({
     outline: 'none',
     border: 'none',
     background: 'var(--black)',
+    padding: theme.spacing(1.25),
+    borderRadius: 'var(--borderRadius)',
+    marginBottom: theme.spacing(2),
     '&::placeholder': {
       color: 'var(--gray7)',
       opacity: .5
     },
-    padding: theme.spacing(1.25),
-    borderRadius: 'var(--borderRadius)',
-    marginBottom: theme.spacing(2)
+    '&[disabled]': {      
+      color: 'var(--gray7)',
+      backgroundColor: 'var(--alpha25)',
+    }
   }
 }))
 

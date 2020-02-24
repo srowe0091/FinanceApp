@@ -27,21 +27,23 @@ const useToolbarStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Toolbar = ({ translucent, color, title, back }) => {
-  const classes = useToolbarStyles(color)
+export const Toolbar = ({ children, translucent, color = "primary", title, back }) => {
+  const classes = useToolbarStyles()
   return (
     <IonHeader className={classes.header}>
-      <IonToolbar className={classes.toolbar} translucent={translucent}>
+      <IonToolbar className={classes.toolbar} translucent={translucent} color={color}>
         <IonButtons className={classes.icon} slot="start">
           {back ? <IonBackButton /> : <IonMenuButton />}
         </IonButtons>
         {title && <IonTitle>{title}</IonTitle>}
+        {children}
       </IonToolbar>
     </IonHeader>
   )
 }
 
 Toolbar.propTypes = {
+  children: PropTypes.node,
   translucent: PropTypes.bool,
   color: PropTypes.string,
   title: PropTypes.string,
