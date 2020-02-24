@@ -47,11 +47,11 @@ const formatInput = value => {
 const Home = ({ history }) => {
   const classes = useNewTransactionViewStyles()
   const [saveTransaction, { loading }] = useMutation(NewTransaction)
-  const onSubmit = useCallback(values => {
+  const onSubmit = useCallback(({ amount, ...values}) => {
     saveTransaction({
       variables: {
         input: {
-          amount: parseInt(replace(/\D/g)('')(values.amount), '10'),
+          amount: parseInt(replace(/\D/g)('')(amount), '10'),
           ...values
         }
       }
@@ -61,7 +61,7 @@ const Home = ({ history }) => {
 
   return (
     <>
-      <Toolbar back color='primary' title="New Transaction" />
+      <Toolbar back color='medium' title="New Transaction" />
       <IonContent color="dark">
         <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
           {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
