@@ -1,8 +1,9 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { IonContent, IonText, useIonViewWillLeave, useIonViewWillEnter } from '@ionic/react'
+import { IonContent, IonText, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import useMountedState from 'react-use/lib/useMountedState'
 import get from 'lodash/fp/get'
 import map from 'lodash/fp/map'
 import concat from 'lodash/fp/concat'
@@ -36,6 +37,7 @@ const useAdminViewStyles = createUseStyles(theme => ({
 }))
 
 const Admin = ({ history }) => {
+  const isMounted = useMountedState()
   const classes = useAdminViewStyles()
   const [transactionIds, handleIds] = useState([])
   const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
@@ -47,8 +49,12 @@ const Admin = ({ history }) => {
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const transactions = useMemo(() => groupBy('owner')(get('admin.groupTransactions')(data)), [data])
 
-  useIonViewWillLeave(() => handleIds([]))
-  useIonViewWillEnter(() => refetch())
+  useIonViewWillEnter(() => {
+    if(isMounted()) {
+      handleIds([])
+      refetch()
+    }
+  })
 
   if (loading) {
     return <FullPageLoader />
@@ -66,7 +72,7 @@ const Admin = ({ history }) => {
                 <IonText color="textSecondary">
                   <h5 className={classes.headers}>{email}</h5>
                 </IonText>
-                {map(t => <TransactionEntry key={t._id} onCheckboxClick={checkboxClick} checked={includes(t._id)(transactionIds)} {...t} />)(transactions[email])}
+                {map(t => <TransactionEntry key={t.id} onCheckboxClick={checkboxClick} checked={includes(t.id)(transactionIds)} {...t} />)(transactions[email])}
               </Fragment>
             ))}
           </div>

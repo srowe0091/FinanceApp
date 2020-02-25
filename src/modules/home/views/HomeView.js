@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { IonContent, IonText, IonFab, IonFabButton, IonIcon, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
+import useMountedState from 'react-use/lib/useMountedState'
 import map from 'lodash/fp/map'
 
 import { add } from 'ionicons/icons'
@@ -47,13 +48,14 @@ const useHomeViewStyles = createUseStyles(theme => ({
 }))
 
 const Home = () => {
+  const isMounted = useMountedState()
   const classes = useHomeViewStyles()
   const [toolbarStyle, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const { data, loading, refetch } = useQuery(UserTransactions)
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
 
-  useIonViewWillEnter(() => refetch())
+  useIonViewWillEnter(() => isMounted() && refetch())
 
   if (loading) {
     return <FullPageLoader />
@@ -79,7 +81,7 @@ const Home = () => {
         </div>
 
         <div className={classes.transactions}>
-          {map(t => <TransactionEntry key={t._id} {...t} />)(data.transactions)}
+          {map(t => <TransactionEntry key={t.id} {...t} />)(data.transactions)}
         </div>
       </IonContent>
       <IonFab vertical="bottom" horizontal="end" slot="fixed">

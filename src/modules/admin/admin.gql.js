@@ -18,7 +18,7 @@ export const PayTransactions = gql`
   mutation PayTransactions($transactionIds: [ID]!) {
     admin {
       payTransactions(transactionIds: $transactionIds) {
-        _id
+        id
       }
     }
   }
