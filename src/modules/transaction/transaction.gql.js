@@ -2,7 +2,8 @@ import gql from 'graphql-tag'
 
 export const TransactionFragment = gql`
   fragment TransactionFragment on Transaction {
-    _id
+    id
+    paid
     group
     amount
     createdAt
@@ -22,7 +23,7 @@ export const UserTransactions = gql`
 export const NewTransaction = gql`
   mutation NewTransaction($input: TransactionInput!) {
     saveTransaction(input: $input) {
-      _id
+      id
     }
   }
 `

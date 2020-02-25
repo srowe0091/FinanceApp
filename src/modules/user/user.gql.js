@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 export const GetUser = gql`
   query GetUser {
     me {
-      _id
+      id
       allowance
       dueDate
     }
@@ -13,7 +13,7 @@ export const GetUser = gql`
 export const UpdateUser = gql`
   mutation UpdateUser($input: UserInput) {
     saveUser(input: $input) {
-      _id
+      id
       email
       allowance
       dueDate
