@@ -19,7 +19,6 @@ export const PayTransactions = gql`
     admin {
       payTransactions(transactionIds: $transactionIds) {
         _id
-        
       }
     }
   }
