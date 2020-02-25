@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import { IonItem, IonLabel, IonCheckbox } from '@ionic/react'
 
-
 import { formatDate } from 'utils/normalizer'
 
 const useTransactionStyles = createUseStyles(theme => ({
@@ -23,7 +22,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const TransactionEntry = ({ id, amount, description, dateCreated, onCheckboxClick, checked }) => {
+export const TransactionEntry = ({ id, amount, description, createdAt, onCheckboxClick, checked }) => {
   const classes = useTransactionStyles()
   return (
     <IonItem className={classes.transaction}>
@@ -31,7 +30,7 @@ export const TransactionEntry = ({ id, amount, description, dateCreated, onCheck
         <span className={classes.label}>
           <span>
             <p>{description}</p>
-            <p color="textSecondary" variant="caption">{formatDate(dateCreated)}</p>
+            <p color="textSecondary" variant="caption">{formatDate(createdAt)}</p>
           </span>
           <p>${(amount / 100).toFixed(2)}</p>
         </span>
@@ -45,7 +44,7 @@ TransactionEntry.propTypes = {
   id: PropTypes.string,
   amount: PropTypes.number,
   description: PropTypes.string,
-  dateCreated: PropTypes.string,
+  createdAt: PropTypes.string,
   checked: PropTypes.bool,
   onCheckboxClick: PropTypes.func
 }
