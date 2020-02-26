@@ -40,8 +40,8 @@ const TransactionSchema = yup.object().shape({
 })
 
 const formatInput = value => {
-  const number = parseInt(replace(/\D/g)('')(value), '10') / 100
-  return [`$${number.toFixed(2)}`, number]
+  const number = parseInt(replace(/\D/g)('')(value), '10')
+  return [`$${(number/100).toFixed(2)}`, number]
 }
 
 const Home = ({ history }) => {
