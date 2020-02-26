@@ -1,16 +1,18 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useMemo } from 'react'
 import { IonContent, IonText, IonFab, IonFabButton, IonIcon, useIonViewWillEnter } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
 import useMountedState from 'react-use/lib/useMountedState'
 import map from 'lodash/fp/map'
+import sumBy from 'lodash/fp/sumBy'
 
 import { add } from 'ionicons/icons'
 
 import { TransactionEntry, Toolbar, FullPageLoader, PullToRefresh } from 'components'
 import routes from 'routes'
 import { UserTransactions } from 'modules/transaction'
-import { formatDate } from 'utils/normalizer'
+import { useUser } from 'modules/authentication'
+import { formatDate, determineDays } from 'utils/normalizer'
 
 const useHomeViewStyles = createUseStyles(theme => ({
   top: {
@@ -47,15 +49,30 @@ const useHomeViewStyles = createUseStyles(theme => ({
   }
 }))
 
-const Home = () => {
+const useHomeHooks = ({ refetch, data }) => {
   const isMounted = useMountedState()
-  const classes = useHomeViewStyles()
+  const { allowance, dueDate } = useUser()
   const [toolbarStyle, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
-  const { data, loading, refetch } = useQuery(UserTransactions)
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
+  const { amountLeft, daysLeft } = useMemo(() => {
+    return {
+      amountLeft: ((allowance - sumBy('amount')(data.transactions)) / 100).toFixed(2),
+      daysLeft: determineDays(dueDate)
+    }
+  }, [dueDate, data, allowance])
 
   useIonViewWillEnter(() => isMounted() && refetch())
+
+  return {
+    amountLeft, daysLeft, onRefresh, toolbarStyle, scrollHandler
+  }
+}
+
+const Home = () => {
+  const classes = useHomeViewStyles()
+  const { data = {}, loading, refetch } = useQuery(UserTransactions)
+  const { amountLeft, daysLeft, onRefresh, toolbarStyle, scrollHandler } = useHomeHooks({ refetch, data })
 
   if (loading) {
     return <FullPageLoader />
@@ -73,10 +90,10 @@ const Home = () => {
             <p>{formatDate(new Date(), 'dddd, MMM D, YYYY')}</p>
           </IonText>
           <IonText color="textPrimary">
-            <h2><strong>$257.95</strong></h2>
+            <h2><strong>{amountLeft}</strong></h2>
           </IonText>
           <IonText color="textPrimary">
-            <p>3 days left</p>
+            <p>{daysLeft}</p>
           </IonText>
         </div>
 

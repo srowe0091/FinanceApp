@@ -106,10 +106,6 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-tint: #f5f6f9;
 }
 
-.ion-page {
-  background-color: var(--themeGray1);
-}
-
 .md {
   --ion-toolbar-background: transparent;
   --ion-toolbar-color: var(--white);
