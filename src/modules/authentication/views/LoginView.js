@@ -48,6 +48,8 @@ const LoginView = ({ history }) => {
               <form onSubmit={handleSubmit}>
                 <Input
                   name="email"
+                  type="email"
+                  inputmode="email"
                   placeholder="Email Address"
                   onChange={handleChange}
                   onBlur={handleBlur}
