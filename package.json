@@ -6,7 +6,9 @@
   "scripts": {
     "start": "react-scripts start",
     "android": "ionic capacitor run android",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "android:copy": "ionic capacitor copy android",
+    "android:start": "npx cap open android"
   },
   "repository": {
     "type": "git",
