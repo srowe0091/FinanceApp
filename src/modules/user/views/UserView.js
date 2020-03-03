@@ -4,7 +4,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
-import get from 'lodash/fp/get'
 import set from 'lodash/fp/set'
 import pick from 'lodash/fp/pick'
 
@@ -60,14 +59,14 @@ const useUserViewStyles = createUseStyles(theme => ({
 const ProfileView = () => {
   const classes = useUserViewStyles()
   const { email } = useUser()
-  const { data, loading } = useQuery(GetUser)
+  const { data = {}, loading } = useQuery(GetUser)
   const [updateUser, { loading: saving }] = useMutation(UpdateUser)
-  const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(get('me')(data)), [data])
+  const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(data.me), [data])
   const [editState, toggleEditState] = useToggle(false)
-  const onSubmit = useCallback(values => {
-    updateUser(set('variables.input')(values)({}))
-      .finally(() => toggleEditState())
-  }, [updateUser, toggleEditState])
+  const onSubmit = useCallback(
+    values => updateUser(set('variables.input')(values)({})).finally(() => toggleEditState()),
+    [updateUser, toggleEditState]
+  )
 
   if (loading) {
     return <FullPageLoader />

@@ -66,7 +66,7 @@ const Home = ({ history }) => {
         <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
           {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
             <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">
-              <MaskedInput autoFocus className={classes.moneyInput} name="amount" format={formatInput} defaultValue={0} onBlur={handleBlur} onChange={handleChange} />
+              <MaskedInput autoFocus className={classes.moneyInput} name="amount" type="tel" format={formatInput} defaultValue={0} onBlur={handleBlur} onChange={handleChange} />
               <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
               <Checkbox label="Group Transaction" name="group" checked={values.group} onChange={handleChange} />
               <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>Submit</Button>
