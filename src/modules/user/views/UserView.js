@@ -12,6 +12,7 @@ import { personCircle } from 'ionicons/icons'
 import { Button, Input } from 'elements'
 import { Toolbar, FullPageLoader } from 'components'
 import { useUser } from 'modules/authentication'
+import { UserProfileSchema } from '../util'
 import { GetUser, UpdateUser } from '../user.gql'
 
 const useUserViewStyles = createUseStyles(theme => ({
@@ -88,15 +89,15 @@ const ProfileView = () => {
             <IonIcon className={classes.userIcon} icon={personCircle} />
             <IonText>{email}</IonText>
           </div>
-          <Formik onSubmit={onSubmit} initialValues={initialValues}>
+          <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={UserProfileSchema} validateOnMount>
             {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
               <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
                 <Input type="number" min={1} max={31} name="dueDate" placeholder="Due Date" disabled={!editState} value={values.dueDate} onBlur={handleBlur} onChange={handleChange} />
                 <Input type="number" name="allowance" placeholder="Bi-Weekly Allowance" disabled={!editState} value={values.allowance} onBlur={handleBlur} onChange={handleChange} />
                 {editState && (
                   <div className={classes.buttons}>
-                    <Button fill="outline" color="light" className={classes.button} disabled={saving} onClick={toggleEditState}>Cancel</Button>
-                    <Button type="submit" className={classes.button} disabled={saving || !isValid} loading={saving}>Submit</Button>
+                    <Button fill="outline" color="light" disabled={saving} onClick={toggleEditState}>Cancel</Button>
+                    <Button type="submit" disabled={saving || !isValid} loading={saving}>Submit</Button>
                   </div>
                 )}
               </form>
