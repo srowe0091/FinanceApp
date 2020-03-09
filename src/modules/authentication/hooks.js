@@ -20,7 +20,8 @@ export const useInitializeAuth = () => {
     if (_sessionId) {
       fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
         headers: { Authorization: _sessionId }
-      }).then(checkErrors)
+      })
+        .then(checkErrors)
         .then(session => {
           const _session = JSON.parse(session)
           if (!_session.dueDate || !_session.allowance) {
@@ -36,42 +37,43 @@ export const useInitializeAuth = () => {
   }, [dispatch])
 
   const handleLogin = useCallback(
-    (email, password) => fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(checkErrors)
-      .then(session => {
-        const _session = JSON.parse(session)
-        localStorage.setItem('session', _session.sessionId)
-        if (!_session.dueDate || !_session.allowance) {
-          dispatch({ type: 'COMPLETE_PROFILE', payload: _session })
-          return
+    (email, password) =>
+      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: {
+          'Content-Type': 'application/json'
         }
-        dispatch({ type: 'LOGIN', payload: _session })
-      }),
+      })
+        .then(checkErrors)
+        .then(session => {
+          const _session = JSON.parse(session)
+          localStorage.setItem('session', _session.sessionId)
+          if (!_session.dueDate || !_session.allowance) {
+            dispatch({ type: 'COMPLETE_PROFILE', payload: _session })
+            return
+          }
+          dispatch({ type: 'LOGIN', payload: _session })
+        }),
     [dispatch]
   )
 
   const handleLogout = useCallback(
-    () => fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
-      method: 'DELETE',
-      headers: { Authorization: localStorage.getItem('session') }
-    }).then(checkErrors)
-      .then(() => client.clearStore())
-      .then(() => {
-        localStorage.removeItem('session')
-        dispatch({ type: 'LOGOUT' })
-      }),
+    () =>
+      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
+        method: 'DELETE',
+        headers: { Authorization: localStorage.getItem('session') }
+      })
+        .then(checkErrors)
+        .then(() => client.clearStore())
+        .then(() => {
+          localStorage.removeItem('session')
+          dispatch({ type: 'LOGOUT' })
+        }),
     [client, dispatch]
   )
 
-  const finishProfile = useCallback(
-    data => dispatch({ type: 'FINISHED_PROFILE', payload: data }),
-    [dispatch]
-  )
+  const finishProfile = useCallback(data => dispatch({ type: 'FINISHED_PROFILE', payload: data }), [dispatch])
 
   return {
     ...state,
@@ -83,7 +85,13 @@ export const useInitializeAuth = () => {
 
 export const useAuthentication = () => {
   const { isAuthenticated, handleLogin, handleLogout, finishProfile, requireProfileUpdate } = useContext(AuthContext)
-  return { isAuthenticated, handleLogin, handleLogout, finishProfile, requireProfileUpdate }
+  return {
+    isAuthenticated,
+    handleLogin,
+    handleLogout,
+    finishProfile,
+    requireProfileUpdate
+  }
 }
 
 export const useUser = () => {

@@ -14,9 +14,7 @@ const useStyles = createUseStyles({
 export const Logo = ({ className }) => {
   const classes = useStyles()
   const _className = useMemo(() => clsx(className, classes.logo), [classes, className])
-  return (
-    <img className={_className} src={logoJpg} alt="logo" />
-  )
+  return <img className={_className} src={logoJpg} alt="logo" />
 }
 
 Logo.propTypes = {

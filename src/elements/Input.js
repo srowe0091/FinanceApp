@@ -15,20 +15,18 @@ const useInputStyles = createUseStyles(theme => ({
     marginBottom: theme.spacing(2),
     '&::placeholder': {
       color: 'var(--gray7)',
-      opacity: .5
+      opacity: 0.5
     },
-    '&[disabled]': {      
+    '&[disabled]': {
       color: 'var(--gray7)',
-      backgroundColor: 'var(--alpha25)',
+      backgroundColor: 'var(--alpha25)'
     }
   }
 }))
 
 export const Input = ({ className, onChange, onBlur, ...rest }) => {
   const classes = useInputStyles()
-  return (
-    <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
-  )
+  return <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
 }
 
 Input.propTypes = {
@@ -41,12 +39,15 @@ export const MaskedInput = ({ className, onChange, onBlur, format, defaultValue,
   const classes = useInputStyles()
   const [value, updateValue] = useState(format(defaultValue)[0])
 
-  const _onChange = useCallback(e => {
-    const [_ui, _value] = format(e.target.value)
-    updateValue(_ui)
-    e.target.value = _value
-    onChange(e)
-  }, [onChange, format])
+  const _onChange = useCallback(
+    e => {
+      const [_ui, _value] = format(e.target.value)
+      updateValue(_ui)
+      e.target.value = _value
+      onChange(e)
+    },
+    [onChange, format]
+  )
 
   return (
     <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={_onChange} value={value} {...rest} />

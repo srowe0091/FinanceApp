@@ -19,15 +19,7 @@ export const AuthorizedRoute = ({ path, admin, component }) => {
     return <Redirect to={routes.home} />
   }
 
-  return (
-    <Route path={path}>
-      {props => (
-        <IonPage id={PAGE_ID}>
-          {createElement(component, props)}
-        </IonPage>
-      )}
-    </Route>
-  )
+  return <Route path={path}>{props => <IonPage id={PAGE_ID}>{createElement(component, props)}</IonPage>}</Route>
 }
 
 AuthorizedRoute.propTypes = {

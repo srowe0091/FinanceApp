@@ -28,7 +28,7 @@ const useUserViewStyles = createUseStyles(theme => ({
 
 const initialValues = {
   allowance: '',
-  dueDate: '',
+  dueDate: ''
 }
 
 export const UpdateUserModal = ({ isOpen, finishProfile }) => {
@@ -46,13 +46,36 @@ export const UpdateUserModal = ({ isOpen, finishProfile }) => {
           <IonText className={classes.header}>
             <h4>Finish Profile</h4>
           </IonText>
-          <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={UserProfileSchema} validateOnMount>
+          <Formik
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            validationSchema={UserProfileSchema}
+            validateOnMount
+          >
             {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
               <form onSubmit={handleSubmit} autoComplete="off">
-                <Input type="number" min={1} max={31} name="dueDate" placeholder="Due Date" value={values.dueDate} onBlur={handleBlur} onChange={handleChange} />
-                <Input type="number" name="allowance" placeholder="Bi-Weekly Allowance" value={values.allowance} onBlur={handleBlur} onChange={handleChange} />
+                <Input
+                  type="number"
+                  min={1}
+                  max={31}
+                  name="dueDate"
+                  placeholder="Due Date"
+                  value={values.dueDate}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="number"
+                  name="allowance"
+                  placeholder="Bi-Weekly Budget"
+                  value={values.allowance}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
 
-                <Button type="submit" className={classes.button} loading={loading} disabled={!isValid || loading}>Save</Button>
+                <Button type="submit" className={classes.button} loading={loading} disabled={!isValid || loading}>
+                  Save
+                </Button>
               </form>
             )}
           </Formik>

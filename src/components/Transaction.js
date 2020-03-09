@@ -15,7 +15,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   label: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   checkbox: {
     marginRight: theme.spacing(2)
@@ -30,12 +30,16 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
         <span className={classes.label}>
           <span>
             <p>{description}</p>
-            <p color="textSecondary" variant="caption">{formatDate(createdAt)}</p>
+            <p color="textSecondary" variant="caption">
+              {formatDate(createdAt)}
+            </p>
           </span>
           <p>${(amount / 100).toFixed(2)}</p>
         </span>
       </IonLabel>
-      {onCheckboxClick && <IonCheckbox slot="start" className={classes.checkbox} checked={checked} onIonChange={onCheckboxClick(id)} />}
+      {onCheckboxClick && (
+        <IonCheckbox slot="start" className={classes.checkbox} checked={checked} onIonChange={onCheckboxClick(id)} />
+      )}
     </IonItem>
   )
 }

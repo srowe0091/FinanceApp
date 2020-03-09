@@ -14,8 +14,14 @@ import routes from 'routes'
 import { textMappings } from 'utils'
 
 const LoginSchema = yup.object().shape({
-  email: yup.string().email('Invalid Email Address').required(),
-  password: yup.string().min(5).required(),
+  email: yup
+    .string()
+    .email('Invalid Email Address')
+    .required(),
+  password: yup
+    .string()
+    .min(5)
+    .required()
 })
 
 const initialValues = {
@@ -29,11 +35,13 @@ const LoginView = () => {
   const [showModal, toggleModal] = useToggle(false)
   const { handleLogin, isAuthenticated, finishProfile, requireProfileUpdate } = useAuthentication()
 
-  const submitHandler = useCallback(({ email, password }) => {
-    setStatus(null)
-    return handleLogin(email, password)
-      .catch(err => setStatus(textMappings[err.status] || err.message))
-  }, [handleLogin])
+  const submitHandler = useCallback(
+    ({ email, password }) => {
+      setStatus(null)
+      return handleLogin(email, password).catch(err => setStatus(textMappings[err.status] || err.message))
+    },
+    [handleLogin]
+  )
 
   useEffect(() => {
     if (requireProfileUpdate) {
@@ -44,7 +52,7 @@ const LoginView = () => {
   if (isAuthenticated) {
     return <Redirect to={routes.home} />
   }
-  
+
   return (
     <IonPage>
       <IonContent fullscreen className={classes.wrapper}>
@@ -71,7 +79,9 @@ const LoginView = () => {
                 />
 
                 <IonText color="danger">
-                  <p align="center" variant="subtitle2" className={classes.errorStatus}>{status}</p>
+                  <p align="center" variant="subtitle2" className={classes.errorStatus}>
+                    {status}
+                  </p>
                 </IonText>
 
                 <Button

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import { menuController } from '@ionic/core'
 import { IonMenu, IonContent, IonItem, IonLabel, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
-import { useLocation } from "react-router-dom"
+import { useLocation } from 'react-router-dom'
 import has from 'lodash/fp/has'
 import filter from 'lodash/fp/filter'
 
@@ -45,8 +45,7 @@ export const DrawerMenu = () => {
       {
         icon: person,
         label: 'Profile',
-        route: routes.profile,
-        condition: false
+        route: routes.profile
       },
       {
         icon: settings,
@@ -55,7 +54,7 @@ export const DrawerMenu = () => {
         condition: role === 'ADMIN'
       }
     ]
-    return filter(link => has('condition')(link) ? link.condition : true)(links)
+    return filter(link => (has('condition')(link) ? link.condition : true))(links)
   }, [role])
 
   if (!isAuthenticated) {
@@ -74,10 +73,10 @@ export const DrawerMenu = () => {
             key={r.label}
             detail
             lines="none"
-            color={location.pathname === r.route ? "tertiary" : "dark"}
+            color={location.pathname === r.route ? 'tertiary' : 'dark'}
             onClick={closeDrawer}
             className={classes.item}
-            {...(location.pathname !== r.route) && { routerLink: r.route }}
+            {...(location.pathname !== r.route && { routerLink: r.route })}
           >
             <IonIcon slot="start" className={classes.icon} icon={r.icon} />
             <IonLabel>{r.label}</IonLabel>

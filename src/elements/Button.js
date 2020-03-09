@@ -23,12 +23,7 @@ const useStyles = createUseStyles({
 export const Button = ({ children, className, loading, ...props }) => {
   const classes = useStyles()
   return (
-    <IonButton
-      expand="full"
-      shape="round"
-      className={clsx(className, classes.button)}
-      {...props}
-    >
+    <IonButton expand="full" shape="round" className={clsx(className, classes.button)} {...props}>
       {children}
       {loading && <IonSpinner className={classes.loading} />}
     </IonButton>
