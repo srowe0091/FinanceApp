@@ -88,6 +88,5 @@ export const useAuthentication = () => {
 
 export const useUser = () => {
   const { user } = useContext(AuthContext)
-  console.log(user)
   return user
 }
