@@ -1,19 +1,20 @@
 import React, { useMemo, useCallback } from 'react'
 import { IonIcon, IonContent, IonButtons, IonButton, IonText } from '@ionic/react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
-import get from 'lodash/fp/get'
 import set from 'lodash/fp/set'
 import pick from 'lodash/fp/pick'
 
 import { personCircle } from 'ionicons/icons'
 
-import { Button, Input } from 'elements'
-import { Toolbar, FullPageLoader } from 'components'
+import { Button, Input, MaskedInput } from 'elements'
+import { Toolbar } from 'components'
+import { formatInput } from 'utils'
 import { useUser } from 'modules/authentication'
-import { GetUser, UpdateUser } from '../user.gql'
+import { UserProfileSchema } from '../util'
+import { UpdateUser } from '../user.gql'
 
 const useUserViewStyles = createUseStyles(theme => ({
   container: {
@@ -35,7 +36,7 @@ const useUserViewStyles = createUseStyles(theme => ({
     marginBottom: theme.spacing(4),
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   userIcon: {
     fontSize: '112px',
@@ -59,26 +60,24 @@ const useUserViewStyles = createUseStyles(theme => ({
 
 const ProfileView = () => {
   const classes = useUserViewStyles()
-  const { email } = useUser()
-  const { data, loading } = useQuery(GetUser)
+  const { email, ...userProps } = useUser()
   const [updateUser, { loading: saving }] = useMutation(UpdateUser)
-  const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(get('me')(data)), [data])
+  const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(userProps), [userProps])
   const [editState, toggleEditState] = useToggle(false)
-  const onSubmit = useCallback(values => {
-    updateUser(set('variables.input')(values)({}))
-      .finally(() => toggleEditState())
-  }, [updateUser, toggleEditState])
-
-  if (loading) {
-    return <FullPageLoader />
-  }
+  const onSubmit = useCallback(
+    values => updateUser(set('variables.input')(values)({})).finally(() => toggleEditState()),
+    [updateUser, toggleEditState]
+  )
+  const onReset = useCallback(() => toggleEditState(), [toggleEditState])
 
   return (
     <>
       <Toolbar color="medium" title="Profile">
         {!editState && (
           <IonButtons className={classes.edit} slot="primary">
-            <IonButton color="primary" onClick={toggleEditState}>Edit</IonButton>
+            <IonButton color="primary" onClick={toggleEditState}>
+              Edit
+            </IonButton>
           </IonButtons>
         )}
       </Toolbar>
@@ -89,15 +88,45 @@ const ProfileView = () => {
             <IonIcon className={classes.userIcon} icon={personCircle} />
             <IonText>{email}</IonText>
           </div>
-          <Formik onSubmit={onSubmit} initialValues={initialValues}>
-            {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
+          <Formik
+            onReset={onReset}
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            validationSchema={UserProfileSchema}
+            validateOnMount
+          >
+            {({ handleSubmit, handleReset, values, handleChange, handleBlur, isValid }) => (
               <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
-                <Input type="number" min={1} max={31} name="dueDate" placeholder="Due Date" disabled={!editState} value={values.dueDate} onBlur={handleBlur} onChange={handleChange} />
-                <Input type="number" name="allowance" placeholder="Bi-Weekly Allowance" disabled={!editState} value={values.allowance} onBlur={handleBlur} onChange={handleChange} />
+                <Input
+                  type="number"
+                  min={1}
+                  max={31}
+                  name="dueDate"
+                  placeholder="Due Date"
+                  disabled={!editState}
+                  value={values.dueDate}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <MaskedInput
+                  autoFocus
+                  type="tel"
+                  name="allowance"
+                  placeholder="Bi-Weekly Budget"
+                  disabled={!editState}
+                  format={formatInput}
+                  value={values.allowance}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
                 {editState && (
                   <div className={classes.buttons}>
-                    <Button fill="outline" color="light" className={classes.button} disabled={saving} onClick={toggleEditState}>Cancel</Button>
-                    <Button type="submit" className={classes.button} disabled={saving || !isValid} loading={saving}>Submit</Button>
+                    <Button fill="outline" color="light" disabled={saving} onClick={handleReset}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={saving || !isValid} loading={saving}>
+                      Submit
+                    </Button>
                   </div>
                 )}
               </form>

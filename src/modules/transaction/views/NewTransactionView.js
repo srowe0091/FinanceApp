@@ -9,6 +9,7 @@ import replace from 'lodash/fp/replace'
 
 import { Toolbar } from 'components'
 import { Input, Button, MaskedInput, Checkbox } from 'elements'
+import { formatInput } from 'utils'
 import { NewTransaction } from '../transaction.gql'
 
 const useNewTransactionViewStyles = createUseStyles(theme => ({
@@ -36,40 +37,51 @@ const useNewTransactionViewStyles = createUseStyles(theme => ({
 const initialValues = { amount: 0, description: '', group: false }
 
 const TransactionSchema = yup.object().shape({
-  amount: yup.number().moreThan(0).required()
+  amount: yup
+    .number()
+    .moreThan(0)
+    .required()
 })
-
-const formatInput = value => {
-  const number = parseInt(replace(/\D/g)('')(value), '10')
-  return [`$${(number/100).toFixed(2)}`, number]
-}
 
 const Home = ({ history }) => {
   const classes = useNewTransactionViewStyles()
   const [saveTransaction, { loading }] = useMutation(NewTransaction)
-  const onSubmit = useCallback(({ amount, ...values}) => {
-    saveTransaction({
-      variables: {
-        input: {
-          amount: parseInt(replace(/\D/g)('')(amount), '10'),
-          ...values
+  const onSubmit = useCallback(
+    ({ amount, ...values }) => {
+      saveTransaction({
+        variables: {
+          input: {
+            amount: parseInt(replace(/\D/g)('')(amount), '10'),
+            ...values
+          }
         }
-      }
-    })
-    .then(() => history.goBack())
-  }, [saveTransaction, history])
+      }).then(() => history.goBack())
+    },
+    [saveTransaction, history]
+  )
 
   return (
     <>
-      <Toolbar back color='medium' title="New Transaction" />
+      <Toolbar back color="medium" title="New Transaction" />
       <IonContent color="dark">
         <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
           {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
             <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">
-              <MaskedInput autoFocus className={classes.moneyInput} name="amount" format={formatInput} defaultValue={0} onBlur={handleBlur} onChange={handleChange} />
+              <MaskedInput
+                autoFocus
+                type="tel"
+                name="amount"
+                className={classes.moneyInput}
+                format={formatInput}
+                value={values.amount}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
               <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
               <Checkbox label="Group Transaction" name="group" checked={values.group} onChange={handleChange} />
-              <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>Submit</Button>
+              <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>
+                Submit
+              </Button>
             </form>
           )}
         </Formik>

@@ -6,7 +6,7 @@ import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
 
 import { Input, Button, Checkbox } from 'elements'
-import { formatDate } from 'utils/normalizer'
+import { formatDate } from 'utils'
 import { LongPress } from './LongPress'
 
 const useEditTransactionStyles = createUseStyles(theme => ({
@@ -48,7 +48,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   label: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   checkbox: {
     marginRight: theme.spacing(2)
@@ -62,17 +62,21 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
   return (
     <>
       <LongPress onTrigger={togglePoppover}>
-        <IonItem button className={classes.transaction}>
+        <IonItem className={classes.transaction}>
           <IonLabel color="light">
             <span className={classes.label}>
               <span>
                 <p>{description}</p>
-                <p color="textSecondary" variant="caption">{formatDate(createdAt)}</p>
+                <p color="textSecondary" variant="caption">
+                  {formatDate(createdAt)}
+                </p>
               </span>
               <p>${(amount / 100).toFixed(2)}</p>
             </span>
           </IonLabel>
-          {onCheckboxClick && <IonCheckbox slot="start" className={classes.checkbox} checked={checked} onIonChange={onCheckboxClick(id)} />}
+          {onCheckboxClick && (
+            <IonCheckbox slot="start" className={classes.checkbox} checked={checked} onIonChange={onCheckboxClick(id)} />
+          )}
         </IonItem>
       </LongPress>
       <IonPopover isOpen={popoverState} onDidDismiss={togglePoppover}>

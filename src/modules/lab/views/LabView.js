@@ -1,84 +1,78 @@
 import React from 'react'
-import { IonHeader, IonToolbar, IonButtons, IonTitle, IonMenuButton, IonItem, IonLabel, IonList, IonText, IonAvatar, IonThumbnail, IonButton, IonIcon, IonSelect, IonSelectOption, IonDatetime, IonToggle, IonInput, IonCheckbox, IonRange, IonContent } from '@ionic/react'
-import {close} from 'ionicons/icons'
+import {
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonTitle,
+  IonMenuButton,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonText,
+  IonAvatar,
+  IonThumbnail,
+  IonButton,
+  IonIcon,
+  IonSelect,
+  IonSelectOption,
+  IonDatetime,
+  IonToggle,
+  IonInput,
+  IonCheckbox,
+  IonRange,
+  IonContent
+} from '@ionic/react'
+import { close } from 'ionicons/icons'
 
 const Lab = () => {
   return (
     <>
       <IonHeader>
-          <IonToolbar color="primary">
-            <IonButtons slot="start">
-              <IonMenuButton />
-            </IonButtons>
-            <IonTitle>Profile</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        <IonToolbar color="primary">
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Profile</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         {/*-- Default Item --*/}
         <IonItem>
-          <IonLabel>
-            Item
-          </IonLabel>
+          <IonLabel>Item</IonLabel>
         </IonItem>
-
         {/*-- Item as a Button --*/}a
         <IonItem onClick={() => {}}>
-          <IonLabel>
-            Button Item
-          </IonLabel>
+          <IonLabel>Button Item</IonLabel>
         </IonItem>
-
         {/*-- Item as an Anchor --*/}
         <IonItem href="https://www.ionicframework.com">
-          <IonLabel>
-            Anchor Item
-          </IonLabel>
+          <IonLabel>Anchor Item</IonLabel>
         </IonItem>
-
         <IonItem color="secondary">
-          <IonLabel>
-            Secondary Color Item
-          </IonLabel>
+          <IonLabel>Secondary Color Item</IonLabel>
         </IonItem>
-
         {/*-- Detail Arrows --*/}
-
         <IonItem detail>
-          <IonLabel>
-            Standard Item with Detail Arrow
-          </IonLabel>
+          <IonLabel>Standard Item with Detail Arrow</IonLabel>
         </IonItem>
-
         <IonItem onClick={() => {}} detail>
-          <IonLabel>
-            Button Item with Detail Arrow
-          </IonLabel>
+          <IonLabel>Button Item with Detail Arrow</IonLabel>
         </IonItem>
-
         <IonItem detail={false} href="https://www.ionicframework.com">
-          <IonLabel>
-            Anchor Item with no Detail Arrow
-          </IonLabel>
+          <IonLabel>Anchor Item with no Detail Arrow</IonLabel>
         </IonItem>
-
-
         <IonList>
           <IonItem>
-            <IonLabel>
-              Item
-            </IonLabel>
+            <IonLabel>Item</IonLabel>
           </IonItem>
 
           <IonItem lines="none">
-            <IonLabel>
-              No Lines Item
-            </IonLabel>
+            <IonLabel>No Lines Item</IonLabel>
           </IonItem>
 
           <IonItem>
             <IonLabel class="ion-text-wrap">
-            Multiline text that should wrap when it is too long
-            to fit on one line in the item.
+              Multiline text that should wrap when it is too long to fit on one line in the item.
             </IonLabel>
           </IonItem>
 
@@ -95,29 +89,21 @@ const Lab = () => {
           </IonItem>
 
           <IonItem lines="full">
-            <IonLabel>
-              Item with Full Lines
-            </IonLabel>
+            <IonLabel>Item with Full Lines</IonLabel>
           </IonItem>
-
         </IonList>
-
-
         {/*-- Item Inset Lines --*/}
         <IonItem lines="inset">
           <IonLabel>Item Lines Inset</IonLabel>
         </IonItem>
-
         {/*-- Item Full Lines --*/}
         <IonItem lines="full">
           <IonLabel>Item Lines Full</IonLabel>
         </IonItem>
-
         {/*-- Item None Lines --*/}
         <IonItem lines="none">
           <IonLabel>Item Lines None</IonLabel>
         </IonItem>
-
         {/*-- List Full Lines --*/}
         <IonList lines="full">
           <IonItem>
@@ -128,7 +114,6 @@ const Lab = () => {
             <IonLabel>Full Lines Item 2</IonLabel>
           </IonItem>
         </IonList>
-
         {/*-- List Inset Lines --*/}
         <IonList lines="inset">
           <IonItem>
@@ -139,7 +124,6 @@ const Lab = () => {
             <IonLabel>Inset Lines Item 2</IonLabel>
           </IonItem>
         </IonList>
-
         {/*-- List No Lines --*/}
         <IonList lines="none">
           <IonItem>
@@ -154,27 +138,18 @@ const Lab = () => {
             <IonLabel>No lines Item 3</IonLabel>
           </IonItem>
         </IonList>
-
-
-
         <IonItem onClick={() => {}}>
           <IonAvatar slot="start">
             <img alt="img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           </IonAvatar>
-          <IonLabel>
-            Avatar Start, Button Item
-          </IonLabel>
+          <IonLabel>Avatar Start, Button Item</IonLabel>
         </IonItem>
-
         <IonItem href="#">
-          <IonLabel>
-            Thumbnail End, Anchor Item
-          </IonLabel>
+          <IonLabel>Thumbnail End, Anchor Item</IonLabel>
           <IonThumbnail slot="end">
             <img alt="img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           </IonThumbnail>
         </IonItem>
-
         <IonItem>
           <IonThumbnail slot="start">
             <img alt="img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
@@ -183,9 +158,10 @@ const Lab = () => {
             <h2>H2 Title Text</h2>
             <p>Button on right</p>
           </IonLabel>
-          <IonButton fill="outline" slot="end">View</IonButton>
+          <IonButton fill="outline" slot="end">
+            View
+          </IonButton>
         </IonItem>
-
         <IonItem onClick={() => {}}>
           <IonThumbnail slot="start">
             <img alt="img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
@@ -196,19 +172,12 @@ const Lab = () => {
           </IonLabel>
           <IonIcon name="close-circle" slot="end" />
         </IonItem>
-
         Buttons in Items
-
         <IonItem>
-          <IonButton slot="start">
-            Start
-          </IonButton>
+          <IonButton slot="start">Start</IonButton>
           <IonLabel>Button Start/End</IonLabel>
-          <IonButton slot="end">
-            End
-          </IonButton>
+          <IonButton slot="end">End</IonButton>
         </IonItem>
-
         <IonItem>
           <IonButton slot="start">
             Start Icon
@@ -220,7 +189,6 @@ const Lab = () => {
             End Icon
           </IonButton>
         </IonItem>
-
         <IonItem>
           <IonButton slot="start">
             <IonIcon slot="icon-only" name="navigate" />
@@ -230,83 +198,62 @@ const Lab = () => {
             <IonIcon slot="icon-only" name="star" />
           </IonButton>
         </IonItem>
-
-
         <IonItem>
-          <IonLabel>
-            Icon End
-          </IonLabel>
+          <IonLabel>Icon End</IonLabel>
           <IonIcon icon={close} slot="start" />
           <IonIcon name="battery-charging"></IonIcon>
         </IonItem>
-
         <IonItem>
-          <IonLabel>
-            Large Icon End
-          </IonLabel>
+          <IonLabel>Large Icon End</IonLabel>
           <IonIcon name="information-circle" size="large" slot="end" />
         </IonItem>
-
         <IonItem>
-          <IonLabel>
-            Small Icon End
-          </IonLabel>
+          <IonLabel>Small Icon End</IonLabel>
           <IonIcon name="information-circle" size="small" slot="end" />
         </IonItem>
-
         <IonItem>
           <IonIcon name="star" slot="start" />
-          <IonLabel>
-            Icon Start
-          </IonLabel>
+          <IonLabel>Icon Start</IonLabel>
         </IonItem>
-
         <IonItem>
-          <IonLabel>
-            Two Icons End
-          </IonLabel>
+          <IonLabel>Two Icons End</IonLabel>
           <IonIcon name="checkmark-circle" slot="end" />
           <IonIcon name="shuffle" slot="end" />
         </IonItem>
-
         <IonItem>
           <IonLabel position="floating">Datetime</IonLabel>
           <IonDatetime></IonDatetime>
         </IonItem>
-
         <IonItem>
           <IonLabel position="floating">Select</IonLabel>
           <IonSelect>
             <IonSelectOption value="">No Game Console</IonSelectOption>
             <IonSelectOption value="nes">NES</IonSelectOption>
-            <IonSelectOption value="n64" selected>Nintendo64</IonSelectOption>
+            <IonSelectOption value="n64" selected>
+              Nintendo64
+            </IonSelectOption>
             <IonSelectOption value="ps">PlayStation</IonSelectOption>
             <IonSelectOption value="genesis">Sega Genesis</IonSelectOption>
             <IonSelectOption value="saturn">Sega Saturn</IonSelectOption>
             <IonSelectOption value="snes">SNES</IonSelectOption>
           </IonSelect>
         </IonItem>
-
         <IonItem>
           <IonLabel>Toggle</IonLabel>
           <IonToggle slot="end"></IonToggle>
         </IonItem>
-
         <IonItem>
           <IonLabel position="floating">Floating Input</IonLabel>
           <IonInput></IonInput>
         </IonItem>
-
         <IonItem>
           <IonLabel>Input (placeholder)</IonLabel>
           <IonInput placeholder="Placeholder"></IonInput>
         </IonItem>
-
         <IonItem>
           <IonLabel>Checkbox</IonLabel>
           <IonCheckbox slot="start" />
         </IonItem>
-
         <IonItem>
           <IonLabel>Range</IonLabel>
           <IonRange></IonRange>
@@ -317,4 +264,3 @@ const Lab = () => {
 }
 
 export default Lab
-

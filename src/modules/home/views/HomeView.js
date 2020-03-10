@@ -10,9 +10,9 @@ import { add } from 'ionicons/icons'
 
 import { TransactionEntry, Toolbar, FullPageLoader, PullToRefresh } from 'components'
 import routes from 'routes'
+import { formatDate, determineDays } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
-import { formatDate, determineDays } from 'utils/normalizer'
 
 const useHomeViewStyles = createUseStyles(theme => ({
   top: {
@@ -41,7 +41,7 @@ const useHomeViewStyles = createUseStyles(theme => ({
     justifyContent: 'space-evenly',
     position: 'relative',
     background: 'var(--white)',
-    borderRadius: '20px',
+    borderRadius: '20px'
   },
   transactions: {
     margin: theme.spacing(4, 2, 0),
@@ -49,9 +49,10 @@ const useHomeViewStyles = createUseStyles(theme => ({
   }
 }))
 
-const useHomeHooks = ({ refetch, data }) => {
+const useHomeHooks = () => {
   const isMounted = useMountedState()
   const { allowance, dueDate } = useUser()
+  const { data = {}, loading, refetch } = useQuery(UserTransactions)
   const [toolbarStyle, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
@@ -65,14 +66,19 @@ const useHomeHooks = ({ refetch, data }) => {
   useIonViewWillEnter(() => isMounted() && refetch())
 
   return {
-    amountLeft, daysLeft, onRefresh, toolbarStyle, scrollHandler
+    amountLeft,
+    daysLeft,
+    onRefresh,
+    toolbarStyle,
+    scrollHandler,
+    loading,
+    transactions: data.transactions
   }
 }
 
 const Home = () => {
   const classes = useHomeViewStyles()
-  const { data = {}, loading, refetch } = useQuery(UserTransactions)
-  const { amountLeft, daysLeft, onRefresh, toolbarStyle, scrollHandler } = useHomeHooks({ refetch, data })
+  const { amountLeft, daysLeft, onRefresh, toolbarStyle, scrollHandler, transactions, loading } = useHomeHooks()
 
   if (loading) {
     return <FullPageLoader />
@@ -90,7 +96,9 @@ const Home = () => {
             <p>{formatDate(new Date(), 'dddd, MMM D, YYYY')}</p>
           </IonText>
           <IonText color="textPrimary">
-            <h2><strong>{amountLeft}</strong></h2>
+            <h2>
+              <strong>{amountLeft}</strong>
+            </h2>
           </IonText>
           <IonText color="textPrimary">
             <p>{daysLeft}</p>
@@ -98,11 +106,11 @@ const Home = () => {
         </div>
 
         <div className={classes.transactions}>
-          {map(t => <TransactionEntry key={t.id} {...t} />)(data.transactions)}
+          {map(t => <TransactionEntry key={t.id} {...t} />)(transactions)}
         </div>
       </IonContent>
       <IonFab vertical="bottom" horizontal="end" slot="fixed">
-        <IonFabButton routerLink={routes.newTransaction} >
+        <IonFabButton routerLink={routes.newTransaction}>
           <IonIcon icon={add} />
         </IonFabButton>
       </IonFab>

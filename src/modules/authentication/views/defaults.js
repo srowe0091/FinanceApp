@@ -7,7 +7,7 @@ export const useStyles = createUseStyles(theme => ({
   },
   form: {
     padding: theme.spacing(2.5),
-    margin: theme.spacing(4, 5, 0),
+    margin: theme.spacing(4, 4, 0),
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '20px',

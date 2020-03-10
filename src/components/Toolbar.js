@@ -14,12 +14,12 @@ const useToolbarStyles = createUseStyles(theme => ({
   },
   header: {
     '&:after': {
-      content: color => color ? '""' : 'none',
+      content: color => (color ? '""' : 'none')
     }
   },
   toolbar: {
-    backgroundColor: color => color ? 'var(--ion-color-primary)' : null,
-    animationName: color => color ? '$fadeIn' : '$fadeOut',
+    backgroundColor: color => (color ? 'var(--ion-color-primary)' : null),
+    animationName: color => (color ? '$fadeIn' : '$fadeOut'),
     animationDuration: '350ms'
   },
   icon: {
@@ -27,7 +27,7 @@ const useToolbarStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Toolbar = ({ children, translucent, color = "primary", title, back }) => {
+export const Toolbar = ({ children, translucent, color = 'primary', title, back }) => {
   const classes = useToolbarStyles()
   return (
     <IonHeader className={classes.header}>

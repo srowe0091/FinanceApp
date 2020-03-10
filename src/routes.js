@@ -5,5 +5,5 @@ export default {
   admin: '/admin',
   profile: '/profile',
   lab: '/lab',
-  newTransaction: '/new-transaction',
+  newTransaction: '/new-transaction'
 }

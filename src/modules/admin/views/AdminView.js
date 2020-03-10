@@ -33,7 +33,7 @@ const useAdminViewStyles = createUseStyles(theme => ({
   },
   button: {
     margin: theme.spacing(2, 0)
-  },
+  }
 }))
 
 const Admin = ({ history }) => {
@@ -45,12 +45,15 @@ const Admin = ({ history }) => {
     onCompleted: () => history.push(routes.home)
   })
   const { data, loading, refetch } = useQuery(GroupTransactions)
-  const checkboxClick = useCallback(id => e => handleIds(_ids => e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids)), [])
+  const checkboxClick = useCallback(
+    id => e => handleIds(_ids => (e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids))),
+    []
+  )
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const transactions = useMemo(() => groupBy('owner')(get('admin.groupTransactions')(data)), [data])
 
   useIonViewWillEnter(() => {
-    if(isMounted()) {
+    if (isMounted()) {
       handleIds([])
       refetch()
     }
@@ -72,11 +75,26 @@ const Admin = ({ history }) => {
                 <IonText color="textSecondary">
                   <h5 className={classes.headers}>{email}</h5>
                 </IonText>
-                {map(t => <TransactionEntry key={t.id} onCheckboxClick={checkboxClick} checked={includes(t.id)(transactionIds)} {...t} />)(transactions[email])}
+                {map(t => (
+                  <TransactionEntry
+                    key={t.id}
+                    onCheckboxClick={checkboxClick}
+                    checked={includes(t.id)(transactionIds)}
+                    {...t}
+                  />
+                ))(transactions[email])}
               </Fragment>
             ))}
           </div>
-          <Button type="button" className={classes.button} disabled={ptLoading || !transactionIds.length} loading={ptLoading} onClick={payTransaction}>Pay</Button>
+          <Button
+            type="button"
+            className={classes.button}
+            disabled={ptLoading || !transactionIds.length}
+            loading={ptLoading}
+            onClick={payTransaction}
+          >
+            Pay
+          </Button>
         </div>
       </IonContent>
     </>
