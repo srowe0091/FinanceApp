@@ -10,9 +10,9 @@ import { add } from 'ionicons/icons'
 
 import { TransactionEntry, Toolbar, FullPageLoader, PullToRefresh } from 'components'
 import routes from 'routes'
+import { formatDate, determineDays } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
-import { formatDate, determineDays } from 'utils/normalizer'
 
 const useHomeViewStyles = createUseStyles(theme => ({
   top: {
