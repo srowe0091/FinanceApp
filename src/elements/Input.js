@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
@@ -35,28 +35,28 @@ Input.propTypes = {
   onBlur: PropTypes.func.isRequired
 }
 
-export const MaskedInput = ({ className, onChange, onBlur, format, defaultValue, ...rest }) => {
+export const MaskedInput = ({ className, onChange, onBlur, format, value, ...rest }) => {
   const classes = useInputStyles()
-  const [value, updateValue] = useState(format(defaultValue)[0])
+
+  const _value = useMemo(() => format(value)[0], [format, value])
 
   const _onChange = useCallback(
     e => {
-      const [_ui, _value] = format(e.target.value)
-      updateValue(_ui)
-      e.target.value = _value
+      const _val = format(e.target.value)[1]
+      e.target.value = _val
       onChange(e)
     },
     [onChange, format]
   )
 
   return (
-    <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={_onChange} value={value} {...rest} />
+    <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={_onChange} value={_value} {...rest} />
   )
 }
 
 MaskedInput.propTypes = {
   className: PropTypes.string,
-  defaultValue: PropTypes.any,
+  value: PropTypes.any,
   format: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired

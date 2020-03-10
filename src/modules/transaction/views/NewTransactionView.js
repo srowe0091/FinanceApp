@@ -9,6 +9,7 @@ import replace from 'lodash/fp/replace'
 
 import { Toolbar } from 'components'
 import { Input, Button, MaskedInput, Checkbox } from 'elements'
+import { formatInput } from 'utils'
 import { NewTransaction } from '../transaction.gql'
 
 const useNewTransactionViewStyles = createUseStyles(theme => ({
@@ -42,11 +43,6 @@ const TransactionSchema = yup.object().shape({
     .required()
 })
 
-const formatInput = value => {
-  const number = parseInt(replace(/\D/g)('')(value), '10')
-  return [`$${(number / 100).toFixed(2)}`, number]
-}
-
 const Home = ({ history }) => {
   const classes = useNewTransactionViewStyles()
   const [saveTransaction, { loading }] = useMutation(NewTransaction)
@@ -73,11 +69,11 @@ const Home = ({ history }) => {
             <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">
               <MaskedInput
                 autoFocus
-                className={classes.moneyInput}
-                name="amount"
                 type="tel"
+                name="amount"
+                className={classes.moneyInput}
                 format={formatInput}
-                defaultValue={0}
+                value={values.amount}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />

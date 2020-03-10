@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import replace from 'lodash/fp/replace'
 
 export const formatDate = (date, format = 'M/D/YYYY') => dayjs(date).format(format)
 
@@ -20,4 +21,9 @@ export const determineDays = (dueDate = 1) => {
 
   const _daysLeft = difference >= 15 ? difference - 15 : difference
   return `${_daysLeft} ${pluralize(_daysLeft, 'day')} left`
+}
+
+export const formatInput = value => {
+  const number = parseInt(replace(/\D/g)('')(value), '10')
+  return [`$${(number / 100).toFixed(2)}`, number]
 }
