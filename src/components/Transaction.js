@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import { IonItem, IonLabel, IonCheckbox } from '@ionic/react'
 
-import { formatDate } from 'utils/normalizer'
+import { formatDate } from 'utils'
 
 const useTransactionStyles = createUseStyles(theme => ({
   transaction: {
