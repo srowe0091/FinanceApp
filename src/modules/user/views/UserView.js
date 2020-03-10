@@ -9,8 +9,9 @@ import pick from 'lodash/fp/pick'
 
 import { personCircle } from 'ionicons/icons'
 
-import { Button, Input } from 'elements'
+import { Button, Input, MaskedInput } from 'elements'
 import { Toolbar } from 'components'
+import { formatInput } from 'utils'
 import { useUser } from 'modules/authentication'
 import { UserProfileSchema } from '../util'
 import { UpdateUser } from '../user.gql'
@@ -67,6 +68,7 @@ const ProfileView = () => {
     values => updateUser(set('variables.input')(values)({})).finally(() => toggleEditState()),
     [updateUser, toggleEditState]
   )
+  const onReset = useCallback(() => toggleEditState(), [toggleEditState])
 
   return (
     <>
@@ -87,12 +89,13 @@ const ProfileView = () => {
             <IonText>{email}</IonText>
           </div>
           <Formik
+            onReset={onReset}
             onSubmit={onSubmit}
             initialValues={initialValues}
             validationSchema={UserProfileSchema}
             validateOnMount
           >
-            {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
+            {({ handleSubmit, handleReset, values, handleChange, handleBlur, isValid }) => (
               <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
                 <Input
                   type="number"
@@ -105,18 +108,20 @@ const ProfileView = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                <Input
-                  type="number"
+                <MaskedInput
+                  autoFocus
+                  type="tel"
                   name="allowance"
                   placeholder="Bi-Weekly Budget"
                   disabled={!editState}
+                  format={formatInput}
                   value={values.allowance}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
                 {editState && (
                   <div className={classes.buttons}>
-                    <Button fill="outline" color="light" disabled={saving} onClick={toggleEditState}>
+                    <Button fill="outline" color="light" disabled={saving} onClick={handleReset}>
                       Cancel
                     </Button>
                     <Button type="submit" disabled={saving || !isValid} loading={saving}>
