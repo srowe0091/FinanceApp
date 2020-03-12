@@ -1,8 +1,13 @@
 {
   "appId": "com.finances.app",
-  "appName": "finances",
+  "appName": "Finances",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
-  "cordova": {}
+  "cordova": {},
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500
+    }
+  }
 }
