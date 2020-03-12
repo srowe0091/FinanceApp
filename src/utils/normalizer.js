@@ -12,10 +12,10 @@ export const determineDays = (dueDate = 1) => {
       ? dayjs().set('date', dueDate)
       : dayjs()
           .set('date', dueDate)
-          .add(1, 'month')
+          .add(2, 'week')
   const difference = dayjs(nextPaymentDate).diff(now, 'day')
 
-  if (difference === 15 || difference === 0) {
+  if (difference === 14 || difference === 0) {
     return 'Submit Payment Today'
   }
 
