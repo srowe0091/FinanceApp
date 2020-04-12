@@ -8,6 +8,9 @@
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 1500
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_launcher"
     }
   }
 }

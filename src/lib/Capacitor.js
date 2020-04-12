@@ -24,14 +24,12 @@ export const ScheduleNotification = async () => {
         body: "Body",
         id: 1,
         schedule: {
-          count: 1,
-          repeats: false,
+          // repeats: true,
+          // every: 'two-weeks',
           on: {
-            minute: 40
+            day: 14
           }
         },
-        sound: null,
-        attachments: null,
         actionTypeId: "",
         extra: null
       }

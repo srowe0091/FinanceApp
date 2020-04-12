@@ -47,6 +47,11 @@ export const DrawerMenu = () => {
         label: 'Profile',
         route: routes.profile
       },
+      // {
+      //   icon: person,
+      //   label: 'Lab',
+      //   route: routes.lab
+      // },
       {
         icon: settings,
         label: 'Admin',
