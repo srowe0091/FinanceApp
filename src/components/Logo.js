@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
 
-import logoJpg from 'media/logo.jpg'
+import logoJpg from 'media/logo.png'
 
 const useStyles = createUseStyles({
   logo: {
