@@ -1,13 +1,15 @@
 import { Plugins } from '@capacitor/core'
-import isEqual from 'lodash/fp/isEqual'
 import isEmpty from 'lodash/fp/isEmpty'
+import includes from 'lodash/fp/includes'
 
 import routes from 'routes'
 
 const { App, LocalNotifications } = Plugins
 
+const _closeAppRoutes = [routes.home, routes.login]
+
 App.addListener('backButton', () => {
-  if (isEqual(routes.home)(window.location.pathname)) {
+  if (includes(window.location.pathname)(_closeAppRoutes)) {
     App.exitApp()
   } else {
     window.history.back()
