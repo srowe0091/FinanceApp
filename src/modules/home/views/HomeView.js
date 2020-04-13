@@ -53,7 +53,7 @@ const useHomeHooks = () => {
   const isMounted = useMountedState()
   const { allowance, dueDate } = useUser()
   const { data = {}, loading, refetch } = useQuery(UserTransactions)
-  const [toolbarStyle, toggleStyle] = useState(false)
+  const [toolbarTransition, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const { amountLeft, groupSpent, daysLeft } = useMemo(() => {
@@ -80,7 +80,7 @@ const useHomeHooks = () => {
     groupSpent,
     daysLeft,
     onRefresh,
-    toolbarStyle,
+    toolbarTransition,
     scrollHandler,
     loading,
     transactions: data.transactions
@@ -91,7 +91,7 @@ const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
 
 const Home = () => {
   const classes = useHomeViewStyles()
-  const { amountLeft, groupSpent, daysLeft, onRefresh, toolbarStyle, scrollHandler, transactions, loading } = useHomeHooks()
+  const { amountLeft, groupSpent, daysLeft, onRefresh, toolbarTransition, scrollHandler, transactions, loading } = useHomeHooks()
 
   if (loading) {
     return <FullPageLoader />
@@ -99,7 +99,7 @@ const Home = () => {
 
   return (
     <>
-      <Toolbar translucent color={toolbarStyle ? 'primary' : null} />
+      <Toolbar translucent color={toolbarTransition ? 'primary' : null} />
       <IonContent color="dark" fullscreen scrollEvents onIonScroll={scrollHandler}>
         <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.top} />
@@ -116,7 +116,7 @@ const Home = () => {
             </IonText>
             {!!groupSpent && (
               <IonText color="textSecondary">
-                <p variant="caption">
+                <p>
                   Group Spent: ${groupSpent}
                 </p>
               </IonText>
