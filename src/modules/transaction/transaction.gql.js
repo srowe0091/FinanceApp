@@ -4,7 +4,6 @@ export const TransactionFragment = gql`
   fragment TransactionFragment on Transaction {
     id
     paid
-    group
     amount
     createdAt
     description
@@ -14,6 +13,7 @@ export const TransactionFragment = gql`
 export const UserTransactions = gql`
   query UserTransactions {
     transactions {
+      group
       ...TransactionFragment
     }
   }

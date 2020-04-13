@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
 import useMountedState from 'react-use/lib/useMountedState'
 import map from 'lodash/fp/map'
-import sumBy from 'lodash/fp/sumBy'
+import reduce from 'lodash/fp/reduce'
 
 import { add } from 'ionicons/icons'
 
@@ -34,7 +34,7 @@ const useHomeViewStyles = createUseStyles(theme => ({
   card: {
     textAlign: 'center',
     width: '80%',
-    height: theme.spacing(18),
+    height: theme.spacing(20),
     margin: theme.spacing(2, 'auto', 0),
     display: 'flex',
     flexDirection: 'column',
@@ -56,9 +56,19 @@ const useHomeHooks = () => {
   const [toolbarStyle, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const { amountLeft, daysLeft } = useMemo(() => {
+  const { amountLeft, groupSpent, daysLeft } = useMemo(() => {
+    const { _amountLeft, _groupSpent } = reduce((acc, curr) => {
+      if (curr.group) {
+        acc._groupSpent = acc._groupSpent + curr.amount
+      } else {
+        acc._amountLeft = acc._amountLeft + curr.amount
+      }
+      return acc
+    })({ _amountLeft: 0, _groupSpent: 0 })(data.transactions)
+
     return {
-      amountLeft: ((allowance - sumBy('amount')(data.transactions)) / 100).toFixed(2),
+      groupSpent: (_groupSpent / 100).toFixed(2),
+      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2),
       daysLeft: determineDays(dueDate)
     }
   }, [dueDate, data, allowance])
@@ -67,6 +77,7 @@ const useHomeHooks = () => {
 
   return {
     amountLeft,
+    groupSpent,
     daysLeft,
     onRefresh,
     toolbarStyle,
@@ -76,9 +87,11 @@ const useHomeHooks = () => {
   }
 }
 
+const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
+
 const Home = () => {
   const classes = useHomeViewStyles()
-  const { amountLeft, daysLeft, onRefresh, toolbarStyle, scrollHandler, transactions, loading } = useHomeHooks()
+  const { amountLeft, groupSpent, daysLeft, onRefresh, toolbarStyle, scrollHandler, transactions, loading } = useHomeHooks()
 
   if (loading) {
     return <FullPageLoader />
@@ -93,13 +106,22 @@ const Home = () => {
 
         <div className={classes.card}>
           <IonText color="textPrimary">
-            <p>{formatDate(new Date(), 'dddd, MMM D, YYYY')}</p>
+            <p>{todayDate}</p>
           </IonText>
-          <IonText color="textPrimary">
-            <h2>
-              <strong>{amountLeft}</strong>
-            </h2>
-          </IonText>
+          <span>
+            <IonText color="textPrimary">
+              <h2>
+                <strong>${amountLeft}</strong>
+              </h2>
+            </IonText>
+            {!!groupSpent && (
+              <IonText color="textSecondary">
+                <p variant="caption">
+                  Group Spent: ${groupSpent}
+                </p>
+              </IonText>
+            )}
+          </span>
           <IonText color="textPrimary">
             <p>{daysLeft}</p>
           </IonText>

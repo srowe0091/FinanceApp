@@ -148,6 +148,10 @@ p[display="inline"] {
   display: inline-block;
 }
 
+p[align="right"] {
+  text-align: right;
+}
+
 h1 {
   font-size: 3.5rem;
   font-weight: 300;
