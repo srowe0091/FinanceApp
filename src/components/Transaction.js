@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
 import { IonItem, IonLabel, IonCheckbox } from '@ionic/react'
 
@@ -19,13 +20,25 @@ const useTransactionStyles = createUseStyles(theme => ({
   },
   checkbox: {
     marginRight: theme.spacing(2)
+  },
+  group: {
+    '&::before': {
+      content: '""',
+      width: '4px',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      position: 'absolute',
+      zIndex: 10,
+      backgroundColor: 'var(--ion-color-primary)'
+    }
   }
 }))
 
-export const TransactionEntry = ({ id, amount, description, createdAt, onCheckboxClick, checked }) => {
+export const TransactionEntry = ({ id, amount, description, createdAt, onCheckboxClick, checked, group }) => {
   const classes = useTransactionStyles()
   return (
-    <IonItem className={classes.transaction}>
+    <IonItem className={clsx(classes.transaction, { [classes.group]: group })}>
       <IonLabel color="light">
         <span className={classes.label}>
           <span>
@@ -34,7 +47,10 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
               {formatDate(createdAt)}
             </p>
           </span>
-          <p>${(amount / 100).toFixed(2)}</p>
+          <span>
+            <p>${(amount / 100).toFixed(2)}</p>
+            {group && <p color="textSecondary" variant="caption" align="right">group</p>}
+          </span>
         </span>
       </IonLabel>
       {onCheckboxClick && (
@@ -50,5 +66,6 @@ TransactionEntry.propTypes = {
   description: PropTypes.string,
   createdAt: PropTypes.string,
   checked: PropTypes.bool,
-  onCheckboxClick: PropTypes.func
+  onCheckboxClick: PropTypes.func,
+  group: PropTypes.bool
 }
