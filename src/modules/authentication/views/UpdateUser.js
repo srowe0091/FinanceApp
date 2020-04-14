@@ -6,7 +6,8 @@ import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
 import set from 'lodash/fp/set'
 
-import { Button, Input } from 'elements'
+import { Button, Input, MaskedInput } from 'elements'
+import { currenyFormat } from 'utils'
 import { UserProfileSchema, UpdateUser } from 'modules/user'
 
 const useUserViewStyles = createUseStyles(theme => ({
@@ -27,7 +28,7 @@ const useUserViewStyles = createUseStyles(theme => ({
 }))
 
 const initialValues = {
-  allowance: '',
+  allowance: 0,
   dueDate: ''
 }
 
@@ -64,10 +65,11 @@ export const UpdateUserModal = ({ isOpen, finishProfile }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                <Input
-                  type="number"
+                <MaskedInput
+                  type="tel"
                   name="allowance"
                   placeholder="Bi-Weekly Budget"
+                  format={currenyFormat}
                   value={values.allowance}
                   onBlur={handleBlur}
                   onChange={handleChange}
