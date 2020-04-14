@@ -114,7 +114,7 @@ const Home = () => {
                 <strong>${amountLeft}</strong>
               </h2>
             </IonText>
-            {!!groupSpent && (
+            {groupSpent > 0 && (
               <IonText color="textSecondary">
                 <p>
                   Group Spent: ${groupSpent}
