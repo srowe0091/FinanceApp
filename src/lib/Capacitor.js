@@ -11,8 +11,6 @@ const _closeAppRoutes = [routes.home, routes.login]
 App.addListener('backButton', () => {
   if (includes(window.location.pathname)(_closeAppRoutes)) {
     App.exitApp()
-  } else {
-    window.history.back()
   }
 })
 
