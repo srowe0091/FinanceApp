@@ -33,7 +33,7 @@ const LoginView = () => {
   const classes = useStyles()
   const [status, setStatus] = useState(null)
   const [showModal, toggleModal] = useToggle(false)
-  const { handleLogin, isAuthenticated, finishProfile, requireProfileUpdate } = useAuthentication()
+  const { handleLogin, isAuthenticated, requireProfileUpdate } = useAuthentication()
 
   const submitHandler = useCallback(
     ({ email, password }) => {
@@ -96,7 +96,7 @@ const LoginView = () => {
             )}
           </Formik>
         </div>
-        <FinishUserModal isOpen={showModal} finishProfile={finishProfile} />
+        <FinishUserModal isOpen={showModal} />
       </IonContent>
     </IonPage>
   )

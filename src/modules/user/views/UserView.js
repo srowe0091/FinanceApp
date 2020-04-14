@@ -1,10 +1,8 @@
 import React, { useMemo, useCallback } from 'react'
 import { IonIcon, IonContent, IonButtons, IonButton, IonText } from '@ionic/react'
-import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
-import set from 'lodash/fp/set'
 import pick from 'lodash/fp/pick'
 
 import { personCircle } from 'ionicons/icons'
@@ -13,8 +11,7 @@ import { Button, Input, MaskedInput } from 'elements'
 import { Toolbar } from 'components'
 import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
-import { UserProfileSchema } from '../util'
-import { UpdateUser } from '../user.gql'
+import { UserProfileSchema, useUpdateUser } from '../util'
 
 const useUserViewStyles = createUseStyles(theme => ({
   container: {
@@ -61,12 +58,12 @@ const useUserViewStyles = createUseStyles(theme => ({
 const ProfileView = () => {
   const classes = useUserViewStyles()
   const { email, ...userProps } = useUser()
-  const [updateUser, { loading: saving }] = useMutation(UpdateUser)
+  const [updateProfile, { loading: saving }] = useUpdateUser()
   const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(userProps), [userProps])
   const [editState, toggleEditState] = useToggle(false)
   const onSubmit = useCallback(
-    values => updateUser(set('variables.input')(values)({})).finally(() => toggleEditState()),
-    [updateUser, toggleEditState]
+    values => updateProfile(values).finally(() => toggleEditState()),
+    [updateProfile, toggleEditState]
   )
   const onReset = useCallback(() => toggleEditState(), [toggleEditState])
 
