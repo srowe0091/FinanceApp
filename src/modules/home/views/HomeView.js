@@ -99,7 +99,7 @@ const Home = () => {
 
   return (
     <>
-      <Toolbar translucent color={toolbarTransition ? 'primary' : null} />
+      <Toolbar translucent transition={toolbarTransition} color="primary" />
       <IonContent color="dark" fullscreen scrollEvents onIonScroll={scrollHandler}>
         <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.top} />
