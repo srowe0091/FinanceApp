@@ -11,7 +11,7 @@ import { personCircle } from 'ionicons/icons'
 
 import { Button, Input, MaskedInput } from 'elements'
 import { Toolbar } from 'components'
-import { formatInput } from 'utils'
+import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
 import { UserProfileSchema } from '../util'
 import { UpdateUser } from '../user.gql'
@@ -114,7 +114,7 @@ const ProfileView = () => {
                   name="allowance"
                   placeholder="Bi-Weekly Budget"
                   disabled={!editState}
-                  format={formatInput}
+                  format={currenyFormat}
                   value={values.allowance}
                   onBlur={handleBlur}
                   onChange={handleChange}

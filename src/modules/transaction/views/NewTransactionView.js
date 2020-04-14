@@ -9,7 +9,7 @@ import replace from 'lodash/fp/replace'
 
 import { Toolbar } from 'components'
 import { Input, Button, MaskedInput, Checkbox } from 'elements'
-import { formatInput } from 'utils'
+import { currenyFormat } from 'utils'
 import { NewTransaction } from '../transaction.gql'
 
 const useNewTransactionViewStyles = createUseStyles(theme => ({
@@ -72,7 +72,7 @@ const Home = ({ history }) => {
                 type="tel"
                 name="amount"
                 className={classes.moneyInput}
-                format={formatInput}
+                format={currenyFormat}
                 value={values.amount}
                 onBlur={handleBlur}
                 onChange={handleChange}
