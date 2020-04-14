@@ -9,7 +9,7 @@ import { useAuthentication } from 'modules/authentication/hooks'
 import { Logo } from 'components'
 import { Input, Button } from 'elements'
 import { useStyles } from './defaults'
-import { UpdateUserModal } from './UpdateUser'
+import { FinishUserModal } from './FinishUser'
 import routes from 'routes'
 import { textMappings } from 'utils'
 
@@ -96,7 +96,7 @@ const LoginView = () => {
             )}
           </Formik>
         </div>
-        <UpdateUserModal isOpen={showModal} finishProfile={finishProfile} />
+        <FinishUserModal isOpen={showModal} finishProfile={finishProfile} />
       </IonContent>
     </IonPage>
   )

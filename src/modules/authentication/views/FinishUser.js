@@ -1,16 +1,14 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { IonText, IonContent, IonModal } from '@ionic/react'
-import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
-import set from 'lodash/fp/set'
 
 import { Button, Input, MaskedInput } from 'elements'
 import { currenyFormat } from 'utils'
-import { UserProfileSchema, UpdateUser } from 'modules/user'
+import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
-const useUserViewStyles = createUseStyles(theme => ({
+const useFinishUserProfileStyles = createUseStyles(theme => ({
   container: {
     textAlign: 'center',
     height: '100%',
@@ -32,12 +30,12 @@ const initialValues = {
   dueDate: ''
 }
 
-export const UpdateUserModal = ({ isOpen, finishProfile }) => {
-  const classes = useUserViewStyles()
-  const [updateProfile, { loading }] = useMutation(UpdateUser)
+export const FinishUserModal = ({ isOpen, finishProfile }) => {
+  const classes = useFinishUserProfileStyles()
+  const [updateUser, { loading: saving }] = useUpdateUser()
   const onSubmit = useCallback(
-    values => updateProfile(set('variables.input')(values)({})).then(({ data }) => finishProfile(data.saveUser)),
-    [updateProfile, finishProfile]
+    values => updateUser(values).then(({ data }) => finishProfile(data.saveUser)),
+    [updateUser, finishProfile]
   )
 
   return (
@@ -75,7 +73,7 @@ export const UpdateUserModal = ({ isOpen, finishProfile }) => {
                   onChange={handleChange}
                 />
 
-                <Button type="submit" className={classes.button} loading={loading} disabled={!isValid || loading}>
+                <Button type="submit" className={classes.button} loading={saving} disabled={!isValid || saving}>
                   Save
                 </Button>
               </form>
@@ -87,7 +85,7 @@ export const UpdateUserModal = ({ isOpen, finishProfile }) => {
   )
 }
 
-UpdateUserModal.propTypes = {
+FinishUserModal.propTypes = {
   isOpen: PropTypes.bool,
   finishProfile: PropTypes.func
 }
