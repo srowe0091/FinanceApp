@@ -1,6 +1,7 @@
 import * as yup from 'yup'
 import { useMutation } from '@apollo/react-hooks'
 import { useCallback } from 'react'
+import { createUseStyles } from 'react-jss'
 import replace from 'lodash/fp/replace'
 
 import { UpdateUser } from './user.gql'
@@ -39,3 +40,45 @@ export const useUpdateUser = () => {
 
   return [handleUpdate, props]
 }
+
+export const useUserViewStyles = createUseStyles(theme => ({
+  container: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  form: {
+    flex: 1,
+    margin: theme.spacing(0, 2, 2),
+    position: 'relative'
+  },
+  top: {
+    height: '70px',
+    background: 'var(--themeGray1)'
+  },
+  userInfo: {
+    marginTop: '-15%',
+    marginBottom: theme.spacing(4),
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  userIcon: {
+    fontSize: '112px',
+    marginBottom: theme.spacing(1),
+    borderRadius: '50%',
+    backgroundColor: 'var(--themeGray1)'
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    position: 'absolute'
+  },
+  edit: {
+    marginRight: theme.spacing(1)
+  }
+}))

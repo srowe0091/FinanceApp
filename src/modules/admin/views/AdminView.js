@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { IonContent, IonText, useIonViewWillEnter } from '@ionic/react'
-import { createUseStyles } from 'react-jss'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import useMountedState from 'react-use/lib/useMountedState'
 import get from 'lodash/fp/get'
@@ -11,30 +10,11 @@ import reject from 'lodash/fp/reject'
 import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
 
+import { useAdminViewStyles } from '../util'
+import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Button } from 'elements'
 import { Toolbar, TransactionEntry, FullPageLoader, PullToRefresh } from 'components'
 import routes from 'routes'
-import { GroupTransactions, PayTransactions } from '../admin.gql'
-
-const useAdminViewStyles = createUseStyles(theme => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    margin: theme.spacing(0, 2)
-  },
-  transactions: {
-    flex: 1,
-    overflow: 'auto',
-    paddingTop: theme.spacing(2)
-  },
-  headers: {
-    marginBottom: theme.spacing(1)
-  },
-  button: {
-    margin: theme.spacing(2, 0)
-  }
-}))
 
 const Admin = ({ history }) => {
   const isMounted = useMountedState()
@@ -42,6 +22,8 @@ const Admin = ({ history }) => {
   const [transactionIds, handleIds] = useState([])
   const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
     variables: { transactionIds },
+    awaitRefetchQueries: true,
+    refetchQueries: ['UserTransactions'],
     onCompleted: () => history.push(routes.home)
   })
   const { data, loading, refetch } = useQuery(GroupTransactions)

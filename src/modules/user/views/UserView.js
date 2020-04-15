@@ -1,59 +1,16 @@
 import React, { useMemo, useCallback } from 'react'
 import { IonIcon, IonContent, IonButtons, IonButton, IonText } from '@ionic/react'
-import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
 import pick from 'lodash/fp/pick'
 
 import { personCircle } from 'ionicons/icons'
 
+import { UserProfileSchema, useUpdateUser, useUserViewStyles } from '../util'
 import { Button, Input, MaskedInput } from 'elements'
 import { Toolbar } from 'components'
 import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
-import { UserProfileSchema, useUpdateUser } from '../util'
-
-const useUserViewStyles = createUseStyles(theme => ({
-  container: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  form: {
-    flex: 1,
-    margin: theme.spacing(0, 2, 2),
-    position: 'relative'
-  },
-  top: {
-    height: '70px',
-    background: 'var(--themeGray1)'
-  },
-  userInfo: {
-    marginTop: '-15%',
-    marginBottom: theme.spacing(4),
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column'
-  },
-  userIcon: {
-    fontSize: '112px',
-    marginBottom: theme.spacing(1),
-    borderRadius: '50%',
-    backgroundColor: 'var(--themeGray1)'
-  },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    position: 'absolute'
-  },
-  edit: {
-    marginRight: theme.spacing(1)
-  }
-}))
 
 const ProfileView = () => {
   const classes = useUserViewStyles()

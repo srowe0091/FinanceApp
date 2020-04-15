@@ -6,7 +6,10 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ThemeProvider } from 'react-jss'
 
+import theme from './styles/theme'
 import routes from 'routes'
+import { AuthorizedRoute } from 'components'
+import { DrawerMenu } from 'modules/drawer'
 import { AuthProvider } from 'modules/authentication/context'
 
 import LoginView from 'modules/authentication/views/LoginView'
@@ -15,10 +18,6 @@ import AdminView from 'modules/admin/views/AdminView'
 import UserView from 'modules/user/views/UserView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 import LabView from 'modules/lab/views/LabView'
-
-import { AuthorizedRoute } from 'components'
-import { DrawerMenu } from 'modules/drawer'
-import theme from './styles/theme'
 
 const client = new ApolloClient({
   uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,

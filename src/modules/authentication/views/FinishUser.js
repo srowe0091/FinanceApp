@@ -1,29 +1,12 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { IonText, IonContent, IonModal } from '@ionic/react'
-import { createUseStyles } from 'react-jss'
 import { Formik } from 'formik'
 
+import { useFinishUserProfileStyles } from '../util'
 import { Button, Input, MaskedInput } from 'elements'
 import { currenyFormat } from 'utils'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
-
-const useFinishUserProfileStyles = createUseStyles(theme => ({
-  container: {
-    textAlign: 'center',
-    height: '100%',
-    padding: theme.spacing(0, 4),
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  header: {
-    marginBottom: theme.spacing(4)
-  },
-  button: {
-    marginTop: theme.spacing(2)
-  }
-}))
 
 const initialValues = {
   allowance: 0,
@@ -46,10 +29,10 @@ export const FinishUserModal = ({ isOpen }) => {
             <h4>Finish Profile</h4>
           </IonText>
           <Formik
+            validateOnMount
             onSubmit={onSubmit}
             initialValues={initialValues}
             validationSchema={UserProfileSchema}
-            validateOnMount
           >
             {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
               <form onSubmit={handleSubmit} autoComplete="off">

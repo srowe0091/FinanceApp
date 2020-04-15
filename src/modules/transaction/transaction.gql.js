@@ -24,7 +24,8 @@ export const UserTransactions = gql`
 export const NewTransaction = gql`
   mutation NewTransaction($input: TransactionInput!) {
     saveTransaction(input: $input) {
-      id
+      ...TransactionFragment
     }
   }
+  ${TransactionFragment}
 `
