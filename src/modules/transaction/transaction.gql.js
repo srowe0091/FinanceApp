@@ -13,6 +13,7 @@ export const TransactionFragment = gql`
 
 export const UserTransactions = gql`
   query UserTransactions {
+    groupSpent
     transactions {
       ...TransactionFragment
     }

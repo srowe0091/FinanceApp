@@ -57,17 +57,15 @@ const useHomeHooks = () => {
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const { amountLeft, groupSpent, daysLeft } = useMemo(() => {
-    const { _amountLeft, _groupSpent } = reduce((acc, curr) => {
-      if (curr.group) {
-        acc._groupSpent = acc._groupSpent + curr.amount
-      } else {
-        acc._amountLeft = acc._amountLeft + curr.amount
+    const _amountLeft = reduce((acc, curr) => {
+      if (!curr.group) {
+        acc = acc + curr.amount
       }
       return acc
-    })({ _amountLeft: 0, _groupSpent: 0 })(data.transactions)
+    })(0)(data.transactions)
 
     return {
-      groupSpent: (_groupSpent / 100).toFixed(2),
+      groupSpent: (data.groupSpent / 100).toFixed(2),
       amountLeft: ((allowance - _amountLeft) / 100).toFixed(2),
       daysLeft: determineDays(dueDate)
     }
