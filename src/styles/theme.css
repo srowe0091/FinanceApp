@@ -148,8 +148,12 @@ p[display="inline"] {
   display: inline-block;
 }
 
-p[align="right"] {
+*[align="right"] {
   text-align: right;
+}
+
+*[align="center"] {
+  text-align: center;
 }
 
 h1 {
