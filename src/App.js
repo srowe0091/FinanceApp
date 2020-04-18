@@ -41,7 +41,7 @@ const App = () => (
             <DrawerMenu />
             <IonRouterOutlet>
               <AuthorizedRoute path={routes.home} component={HomeView} />
-              <AuthorizedRoute path={routes.admin.index} component={AdminView} admin />
+              <AuthorizedRoute path={routes.admin} component={AdminView} admin />
               <AuthorizedRoute path={routes.profile} component={UserView} />
               <AuthorizedRoute path={routes.newTransaction} component={NewTransactionView} />
               <AuthorizedRoute path={routes.lab} component={LabView} />
