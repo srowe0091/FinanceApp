@@ -50,6 +50,7 @@ const LoginView = () => {
             {({ handleSubmit, handleChange, handleBlur, errors, isSubmitting, isValid }) => (
               <form onSubmit={handleSubmit}>
                 <Input
+                  autoFocus
                   name="email"
                   type="email"
                   placeholder="Email Address"

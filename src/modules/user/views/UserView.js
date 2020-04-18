@@ -63,7 +63,6 @@ const ProfileView = () => {
                   onChange={handleChange}
                 />
                 <MaskedInput
-                  autoFocus
                   type="tel"
                   name="allowance"
                   placeholder="Bi-Weekly Budget"
