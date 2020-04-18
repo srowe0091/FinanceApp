@@ -10,6 +10,7 @@ import theme from './styles/theme'
 import routes from 'routes'
 import { AuthorizedRoute } from 'components'
 import { DrawerMenu } from 'modules/drawer'
+import { ToastNotification } from 'modules/notification'
 import { AuthProvider } from 'modules/authentication/context'
 
 import LoginView from 'modules/authentication/views/LoginView'
@@ -36,10 +37,11 @@ const App = () => (
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <IonReactRouter>
+            <ToastNotification />
             <DrawerMenu />
             <IonRouterOutlet>
               <AuthorizedRoute path={routes.home} component={HomeView} />
-              <AuthorizedRoute path={routes.admin} component={AdminView} admin />
+              <AuthorizedRoute path={routes.admin.index} component={AdminView} admin />
               <AuthorizedRoute path={routes.profile} component={UserView} />
               <AuthorizedRoute path={routes.newTransaction} component={NewTransactionView} />
               <AuthorizedRoute path={routes.lab} component={LabView} />
