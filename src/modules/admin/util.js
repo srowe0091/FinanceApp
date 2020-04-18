@@ -17,5 +17,8 @@ export const useAdminViewStyles = createUseStyles(theme => ({
   },
   button: {
     margin: theme.spacing(2, 0)
+  },
+  emptyView: {
+    marginTop: theme.spacing(8)
   }
 }))
