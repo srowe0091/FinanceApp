@@ -10,6 +10,7 @@ import { NewTransaction } from '../transaction.gql'
 import { Toolbar } from 'components'
 import { Input, Button, MaskedInput, Checkbox } from 'elements'
 import { currenyFormat } from 'utils'
+import { useUser } from 'modules/authentication'
 
 const initialValues = {
   amount: 0,
@@ -19,9 +20,10 @@ const initialValues = {
 
 const NewTransactionPage = ({ history }) => {
   const classes = useNewTransactionViewStyles()
+  const { isAdmin } = useUser()
   const [saveTransaction, { loading }] = useMutation(NewTransaction, {
     awaitRefetchQueries: true,
-    refetchQueries: ['UserTransactions']
+    refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['PayTransactions'] : [])
   })
   const onSubmit = useCallback(
     ({ amount, ...values }) => {
