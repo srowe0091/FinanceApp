@@ -13,12 +13,12 @@ const initialValues = {
   dueDate: ''
 }
 
-export const FinishUserModal = ({ isOpen }) => {
+export const FinishUserModal = ({ isOpen, closeModal }) => {
   const classes = useFinishUserProfileStyles()
   const [updateUser, { loading: saving }] = useUpdateUser()
   const onSubmit = useCallback(
-    values => updateUser(values),
-    [updateUser]
+    values => updateUser(values).then(() => closeModal(false)),
+    [updateUser, closeModal]
   )
 
   return (
@@ -69,5 +69,6 @@ export const FinishUserModal = ({ isOpen }) => {
 }
 
 FinishUserModal.propTypes = {
-  isOpen: PropTypes.bool
+  isOpen: PropTypes.bool,
+  closeModal: PropTypes.func
 }

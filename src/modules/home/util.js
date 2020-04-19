@@ -43,8 +43,8 @@ export const useHomeViewStyles = createUseStyles(theme => ({
 }))
 
 export const useHomeHooks = () => {
-  const { allowance, dueDate } = useUser()
-  const { data = {}, loading, refetch } = useQuery(UserTransactions)
+  const { allowance, dueDate, inGroup } = useUser()
+  const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const [toolbarTransition, toggleStyle] = useState(false)
   const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])

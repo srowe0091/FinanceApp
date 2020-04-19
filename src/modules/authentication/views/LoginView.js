@@ -33,7 +33,7 @@ const LoginView = () => {
 
   useEffect(() => {
     if (requireProfileUpdate) {
-      toggleModal()
+      toggleModal(true)
     }
   }, [requireProfileUpdate, toggleModal])
 
@@ -85,7 +85,7 @@ const LoginView = () => {
             )}
           </Formik>
         </div>
-        <FinishUserModal isOpen={showModal} />
+        <FinishUserModal isOpen={showModal} closeModal={toggleModal} />
       </IonContent>
     </IonPage>
   )

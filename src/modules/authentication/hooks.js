@@ -96,5 +96,5 @@ export const useAuthentication = () => {
 
 export const useUser = () => {
   const { user } = useContext(AuthContext)
-  return Object.assign(user, { isAdmin: user.role === 'ADMIN' })
+  return user
 }

@@ -4,8 +4,10 @@ import { IonToolbar, IonSegment, IonSegmentButton, IonLabel } from '@ionic/react
 import PayTransaction from './PayTab'
 import Users from './UsersTab'
 import { Toolbar } from 'components'
+import { useUser } from 'modules/authentication'
 
 const Admin = () => {
+  const { inGroup } = useUser()
   const [activeTab, changeTab] = useState('pay')
   const handleTabChange = useCallback(e => changeTab(e.target.value), [])
 
@@ -14,7 +16,7 @@ const Admin = () => {
       <Toolbar
         color="medium"
         title="Admin"
-        extraToolbar={(
+        extraToolbar={inGroup && (
           <IonToolbar color="medium">
             <IonSegment onIonChange={handleTabChange} value={activeTab}>
               <IonSegmentButton value="pay">

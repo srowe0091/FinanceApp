@@ -23,7 +23,7 @@ const PayTransaction = () => {
   const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
     variables: { transactionIds },
     awaitRefetchQueries: true,
-    refetchQueries: ['UserTransactions'],
+    refetchQueries: ['UserTransactions', 'GroupTransactions'],
     onCompleted: () => Pubsub.emit('TOAST_NOTIFICATION', 'Transactions Paid')
   })
   const checkboxClick = useCallback(
