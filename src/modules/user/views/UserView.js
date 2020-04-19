@@ -14,7 +14,7 @@ import { useUser } from 'modules/authentication'
 
 const ProfileView = () => {
   const classes = useUserViewStyles()
-  const { email, ...userProps } = useUser()
+  const { email, isAdmin, ...userProps } = useUser()
   const [updateProfile, { loading: saving }] = useUpdateUser()
   const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(userProps), [userProps])
   const [editState, toggleEditState] = useToggle(false)
@@ -27,7 +27,7 @@ const ProfileView = () => {
   return (
     <>
       <Toolbar color="medium" title="Profile">
-        {!editState && (
+        {isAdmin && !editState && (
           <IonButtons className={classes.edit} slot="primary">
             <IonButton color="primary" onClick={toggleEditState}>
               Edit
