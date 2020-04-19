@@ -12,7 +12,7 @@ import includes from 'lodash/fp/includes'
 import { useAdminViewStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Button } from 'elements'
-import { TransactionEntry, FullPageLoader, PullToRefresh } from 'components'
+import { TransactionEntry, RelativeLoader, PullToRefresh } from 'components'
 import Pubsub from 'modules/pubsub'
 
 const PayTransaction = () => {
@@ -40,9 +40,7 @@ const PayTransaction = () => {
   })
 
   if (loading) {
-    return (
-      <FullPageLoader />
-    )
+    return <RelativeLoader />
   }
 
   return (

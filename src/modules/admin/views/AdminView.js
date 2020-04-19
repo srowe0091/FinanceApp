@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import { IonToolbar, IonSegment, IonSegmentButton, IonLabel } from '@ionic/react'
 
-import PayTransaction from './PayTransaction'
-import Users from './Users'
+import PayTransaction from './PayTab'
+import Users from './UsersTab'
 import { Toolbar } from 'components'
 
 const Admin = () => {
@@ -11,20 +11,23 @@ const Admin = () => {
 
   return (
     <>
-      <Toolbar color="medium" title="Admin" />
+      <Toolbar
+        color="medium"
+        title="Admin"
+        extraToolbar={(
+          <IonToolbar color="medium">
+            <IonSegment onIonChange={handleTabChange} value={activeTab}>
+              <IonSegmentButton value="pay">
+                <IonLabel>Pay</IonLabel>
+              </IonSegmentButton>
 
-      <IonToolbar color="medium">
-        <IonSegment onIonChange={handleTabChange} value={activeTab}>
-          <IonSegmentButton value="pay">
-            <IonLabel>Pay</IonLabel>
-          </IonSegmentButton>
-
-          <IonSegmentButton value="users">
-            <IonLabel>Users</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
-      </IonToolbar>
-
+              <IonSegmentButton value="users">
+                <IonLabel>Users</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
+          </IonToolbar>
+        )}
+      />
       {activeTab === 'pay' && <PayTransaction />}
       {activeTab === 'users' && <Users />}
     </>

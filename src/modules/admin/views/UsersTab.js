@@ -1,39 +1,46 @@
 import React from 'react'
-import { IonContent, IonCard, IonCardContent, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react'
-import { pin } from 'ionicons/icons'
+import { IonContent, IonCard, IonCardTitle, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react'
+import { pencil, personCircle } from 'ionicons/icons'
 import { useQuery } from '@apollo/react-hooks'
 import map from 'lodash/fp/map'
 
+import { useUsersTabStyles } from '../util'
 import { UsersInGroup } from '../admin.gql'
-import { FullPageLoader } from 'components'
+import { RelativeLoader } from 'components'
+import { currency, determineDays } from 'utils'
 
 const Users = () => {
+  const classes = useUsersTabStyles()
   const { data, loading } = useQuery(UsersInGroup)
 
   if (loading) {
     return (
-      <FullPageLoader />
+      <RelativeLoader />
     )
   }
 
-  console.log(data)
-
   return (
     <IonContent color="dark">
-      {map(d => (
-        <IonCard key={d.id}>
-          <IonItem>
-            <IonIcon icon={pin} slot="start" />
-            <IonLabel>ion-item in a card, icon left, button right</IonLabel>
-            <IonButton fill="outline" slot="end">View</IonButton>
-          </IonItem>
+      <div className={classes.wrapper}>
+        {map(d => (
+          <IonCard key={d.id} color="secondary" className={classes.card}>
+            <IonItem color="inherit" lines="none">
+              <IonIcon size="large" slot="start" icon={personCircle} className={classes.icon} />
+              <IonCardTitle>{d.email}</IonCardTitle>
+              <IonButton color="light" fill="clear" slot="end">
+                <IonIcon slot="icon-only" icon={pencil} />
+              </IonButton>
+            </IonItem>
 
-          <IonCardContent>
-            This is content, without any paragraph or header tags,
-            within an ion-cardContent element.
-          </IonCardContent>
-        </IonCard>
-      ))(data?.admin?.usersInGroup)}
+            <IonItem color="inherit" lines="none">
+              <IonLabel>
+                <p variant="body2">Allowance: {currency(d.allowance)}</p>
+                <p variant="body2">Next Payment: {determineDays(d.dueDate)}</p>
+              </IonLabel>
+            </IonItem>
+          </IonCard>
+        ))(data?.admin?.usersInGroup)}
+      </div>
     </IonContent>
   )
 }
