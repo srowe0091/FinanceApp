@@ -11,7 +11,6 @@ const useTransactionStyles = createUseStyles(theme => ({
     marginBottom: theme.spacing(2),
     borderRadius: theme.spacing(1),
     boxShadow: '0px 2px 5px -2px var(--black)',
-    '--background': 'var(--themeGray1)'
   },
   label: {
     display: 'flex',
@@ -38,8 +37,8 @@ const useTransactionStyles = createUseStyles(theme => ({
 export const TransactionEntry = ({ id, amount, description, createdAt, onCheckboxClick, checked, group }) => {
   const classes = useTransactionStyles()
   return (
-    <IonItem className={clsx(classes.transaction, { [classes.group]: group })}>
-      <IonLabel color="light">
+    <IonItem color="medium" lines="none" className={clsx(classes.transaction, { [classes.group]: group })}>
+      <IonLabel>
         <span className={classes.label}>
           <span>
             <p>{description || (<span color="textSecondary">(blank)</span>)}</p>
