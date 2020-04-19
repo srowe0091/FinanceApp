@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 
 import { TransactionFragment } from 'modules/transaction'
+import { UserFragment } from 'modules/user'
 
 export const GroupTransactions = gql`
   query GroupTransactions {
@@ -12,6 +13,17 @@ export const GroupTransactions = gql`
     }
   }
   ${TransactionFragment}
+`
+
+export const UsersInGroup = gql`
+  query UsersInGroup {
+    admin {
+      usersInGroup {
+        ...UserFragment
+      }
+    }
+  }
+  ${UserFragment}
 `
 
 export const PayTransactions = gql`

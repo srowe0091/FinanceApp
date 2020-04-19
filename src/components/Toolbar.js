@@ -33,7 +33,7 @@ const useToolbarStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Toolbar = ({ children, translucent, color = 'primary', title, back, transition }) => {
+export const Toolbar = ({ children, translucent, color = 'primary', title, back, transition, extraToolbar }) => {
   const classes = useToolbarStyles(color)
   const transitionClass = useMemo(() => {
     if (!isNil(transition)) {
@@ -49,6 +49,7 @@ export const Toolbar = ({ children, translucent, color = 'primary', title, back,
         {title && <IonTitle>{title}</IonTitle>}
         {children}
       </IonToolbar>
+      {extraToolbar}
     </IonHeader>
   )
 }
@@ -59,5 +60,6 @@ Toolbar.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
   back: PropTypes.bool,
-  transition: PropTypes.bool
+  transition: PropTypes.bool,
+  extraToolbar: PropTypes.node
 }

@@ -23,7 +23,9 @@ export const determineDays = (dueDate = 1) => {
   return `${_daysLeft} ${pluralize(_daysLeft, 'day')} left`
 }
 
+export const currency = number => `$${(number / 100).toFixed(2)}`
+
 export const currenyFormat = value => {
   const number = parseInt(replace(/\D/g)('')(value), '10')
-  return [`$${(number / 100).toFixed(2)}`, number]
+  return [currency(number), number]
 }

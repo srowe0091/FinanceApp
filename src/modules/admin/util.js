@@ -17,5 +17,20 @@ export const useAdminViewStyles = createUseStyles(theme => ({
   },
   button: {
     margin: theme.spacing(2, 0)
+  },
+  emptyView: {
+    marginTop: theme.spacing(8)
+  }
+}))
+
+export const useUsersTabStyles = createUseStyles(theme => ({
+  card: {
+    marginBottom: theme.spacing(2)
+  },
+  icon: {
+    marginRight: theme.spacing(1)
+  },
+  wrapper: {
+    margin: theme.spacing(2, 2, 0)
   }
 }))

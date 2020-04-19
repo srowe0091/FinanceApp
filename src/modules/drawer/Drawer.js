@@ -32,7 +32,7 @@ const useDrawerMenuStyles = createUseStyles(theme => ({
 export const DrawerMenu = () => {
   const classes = useDrawerMenuStyles()
   const location = useLocation()
-  const { role, email } = useUser()
+  const { isAdmin, email } = useUser()
   const { handleLogout, isAuthenticated } = useAuthentication()
   const closeDrawer = useCallback(() => menuController.close(), [])
   const drawerLinks = useMemo(() => {
@@ -56,11 +56,11 @@ export const DrawerMenu = () => {
         icon: settings,
         label: 'Admin',
         route: routes.admin,
-        condition: role === 'ADMIN'
+        condition: isAdmin
       }
     ]
     return filter(link => (has('condition')(link) ? link.condition : true))(links)
-  }, [role])
+  }, [isAdmin])
 
   if (!isAuthenticated) {
     return null
