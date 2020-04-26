@@ -9,7 +9,7 @@ const initialState = {
   user: {}
 }
 
-const sessionProps = pick(['email', 'allowance', 'dueDate', 'isAdmin', 'inGroup'])
+const sessionProps = pick(['email', 'allowance', 'dueDate', 'isAdmin', 'inGroup', 'cards'])
 
 const reducer = (state, action) => {
   switch (action.type) {

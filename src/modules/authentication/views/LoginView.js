@@ -46,7 +46,7 @@ const LoginView = () => {
       <IonContent fullscreen className={classes.wrapper}>
         <div className={classes.form}>
           <Logo className={classes.logo} />
-          <Formik onSubmit={submitHandler} validationSchema={LoginSchema} initialValues={initialValues} validateOnMount>
+          <Formik onSubmit={submitHandler} validationSchema={LoginSchema} initialValues={initialValues} isInitialValid={false}>
             {({ handleSubmit, handleChange, handleBlur, errors, isSubmitting, isValid }) => (
               <form onSubmit={handleSubmit}>
                 <Input

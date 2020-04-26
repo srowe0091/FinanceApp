@@ -12,11 +12,16 @@ export const UserFragment = gql`
 export const GetUser = gql`
   query GetUser {
     me {
-      id
-      allowance
-      dueDate
+      ...UserFragment
+      isAdmin
+      inGroup
+      cards {
+        name
+        dueDate
+      }
     }
   }
+  ${UserFragment}
 `
 
 export const UpdateUser = gql`

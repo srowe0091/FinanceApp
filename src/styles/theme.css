@@ -37,6 +37,8 @@ body {
   /** shade === darker **/
   /** tint === lighter **/
 
+  /** #313347 + #60637e **/
+
   /** primary **/
   --ion-color-primary: #02B25F;
   --ion-color-primary-rgb: 2, 178, 95;

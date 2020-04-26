@@ -3,6 +3,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
+import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
   if (!response.ok) {
@@ -15,6 +16,20 @@ export const useInitializeAuth = () => {
   const [state, dispatch] = useAuthReducer()
   const client = useApolloClient()
 
+  const handleGetUser = useCallback(async () => {
+    try {
+      const response = await client.query({ query: GetUser })
+      const user = response?.data?.me || {}
+      if (!user.dueDate || !user.allowance) {
+        dispatch({ type: 'COMPLETE_PROFILE', payload: user })
+        return
+      }
+      dispatch({ type: 'LOGIN', payload: user })
+    } catch (err) {
+      console.log(err)
+    }
+  }, [client, dispatch])
+
   useEffect(() => {
     const _sessionId = localStorage.getItem('session')
     if (_sessionId) {
@@ -22,19 +37,12 @@ export const useInitializeAuth = () => {
         headers: { Authorization: _sessionId }
       })
         .then(checkErrors)
-        .then(session => {
-          const _session = JSON.parse(session)
-          if (!_session.dueDate || !_session.allowance) {
-            dispatch({ type: 'COMPLETE_PROFILE', payload: _session })
-            return
-          }
-          dispatch({ type: 'LOGIN', payload: _session })
-        })
+        .then(handleGetUser)
         .catch(() => dispatch({ type: 'STOP_LOADING' }))
     } else {
       dispatch({ type: 'STOP_LOADING' })
     }
-  }, [dispatch])
+  }, [dispatch, handleGetUser])
 
   const handleLogin = useCallback(
     (email, password) =>
@@ -46,16 +54,12 @@ export const useInitializeAuth = () => {
         }
       })
         .then(checkErrors)
-        .then(session => {
-          const _session = JSON.parse(session)
-          localStorage.setItem('session', _session.sessionId)
-          if (!_session.dueDate || !_session.allowance) {
-            dispatch({ type: 'COMPLETE_PROFILE', payload: _session })
-            return
-          }
-          dispatch({ type: 'LOGIN', payload: _session })
+        .then(res => {
+          const { session } = JSON.parse(res)
+          localStorage.setItem('session', session)
+          return handleGetUser()
         }),
-    [dispatch]
+    [handleGetUser]
   )
 
   const handleLogout = useCallback(
