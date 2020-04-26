@@ -12,7 +12,7 @@ export const TransactionFragment = gql`
 `
 
 export const UserTransactions = gql`
-  query UserTransactions($inGroup: Boolean != false) {
+  query UserTransactions($inGroup: Boolean! = false) {
     groupSpent @include(if: $inGroup)
     transactions {
       ...TransactionFragment

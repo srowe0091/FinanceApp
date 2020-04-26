@@ -16,19 +16,21 @@ const Admin = () => {
       <Toolbar
         color="medium"
         title="Admin"
-        extraToolbar={inGroup && (
-          <IonToolbar color="medium">
-            <IonSegment onIonChange={handleTabChange} value={activeTab}>
-              <IonSegmentButton value="pay">
-                <IonLabel>Pay</IonLabel>
-              </IonSegmentButton>
+        extraToolbar={
+          inGroup && (
+            <IonToolbar color="medium">
+              <IonSegment onIonChange={handleTabChange} value={activeTab}>
+                <IonSegmentButton value="pay">
+                  <IonLabel>Pay</IonLabel>
+                </IonSegmentButton>
 
-              <IonSegmentButton value="users">
-                <IonLabel>Users</IonLabel>
-              </IonSegmentButton>
-            </IonSegment>
-          </IonToolbar>
-        )}
+                <IonSegmentButton value="users">
+                  <IonLabel>Users</IonLabel>
+                </IonSegmentButton>
+              </IonSegment>
+            </IonToolbar>
+          )
+        }
       />
       {activeTab === 'pay' && <PayTransaction />}
       {activeTab === 'users' && <Users />}

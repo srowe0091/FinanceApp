@@ -10,7 +10,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   transaction: {
     marginBottom: theme.spacing(2),
     borderRadius: theme.spacing(1),
-    boxShadow: '0px 2px 5px -2px var(--black)',
+    boxShadow: '0px 2px 5px -2px var(--black)'
   },
   label: {
     display: 'flex',
@@ -41,14 +41,18 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
       <IonLabel>
         <span className={classes.label}>
           <span>
-            <p>{description || (<span color="textSecondary">(blank)</span>)}</p>
+            <p>{description || <span color="textSecondary">(blank)</span>}</p>
             <p color="textSecondary" variant="caption">
               {formatDate(createdAt)}
             </p>
           </span>
           <span>
             <p>${(amount / 100).toFixed(2)}</p>
-            {group && <p color="textSecondary" variant="caption" align="right">group</p>}
+            {group && (
+              <p color="textSecondary" variant="caption" align="right">
+                group
+              </p>
+            )}
           </span>
         </span>
       </IonLabel>

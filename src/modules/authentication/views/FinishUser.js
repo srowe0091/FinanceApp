@@ -16,10 +16,7 @@ const initialValues = {
 export const FinishUserModal = ({ isOpen, closeModal }) => {
   const classes = useFinishUserProfileStyles()
   const [updateUser, { loading: saving }] = useUpdateUser()
-  const onSubmit = useCallback(
-    values => updateUser(values).then(() => closeModal(false)),
-    [updateUser, closeModal]
-  )
+  const onSubmit = useCallback(values => updateUser(values).then(() => closeModal(false)), [updateUser, closeModal])
 
   return (
     <IonModal isOpen={isOpen} backdropDismiss={false}>

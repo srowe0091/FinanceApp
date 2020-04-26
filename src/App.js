@@ -28,7 +28,7 @@ const client = new ApolloClient({
         Authorization: localStorage.getItem('session')
       }
     })
-  },
+  }
   // onError: ({ graphQLErrors }) => {
   //   // handle when session expires during GraphQL request
   // }

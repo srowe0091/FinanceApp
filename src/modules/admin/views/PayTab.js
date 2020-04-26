@@ -50,23 +50,27 @@ const PayTransaction = () => {
         <div className={classes.transactions}>
           {isEmpty(transactions) ? (
             <IonText color="textSecondary">
-              <h5 align="center" className={classes.emptyView}>No transactions</h5>
+              <h5 align="center" className={classes.emptyView}>
+                No transactions
+              </h5>
             </IonText>
-          ) : Object.keys(transactions).map(email => (
-            <Fragment key={email}>
-              <IonText color="textSecondary">
-                <h5 className={classes.headers}>{email}</h5>
-              </IonText>
-              {map(t => (
-                <TransactionEntry
-                  key={t.id}
-                  onCheckboxClick={checkboxClick}
-                  checked={includes(t.id)(transactionIds)}
-                  {...t}
-                />
-              ))(transactions[email])}
-            </Fragment>
-          ))}
+          ) : (
+            Object.keys(transactions).map(email => (
+              <Fragment key={email}>
+                <IonText color="textSecondary">
+                  <h5 className={classes.headers}>{email}</h5>
+                </IonText>
+                {map(t => (
+                  <TransactionEntry
+                    key={t.id}
+                    onCheckboxClick={checkboxClick}
+                    checked={includes(t.id)(transactionIds)}
+                    {...t}
+                  />
+                ))(transactions[email])}
+              </Fragment>
+            ))
+          )}
         </div>
         {!!transactionIds.length && (
           <Button
