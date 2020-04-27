@@ -20,10 +20,10 @@ const initialValues = {
 
 const NewTransactionPage = ({ history }) => {
   const classes = useNewTransactionViewStyles()
-  const { isAdmin } = useUser()
+  const { isAdmin, inGroup } = useUser()
   const [saveTransaction, { loading }] = useMutation(NewTransaction, {
     awaitRefetchQueries: true,
-    refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['PayTransactions'] : [])
+    refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['GroupTransactions'] : [])
   })
   const onSubmit = useCallback(
     ({ amount, ...values }) => {
@@ -57,7 +57,9 @@ const NewTransactionPage = ({ history }) => {
                 onChange={handleChange}
               />
               <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
-              <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
+              {inGroup && (
+                <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
+              )}
               <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>
                 Submit
               </Button>

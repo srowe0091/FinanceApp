@@ -37,7 +37,9 @@ const useAutoFocus = autoFocus => {
 export const Input = ({ className, onChange, onBlur, autoFocus, ...rest }) => {
   const classes = useInputStyles()
   const element = useAutoFocus(autoFocus)
-  return <input ref={element} className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
+  return (
+    <input ref={element} className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
+  )
 }
 
 Input.propTypes = {
@@ -63,7 +65,14 @@ export const MaskedInput = ({ className, onChange, onBlur, format, value, autoFo
   )
 
   return (
-    <input ref={element} className={clsx(className, classes.input)} onBlur={onBlur} onChange={_onChange} value={_value} {...rest} />
+    <input
+      ref={element}
+      className={clsx(className, classes.input)}
+      onBlur={onBlur}
+      onChange={_onChange}
+      value={_value}
+      {...rest}
+    />
   )
 }
 

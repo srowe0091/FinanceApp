@@ -13,23 +13,23 @@ body {
 /** Ionic CSS Variables **/
 :root {
   /** font **/
-  --ion-font-family: "Ubuntu";
+  --ion-font-family: 'Ubuntu';
 
   /** colors **/
   --white: #ffffff;
   --black: #000000;
-  --gray1: #F8F8F8;
-  --gray2: #F0F0F0;
-  --gray3: #ECECEC;
-  --gray4: #E8E8E8;
-  --gray5: #BEBEBE;
-  --gray6: #9C9C9C;
+  --gray1: #f8f8f8;
+  --gray2: #f0f0f0;
+  --gray3: #ececec;
+  --gray4: #e8e8e8;
+  --gray5: #bebebe;
+  --gray6: #9c9c9c;
   --gray7: #6d6d6d;
   --themeGray1: #2d2f38;
   --themeGray2: #202129;
   --alpha0: rgba(0, 0, 0, 0);
-  --alpha25: rgba(0, 0, 0, .25);
-  --alpha5: rgba(0, 0, 0, .5);
+  --alpha25: rgba(0, 0, 0, 0.25);
+  --alpha5: rgba(0, 0, 0, 0.5);
 
   /** variables **/
   --borderRadius: 6px;
@@ -37,29 +37,31 @@ body {
   /** shade === darker **/
   /** tint === lighter **/
 
+  /** #313347 + #60637e **/
+
   /** primary **/
-  --ion-color-primary: #02B25F;
+  --ion-color-primary: #02b25f;
   --ion-color-primary-rgb: 2, 178, 95;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #009946;
-  --ion-color-primary-tint: #02B25F;
+  --ion-color-primary-tint: #02b25f;
 
   /** secondary **/
   --ion-color-secondary: #004ec2;
   --ion-color-secondary-rgb: 73, 71, 214;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #302EBD;
-  --ion-color-secondary-tint: #6361F0;
+  --ion-color-secondary-shade: #302ebd;
+  --ion-color-secondary-tint: #6361f0;
 
   /** tertiary **/
   --ion-color-tertiary: #277550;
   --ion-color-tertiary-rgb: 39, 117, 80;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #0E5C37;
-  --ion-color-tertiary-tint: #418F6A;
+  --ion-color-tertiary-shade: #0e5c37;
+  --ion-color-tertiary-tint: #418f6a;
 
   /** success **/
   --ion-color-success: #10dc60;
@@ -91,14 +93,14 @@ body {
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
   --ion-color-dark-shade: #070810;
-  --ion-color-dark-tint: #3A3B43;
+  --ion-color-dark-tint: #3a3b43;
 
   /** medium **/
   --ion-color-medium: #2d2f38;
   --ion-color-medium-rgb: 45, 47, 56;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #14161F;
+  --ion-color-medium-shade: #14161f;
   --ion-color-medium-tint: #474952;
 
   /** light **/
@@ -115,48 +117,48 @@ body {
   --ion-toolbar-color: var(--white);
 }
 
-*[color="textSecondary"] {
+*[color='textSecondary'] {
   color: var(--gray6);
 }
 
-*[color="textPrimary"] {
+*[color='textPrimary'] {
   color: var(--black);
 }
 
 p {
-  font-size: .875rem;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
-p[variant="body2"] {
-  font-size: .875rem;
+p[variant='body2'] {
+  font-size: 0.875rem;
   line-height: 1.43;
 }
 
-p[variant="subtitle1"] {
+p[variant='subtitle1'] {
   font-size: 1rem;
   line-height: 1.75;
 }
 
-p[variant="subtitle2"] {
-  font-size: .875rem;
+p[variant='subtitle2'] {
+  font-size: 0.875rem;
   line-height: 1.57;
 }
 
-p[variant="caption"] {
-  font-size: .70rem;
+p[variant='caption'] {
+  font-size: 0.7rem;
   line-height: 1.66;
 }
 
-p[display="inline"] {
+p[display='inline'] {
   display: inline-block;
 }
 
-*[align="right"] {
+*[align='right'] {
   text-align: right;
 }
 
-*[align="center"] {
+*[align='center'] {
   text-align: center;
 }
 

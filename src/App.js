@@ -29,6 +29,9 @@ const client = new ApolloClient({
       }
     })
   }
+  // onError: ({ graphQLErrors }) => {
+  //   // handle when session expires during GraphQL request
+  // }
 })
 
 const App = () => (

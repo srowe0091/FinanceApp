@@ -18,10 +18,10 @@ const ProfileView = () => {
   const [updateProfile, { loading: saving }] = useUpdateUser()
   const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(userProps), [userProps])
   const [editState, toggleEditState] = useToggle(false)
-  const onSubmit = useCallback(
-    values => updateProfile(values).finally(() => toggleEditState()),
-    [updateProfile, toggleEditState]
-  )
+  const onSubmit = useCallback(values => updateProfile(values).finally(() => toggleEditState()), [
+    updateProfile,
+    toggleEditState
+  ])
   const onReset = useCallback(() => toggleEditState(), [toggleEditState])
 
   return (

@@ -9,13 +9,13 @@ import { useAuthentication, useUser } from 'modules/authentication'
 
 export const AuthorizedRoute = ({ path, admin, component }) => {
   const { isAuthenticated } = useAuthentication()
-  const { role } = useUser()
+  const { isAdmin } = useUser()
 
   if (!isAuthenticated) {
     return <Redirect to={routes.login} />
   }
 
-  if (admin && role !== 'ADMIN') {
+  if (admin && !isAdmin) {
     return <Redirect to={routes.home} />
   }
 

@@ -14,9 +14,7 @@ const Users = () => {
   const { data, loading } = useQuery(UsersInGroup)
 
   if (loading) {
-    return (
-      <RelativeLoader />
-    )
+    return <RelativeLoader />
   }
 
   return (
@@ -33,9 +31,18 @@ const Users = () => {
             </IonItem>
 
             <IonItem color="inherit" lines="none">
-              <IonLabel>
-                <p variant="body2">Allowance: {currency(d.allowance)}</p>
-                <p variant="body2">Next Payment: {determineDays(d.dueDate)}</p>
+              <IonLabel color="light">
+                <p variant="body2">
+                  {d.allowance && d.dueDate ? (
+                    <>
+                      Allowance: {currency(d.allowance)}
+                      <br />
+                      Next Payment: {determineDays(d.dueDate)}
+                    </>
+                  ) : (
+                    "Profile hasn't been completed"
+                  )}
+                </p>
               </IonLabel>
             </IonItem>
           </IonCard>
