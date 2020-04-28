@@ -5,13 +5,13 @@ export const formatDate = (date, format = 'M/D/YYYY') => dayjs(date).format(form
 
 export const pluralize = (count, string) => (1 === count ? string : `${string}s`)
 
-export const determineDays = (dueDate = 1) => {
+export const determineDays = dueDate => {
   const now = new Date()
   const nextPaymentDate =
-    dayjs().date() <= dueDate ? dayjs().set('date', dueDate) : dayjs().set('date', dueDate).add(2, 'week')
+    dayjs().date() <= dueDate ? dayjs().set('date', dueDate) : dayjs().set('date', dueDate).add(1, 'month')
   const difference = dayjs(nextPaymentDate).diff(now, 'day')
 
-  if (difference === 14 || difference === 0) {
+  if (difference === 15 || difference === 0) {
     return 'Submit Payment Today'
   }
 
