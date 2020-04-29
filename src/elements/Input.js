@@ -1,10 +1,12 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
+import { useIonViewWillEnter } from '@ionic/react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
 
 const useInputStyles = createUseStyles(theme => ({
   input: {
+    flex: 'none',
     width: '100%',
     color: 'var(--white)',
     outline: 'none',
@@ -24,19 +26,32 @@ const useInputStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Input = ({ className, onChange, onBlur, ...rest }) => {
+const useAutoFocus = autoFocus => {
+  const ele = useRef(null)
+
+  useIonViewWillEnter(() => autoFocus && ele?.current?.focus?.())
+
+  return ele
+}
+
+export const Input = ({ className, onChange, onBlur, autoFocus, ...rest }) => {
   const classes = useInputStyles()
-  return <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
+  const element = useAutoFocus(autoFocus)
+  return (
+    <input ref={element} className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
+  )
 }
 
 Input.propTypes = {
   className: PropTypes.string,
+  autoFocus: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 }
 
-export const MaskedInput = ({ className, onChange, onBlur, format, value, ...rest }) => {
+export const MaskedInput = ({ className, onChange, onBlur, format, value, autoFocus, ...rest }) => {
   const classes = useInputStyles()
+  const element = useAutoFocus(autoFocus)
 
   const _value = useMemo(() => format(value)[0], [format, value])
 
@@ -50,13 +65,21 @@ export const MaskedInput = ({ className, onChange, onBlur, format, value, ...res
   )
 
   return (
-    <input className={clsx(className, classes.input)} onBlur={onBlur} onChange={_onChange} value={_value} {...rest} />
+    <input
+      ref={element}
+      className={clsx(className, classes.input)}
+      onBlur={onBlur}
+      onChange={_onChange}
+      value={_value}
+      {...rest}
+    />
   )
 }
 
 MaskedInput.propTypes = {
   className: PropTypes.string,
   value: PropTypes.any,
+  autoFocus: PropTypes.bool,
   format: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired

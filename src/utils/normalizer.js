@@ -5,14 +5,10 @@ export const formatDate = (date, format = 'M/D/YYYY') => dayjs(date).format(form
 
 export const pluralize = (count, string) => (1 === count ? string : `${string}s`)
 
-export const determineDays = (dueDate = 1) => {
+export const determineDays = dueDate => {
   const now = new Date()
   const nextPaymentDate =
-    dayjs().date() <= dueDate
-      ? dayjs().set('date', dueDate)
-      : dayjs()
-          .set('date', dueDate)
-          .add(1, 'month')
+    dayjs().date() <= dueDate ? dayjs().set('date', dueDate) : dayjs().set('date', dueDate).add(1, 'month')
   const difference = dayjs(nextPaymentDate).diff(now, 'day')
 
   if (difference === 15 || difference === 0) {
@@ -23,7 +19,9 @@ export const determineDays = (dueDate = 1) => {
   return `${_daysLeft} ${pluralize(_daysLeft, 'day')} left`
 }
 
-export const formatInput = value => {
+export const currency = number => `$${(number / 100).toFixed(2)}`
+
+export const currenyFormat = value => {
   const number = parseInt(replace(/\D/g)('')(value), '10')
-  return [`$${(number / 100).toFixed(2)}`, number]
+  return [currency(number), number]
 }

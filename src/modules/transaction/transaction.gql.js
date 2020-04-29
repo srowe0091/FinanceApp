@@ -12,7 +12,8 @@ export const TransactionFragment = gql`
 `
 
 export const UserTransactions = gql`
-  query UserTransactions {
+  query UserTransactions($inGroup: Boolean! = false) {
+    groupSpent @include(if: $inGroup)
     transactions {
       ...TransactionFragment
     }
@@ -23,7 +24,8 @@ export const UserTransactions = gql`
 export const NewTransaction = gql`
   mutation NewTransaction($input: TransactionInput!) {
     saveTransaction(input: $input) {
-      id
+      ...TransactionFragment
     }
   }
+  ${TransactionFragment}
 `

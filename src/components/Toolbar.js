@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { IonHeader, IonMenuButton, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
+import isNil from 'lodash/fp/isNil'
 
 const useToolbarStyles = createUseStyles(theme => ({
   '@keyframes fadeIn': {
@@ -14,30 +16,40 @@ const useToolbarStyles = createUseStyles(theme => ({
   },
   header: {
     '&:after': {
-      content: color => (color ? '""' : 'none')
+      content: 'none'
     }
   },
-  toolbar: {
-    backgroundColor: color => (color ? 'var(--ion-color-primary)' : null),
-    animationName: color => (color ? '$fadeIn' : '$fadeOut'),
-    animationDuration: '350ms'
+  fadeIn: {
+    backgroundColor: color => (color ? `var(--ion-color-${color})` : null),
+    animationName: '$fadeIn',
+    animationDuration: '500ms'
+  },
+  fadeOut: {
+    animationName: '$fadeOut',
+    animationDuration: '500ms'
   },
   icon: {
     margin: theme.spacing(0, 1)
   }
 }))
 
-export const Toolbar = ({ children, translucent, color = 'primary', title, back }) => {
-  const classes = useToolbarStyles()
+export const Toolbar = ({ children, translucent, color = 'primary', title, back, transition, extraToolbar }) => {
+  const classes = useToolbarStyles(color)
+  const transitionClass = useMemo(() => {
+    if (!isNil(transition)) {
+      return transition ? classes.fadeIn : classes.fadeOut
+    }
+  }, [transition, classes])
   return (
-    <IonHeader className={classes.header}>
-      <IonToolbar className={classes.toolbar} translucent={translucent} color={color}>
+    <IonHeader className={clsx(transitionClass, classes.header)}>
+      <IonToolbar translucent={translucent} color={!transitionClass && color}>
         <IonButtons className={classes.icon} slot="start">
           {back ? <IonBackButton /> : <IonMenuButton />}
         </IonButtons>
         {title && <IonTitle>{title}</IonTitle>}
         {children}
       </IonToolbar>
+      {extraToolbar}
     </IonHeader>
   )
 }
@@ -47,5 +59,7 @@ Toolbar.propTypes = {
   translucent: PropTypes.bool,
   color: PropTypes.string,
   title: PropTypes.string,
-  back: PropTypes.bool
+  back: PropTypes.bool,
+  transition: PropTypes.bool,
+  extraToolbar: PropTypes.node
 }

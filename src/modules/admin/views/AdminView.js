@@ -1,108 +1,41 @@
-import React, { useCallback, useState, useMemo, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { IonContent, IonText, useIonViewWillEnter } from '@ionic/react'
-import { createUseStyles } from 'react-jss'
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import useMountedState from 'react-use/lib/useMountedState'
-import get from 'lodash/fp/get'
-import map from 'lodash/fp/map'
-import concat from 'lodash/fp/concat'
-import reject from 'lodash/fp/reject'
-import groupBy from 'lodash/fp/groupBy'
-import includes from 'lodash/fp/includes'
+import React, { useCallback, useState } from 'react'
+import { IonToolbar, IonSegment, IonSegmentButton, IonLabel } from '@ionic/react'
 
-import { Button } from 'elements'
-import { Toolbar, TransactionEntry, FullPageLoader, PullToRefresh } from 'components'
-import routes from 'routes'
-import { GroupTransactions, PayTransactions } from '../admin.gql'
+import PayTransaction from './PayTab'
+import Users from './UsersTab'
+import { Toolbar } from 'components'
+import { useUser } from 'modules/authentication'
 
-const useAdminViewStyles = createUseStyles(theme => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    margin: theme.spacing(0, 2)
-  },
-  transactions: {
-    flex: 1,
-    overflow: 'auto',
-    paddingTop: theme.spacing(2)
-  },
-  headers: {
-    marginBottom: theme.spacing(1)
-  },
-  button: {
-    margin: theme.spacing(2, 0)
-  }
-}))
-
-const Admin = ({ history }) => {
-  const isMounted = useMountedState()
-  const classes = useAdminViewStyles()
-  const [transactionIds, handleIds] = useState([])
-  const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
-    variables: { transactionIds },
-    onCompleted: () => history.push(routes.home)
-  })
-  const { data, loading, refetch } = useQuery(GroupTransactions)
-  const checkboxClick = useCallback(
-    id => e => handleIds(_ids => (e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids))),
-    []
-  )
-  const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const transactions = useMemo(() => groupBy('owner')(get('admin.groupTransactions')(data)), [data])
-
-  useIonViewWillEnter(() => {
-    if (isMounted()) {
-      handleIds([])
-      refetch()
-    }
-  })
-
-  if (loading) {
-    return <FullPageLoader />
-  }
+const Admin = () => {
+  const { inGroup } = useUser()
+  const [activeTab, changeTab] = useState('pay')
+  const handleTabChange = useCallback(e => changeTab(e.target.value), [])
 
   return (
     <>
-      <Toolbar color="medium" title="Pay Transactions" />
-      <IonContent color="dark">
-        <PullToRefresh onRefresh={onRefresh} />
-        <div className={classes.wrapper}>
-          <div className={classes.transactions}>
-            {Object.keys(transactions).map(email => (
-              <Fragment key={email}>
-                <IonText color="textSecondary">
-                  <h5 className={classes.headers}>{email}</h5>
-                </IonText>
-                {map(t => (
-                  <TransactionEntry
-                    key={t.id}
-                    onCheckboxClick={checkboxClick}
-                    checked={includes(t.id)(transactionIds)}
-                    {...t}
-                  />
-                ))(transactions[email])}
-              </Fragment>
-            ))}
-          </div>
-          <Button
-            type="button"
-            className={classes.button}
-            disabled={ptLoading || !transactionIds.length}
-            loading={ptLoading}
-            onClick={payTransaction}
-          >
-            Pay
-          </Button>
-        </div>
-      </IonContent>
+      <Toolbar
+        color="medium"
+        title="Admin"
+        extraToolbar={
+          inGroup && (
+            <IonToolbar color="medium">
+              <IonSegment onIonChange={handleTabChange} value={activeTab}>
+                <IonSegmentButton value="pay">
+                  <IonLabel>Pay</IonLabel>
+                </IonSegmentButton>
+
+                <IonSegmentButton value="users">
+                  <IonLabel>Users</IonLabel>
+                </IonSegmentButton>
+              </IonSegment>
+            </IonToolbar>
+          )
+        }
+      />
+      {activeTab === 'pay' && <PayTransaction />}
+      {activeTab === 'users' && <Users />}
     </>
   )
-}
-
-Admin.propTypes = {
-  history: PropTypes.object
 }
 
 export default Admin

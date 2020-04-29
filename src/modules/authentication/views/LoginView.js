@@ -2,27 +2,15 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { IonPage, IonContent, IonText } from '@ionic/react'
 import { Formik } from 'formik'
 import { Redirect } from 'react-router-dom'
-import * as yup from 'yup'
 import useToggle from 'react-use/lib/useToggle'
 
-import { useAuthentication } from 'modules/authentication/hooks'
+import { useLoginViewStyle, LoginSchema } from '../util'
+import { FinishUserModal } from './FinishUser'
 import { Logo } from 'components'
 import { Input, Button } from 'elements'
-import { useStyles } from './defaults'
-import { UpdateUserModal } from './UpdateUser'
 import routes from 'routes'
 import { textMappings } from 'utils'
-
-const LoginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email('Invalid Email Address')
-    .required(),
-  password: yup
-    .string()
-    .min(5)
-    .required()
-})
+import { useAuthentication } from 'modules/authentication'
 
 const initialValues = {
   email: '',
@@ -30,10 +18,10 @@ const initialValues = {
 }
 
 const LoginView = () => {
-  const classes = useStyles()
+  const classes = useLoginViewStyle()
   const [status, setStatus] = useState(null)
   const [showModal, toggleModal] = useToggle(false)
-  const { handleLogin, isAuthenticated, finishProfile, requireProfileUpdate } = useAuthentication()
+  const { handleLogin, isAuthenticated, requireProfileUpdate } = useAuthentication()
 
   const submitHandler = useCallback(
     ({ email, password }) => {
@@ -45,7 +33,7 @@ const LoginView = () => {
 
   useEffect(() => {
     if (requireProfileUpdate) {
-      toggleModal()
+      toggleModal(true)
     }
   }, [requireProfileUpdate, toggleModal])
 
@@ -58,10 +46,16 @@ const LoginView = () => {
       <IonContent fullscreen className={classes.wrapper}>
         <div className={classes.form}>
           <Logo className={classes.logo} />
-          <Formik onSubmit={submitHandler} validationSchema={LoginSchema} initialValues={initialValues} validateOnMount>
+          <Formik
+            onSubmit={submitHandler}
+            validationSchema={LoginSchema}
+            initialValues={initialValues}
+            isInitialValid={false}
+          >
             {({ handleSubmit, handleChange, handleBlur, errors, isSubmitting, isValid }) => (
               <form onSubmit={handleSubmit}>
                 <Input
+                  autoFocus
                   name="email"
                   type="email"
                   placeholder="Email Address"
@@ -96,7 +90,7 @@ const LoginView = () => {
             )}
           </Formik>
         </div>
-        <UpdateUserModal isOpen={showModal} finishProfile={finishProfile} />
+        <FinishUserModal isOpen={showModal} closeModal={toggleModal} />
       </IonContent>
     </IonPage>
   )
