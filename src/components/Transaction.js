@@ -2,55 +2,94 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
-import { IonItem, IonLabel, IonCheckbox, IonPopover, IonDatetime } from '@ionic/react'
+import { modalController } from '@ionic/core'
+import {
+  IonItem,
+  IonLabel,
+  IonCheckbox,
+  IonModal,
+  IonDatetime,
+  IonIcon,
+  IonFabButton,
+  IonFab,
+  IonText
+} from '@ionic/react'
+import { close } from 'ionicons/icons'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
 
+import { LongPress } from './LongPress'
 import { Input, Button, Checkbox } from 'elements'
 import { formatDate } from 'utils'
-import { LongPress } from './LongPress'
+import { useUser } from 'modules/authentication'
 
 const useEditTransactionStyles = createUseStyles(theme => ({
   container: {
-    padding: theme.spacing(2),
-    background: 'var(--themeGray1)'
+    height: '100%',
+    padding: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
   button: {
     marginTop: theme.spacing(2)
+  },
+  header: {
+    marginBottom: theme.spacing(2)
   }
 }))
 
-const EditTransaction = ({ id, description, amount, createdAt }) => {
+const EditTransaction = ({ id, description, group, createdAt }) => {
   const classes = useEditTransactionStyles()
+  const { inGroup } = useUser()
   const loading = false
-  const initialValues = useMemo(() => ({ description, amount }), [description, amount])
+  const initialValues = useMemo(() => ({ description, group }), [description, group])
   return (
-    <Formik initialValues={initialValues}>
-      {({ handleBlur, handleChange, isValid, values }) => (
-        <form className={classes.container}>
-          <Input
-            name="description"
-            placeholder="memo"
-            value={values.description || ''}
-            onBlur={handleBlur}
-            onChange={handleChange}
-          />
-          <IonItem>
-            <IonDatetime displayFormat="M/D/YYYY" value={createdAt}></IonDatetime>
-          </IonItem>
-          <Button
-            type="submit"
-            size="small"
-            className={classes.button}
-            disabled={loading || !isValid}
-            loading={loading}
-          >
-            Save
-          </Button>
-        </form>
-      )}
-    </Formik>
+    <div className={classes.container}>
+      <IonFab vertical="top" horizontal="end" slot="fixed">
+        <IonFabButton size="small" onClick={modalController.dismiss}>
+          <IonIcon icon={close} />
+        </IonFabButton>
+      </IonFab>
+      <IonText color="light">
+        <h5 className={classes.header}>Edit Transaction</h5>
+      </IonText>
+      <Formik initialValues={initialValues}>
+        {({ handleBlur, handleChange, isValid, values }) => (
+          <form>
+            <Input
+              name="description"
+              placeholder="memo"
+              value={values.description || ''}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
+            {inGroup && <Checkbox color="medium" label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />}
+
+            <IonItem>
+              <IonDatetime displayFormat="M/D/YYYY" value={createdAt}></IonDatetime>
+            </IonItem>
+            <Button
+              type="submit"
+              size="small"
+              className={classes.button}
+              disabled={loading || !isValid}
+              loading={loading}
+            >
+              Save
+            </Button>
+          </form>
+        )}
+      </Formik>{' '}
+    </div>
   )
+}
+
+EditTransaction.propTypes = {
+  id: PropTypes.string,
+  description: PropTypes.string,
+  group: PropTypes.bool,
+  createdAt: PropTypes.string
 }
 
 const useTransactionStyles = createUseStyles(theme => ({
@@ -78,6 +117,9 @@ const useTransactionStyles = createUseStyles(theme => ({
       zIndex: 10,
       backgroundColor: 'var(--ion-color-primary)'
     }
+  },
+  popover: {
+    '--background': 'var(--ion-color-medium)'
   }
 }))
 
@@ -117,9 +159,9 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
           )}
         </IonItem>
       </LongPress>
-      <IonPopover isOpen={popoverState} onDidDismiss={togglePoppover}>
-        <EditTransaction id={id} amount={amount} description={description} createdAt={createdAt} />
-      </IonPopover>
+      <IonModal isOpen={popoverState} onDidDismiss={togglePoppover} className={classes.popover}>
+        <EditTransaction id={id} amount={amount} description={description} group={group} createdAt={createdAt} />
+      </IonModal>
     </>
   )
 }

@@ -58,7 +58,7 @@ const NewTransactionPage = ({ history }) => {
               />
               <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
               {inGroup && (
-                <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
+                <Checkbox color="dark" label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
               )}
               <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>
                 Submit
