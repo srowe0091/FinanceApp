@@ -53,8 +53,7 @@ export const useUserViewStyles = createUseStyles(theme => ({
     position: 'relative'
   },
   top: {
-    height: '70px',
-    background: 'var(--themeGray1)'
+    height: '70px'
   },
   userInfo: {
     marginTop: '-15%',
@@ -65,9 +64,8 @@ export const useUserViewStyles = createUseStyles(theme => ({
   },
   userIcon: {
     fontSize: '112px',
-    marginBottom: theme.spacing(1),
     borderRadius: '50%',
-    backgroundColor: 'var(--themeGray1)'
+    marginBottom: theme.spacing(1)
   },
   buttons: {
     display: 'flex',

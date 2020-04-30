@@ -44,12 +44,12 @@ const PayTransaction = () => {
   }
 
   return (
-    <IonContent color="dark">
+    <IonContent fullscreen color="background">
       <PullToRefresh onRefresh={onRefresh} />
       <div className={classes.wrapper}>
         <div className={classes.transactions}>
           {isEmpty(transactions) ? (
-            <IonText color="textSecondary">
+            <IonText>
               <h5 align="center" className={classes.emptyView}>
                 No transactions
               </h5>
@@ -57,9 +57,7 @@ const PayTransaction = () => {
           ) : (
             Object.keys(transactions).map(email => (
               <Fragment key={email}>
-                <IonText color="textSecondary">
-                  <h5 className={classes.headers}>{email}</h5>
-                </IonText>
+                <h5 className={classes.headers}>{email}</h5>
                 {map(t => (
                   <TransactionEntry
                     key={t.id}

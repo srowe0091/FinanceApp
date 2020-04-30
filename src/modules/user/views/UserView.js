@@ -26,16 +26,17 @@ const ProfileView = () => {
 
   return (
     <>
-      <Toolbar color="medium" title="Profile">
+      <Toolbar title="Profile">
         {isAdmin && !editState && (
           <IonButtons className={classes.edit} slot="primary">
-            <IonButton color="primary" onClick={toggleEditState}>
+            <IonButton onClick={toggleEditState}>
               Edit
             </IonButton>
           </IonButtons>
         )}
       </Toolbar>
-      <IonContent color="dark">
+
+      <IonContent fullscreen color="background">
         <div className={classes.container}>
           <div className={classes.top} />
           <div className={classes.userInfo}>

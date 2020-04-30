@@ -21,31 +21,30 @@ const Home = () => {
 
   return (
     <>
-      <Toolbar translucent transition={toolbarTransition} color="primary" />
+      <Toolbar transition={toolbarTransition} />
 
-      <IonContent color="dark" fullscreen scrollEvents onIonScroll={scrollHandler}>
+      <IonContent color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
         <PullToRefresh onRefresh={onRefresh} />
-        <div className={classes.top} />
 
         <div className={classes.card}>
-          <IonText color="textPrimary">
+          <IonText>
             <p>{todayDate}</p>
           </IonText>
           <span>
-            <IonText color="textPrimary">
+            <IonText>
               <h2>
                 <strong>${amountLeft}</strong>
               </h2>
             </IonText>
             {groupSpent > 0 && (
-              <IonText color="textSecondary">
+              <IonText>
                 <p>
                   Group Spent: ${groupSpent}
                 </p>
               </IonText>
             )}
           </span>
-          <IonText color="textPrimary">
+          <IonText>
             <p>{daysLeft}</p>
           </IonText>
         </div>

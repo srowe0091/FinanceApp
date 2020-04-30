@@ -11,7 +11,7 @@ const useInputStyles = createUseStyles(theme => ({
     color: 'var(--white)',
     outline: 'none',
     border: 'none',
-    background: 'var(--black)',
+    background: '#1e2029',
     padding: theme.spacing(1.25),
     borderRadius: 'var(--borderRadius)',
     marginBottom: theme.spacing(2),
@@ -20,8 +20,7 @@ const useInputStyles = createUseStyles(theme => ({
       opacity: 0.5
     },
     '&[disabled]': {
-      color: 'var(--gray7)',
-      backgroundColor: 'var(--alpha25)'
+      opacity: .5
     }
   }
 }))

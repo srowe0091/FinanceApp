@@ -41,8 +41,9 @@ const NewTransactionPage = ({ history }) => {
 
   return (
     <>
-      <Toolbar back color="medium" title="New Transaction" />
-      <IonContent color="dark">
+      <Toolbar back title="New Transaction" />
+
+      <IonContent color="background" fullscreen>
         <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
           {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
             <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">

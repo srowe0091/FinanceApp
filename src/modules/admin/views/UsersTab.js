@@ -18,11 +18,11 @@ const Users = () => {
   }
 
   return (
-    <IonContent color="dark">
+    <IonContent fullscreen color="background">
       <div className={classes.wrapper}>
         {map(d => (
-          <IonCard key={d.id} color="secondary" className={classes.card}>
-            <IonItem color="inherit" lines="none">
+          <IonCard key={d.id} color="medium" className={classes.card}>
+            <IonItem color="transparent" lines="none">
               <IonIcon size="large" slot="start" icon={personCircle} className={classes.icon} />
               <IonCardTitle>{d.email}</IonCardTitle>
               <IonButton color="light" fill="clear" slot="end">
@@ -30,7 +30,7 @@ const Users = () => {
               </IonButton>
             </IonItem>
 
-            <IonItem color="inherit" lines="none">
+            <IonItem color="transparent" lines="none">
               <IonLabel color="light">
                 <p variant="body2">
                   {d.allowance && d.dueDate ? (

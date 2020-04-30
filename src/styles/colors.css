@@ -1,0 +1,52 @@
+:root {
+  /** background **/
+  --ion-color-background: linear-gradient(135deg, #555c7a 0%, #20202c 100%);
+  --ion-color-background-rgb: 85, 92, 122;
+  --ion-color-background-contrast: #ffffff;
+  --ion-color-background-contrast-rgb: 255, 255, 255;
+  --ion-color-background-shade: #3e4054;
+  --ion-color-background-tint: #595b70;
+
+  /** medium background **/
+  --ion-color-md-background: linear-gradient(225deg, #444a61 0%, #1c1c29 100%);
+  --ion-color-md-background-rgb: 85, 92, 122;
+  --ion-color-md-background-contrast: #ffffff;
+  --ion-color-md-background-contrast-rgb: 255, 255, 255;
+  --ion-color-md-background-shade: #3e4054;
+  --ion-color-md-background-tint: #595b70;
+
+  /** transparent **/
+  --ion-color-transparent: transparent;
+  --ion-color-transparent-rgb: 85, 92, 122;
+  --ion-color-transparent-contrast: #ffffff;
+  --ion-color-transparent-contrast-rgb: 255, 255, 255;
+  --ion-color-transparent-shade: transparent;
+  --ion-color-transparent-tint: transparent;
+}
+
+.ion-color-background {
+  --ion-color-base: var(--ion-color-background);
+  --ion-color-base-rgb: var(--ion-color-background-rgb);
+  --ion-color-contrast: var(--ion-color-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-background-contrast-rgb);
+  --ion-color-shade: var(--ion-color-background-shade);
+  --ion-color-tint: var(--ion-color-background-tint);
+}
+
+.ion-color-md-background {
+  --ion-color-base: var(--ion-color-md-background);
+  --ion-color-base-rgb: var(--ion-color-md-background-rgb);
+  --ion-color-contrast: var(--ion-color-md-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-md-background-contrast-rgb);
+  --ion-color-shade: var(--ion-color-md-background-shade);
+  --ion-color-tint: var(--ion-color-md-background-tint);
+}
+
+.ion-color-transparent {
+  --ion-color-base: var(--ion-color-transparent);
+  --ion-color-base-rgb: var(--ion-color-transparent-rgb);
+  --ion-color-contrast: var(--ion-color-transparent-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-transparent-contrast-rgb);
+  --ion-color-shade: var(--ion-color-transparent-shade);
+  --ion-color-tint: var(--ion-color-transparent-tint);
+}

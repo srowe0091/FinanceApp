@@ -27,13 +27,14 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   card: {
     textAlign: 'center',
     width: '80%',
-    height: theme.spacing(20),
-    margin: theme.spacing(2, 'auto', 0),
+    height: theme.spacing(21),
+    margin: theme.spacing(1, 'auto', 0),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     position: 'relative',
-    background: 'var(--white)',
+    background: 'linear-gradient(315deg, var(--ion-color-primary) 0%, var(--ion-color-secondary) 100%)',
+    boxShadow: '0px 4px 10px -4px var(--black)',
     borderRadius: '20px'
   },
   transactions: {

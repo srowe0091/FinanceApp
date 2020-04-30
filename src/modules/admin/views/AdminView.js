@@ -18,7 +18,7 @@ const Admin = () => {
         title="Admin"
         extraToolbar={
           inGroup && (
-            <IonToolbar color="medium">
+            <IonToolbar color="transparent">
               <IonSegment onIonChange={handleTabChange} value={activeTab}>
                 <IonSegmentButton value="pay">
                   <IonLabel>Pay</IonLabel>

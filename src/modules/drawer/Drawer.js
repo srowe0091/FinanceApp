@@ -13,19 +13,27 @@ import { PAGE_ID } from 'utils'
 import { useUser, useAuthentication } from 'modules/authentication'
 
 const useDrawerMenuStyles = createUseStyles(theme => ({
+  container: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
   user: {
     height: '150px',
     padding: theme.spacing(1, 2),
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    background: 'var(--themeGray1)'
+    justifyContent: 'space-evenly'
   },
   userIcon: {
     fontSize: '48px'
   },
   icon: {
     marginRight: theme.spacing(3)
+  },
+  logout: {
+    marginTop: 'auto',
+    marginBottom: theme.spacing(1)
   }
 }))
 
@@ -68,29 +76,31 @@ export const DrawerMenu = () => {
 
   return (
     <IonMenu contentId={PAGE_ID}>
-      <IonContent className={classes.drawer} color="dark">
-        <div className={classes.user}>
-          <IonIcon className={classes.userIcon} icon={personCircle} />
-          {email}
-        </div>
-        {drawerLinks.map(r => (
-          <IonItem
-            key={r.label}
-            detail
-            lines="none"
-            color={location.pathname === r.route ? 'tertiary' : 'dark'}
-            onClick={closeDrawer}
-            className={classes.item}
-            {...(location.pathname !== r.route && { routerLink: r.route })}
-          >
-            <IonIcon slot="start" className={classes.icon} icon={r.icon} />
-            <IonLabel>{r.label}</IonLabel>
+      <IonContent color="md-background">
+        <div className={classes.container}>
+          <div className={classes.user}>
+            <IonIcon className={classes.userIcon} icon={personCircle} />
+            {email}
+          </div>
+          {drawerLinks.map(r => (
+            <IonItem
+              key={r.label}
+              detail
+              lines="none"
+              color={location.pathname === r.route ? 'primary' : 'transparent'}
+              onClick={closeDrawer}
+              className={classes.item}
+              {...(location.pathname !== r.route && { routerLink: r.route })}
+            >
+              <IonIcon slot="start" className={classes.icon} icon={r.icon} />
+              <IonLabel>{r.label}</IonLabel>
+            </IonItem>
+          ))}
+          <IonItem button lines="none" color="transparent" onClick={handleLogout} className={classes.logout}>
+            <IonIcon slot="start" className={classes.icon} icon={logOutOutline} />
+            <IonLabel>Logout</IonLabel>
           </IonItem>
-        ))}
-        <IonItem button lines="none" color="dark" onClick={handleLogout}>
-          <IonIcon slot="start" className={classes.icon} icon={logOutOutline} />
-          <IonLabel>Logout</IonLabel>
-        </IonItem>
+        </div>
       </IonContent>
     </IonMenu>
   )

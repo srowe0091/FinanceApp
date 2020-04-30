@@ -45,7 +45,7 @@ const useRelativeLoaderStyles = createUseStyles({
 export const RelativeLoader = () => {
   const classes = useRelativeLoaderStyles()
   return (
-    <IonContent color="dark">
+    <IonContent color="background">
       <div className={classes.container}>
         <IonSpinner color="primary" className={classes.loading} />
       </div>
