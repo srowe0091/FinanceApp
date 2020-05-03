@@ -8,22 +8,6 @@ import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
 
 export const useHomeViewStyles = createUseStyles(theme => ({
-  top: {
-    width: '100%',
-    height: theme.spacing(23),
-    top: 0,
-    position: 'absolute',
-    background: 'linear-gradient(140deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%)',
-    '&:before': {
-      content: '""',
-      display: 'block',
-      width: '100%',
-      height: theme.spacing(12),
-      background: 'linear-gradient(to bottom, var(--alpha0) 0%, var(--themeGray2) 100%)',
-      position: 'absolute',
-      bottom: '-1px'
-    }
-  },
   card: {
     textAlign: 'center',
     width: '80%',
@@ -33,9 +17,9 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     position: 'relative',
-    background: 'linear-gradient(315deg, var(--ion-color-primary) 0%, var(--ion-color-secondary) 100%)',
+    background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-secondary)'),
     boxShadow: '0px 4px 10px -4px var(--black)',
-    borderRadius: '20px'
+    borderRadius: 'var(--borderRadius)'
   },
   transactions: {
     margin: theme.spacing(4, 2, 0),

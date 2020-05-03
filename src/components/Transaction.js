@@ -9,7 +9,7 @@ import { formatDate } from 'utils'
 const useTransactionStyles = createUseStyles(theme => ({
   transaction: {
     marginBottom: theme.spacing(2),
-    borderRadius: theme.spacing(1),
+    borderRadius: 'var(--borderRadius)',
     boxShadow: '0px 2px 5px -2px var(--black)'
   },
   label: {

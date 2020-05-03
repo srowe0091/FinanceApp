@@ -23,7 +23,7 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     margin: theme.spacing(4, 4, 0),
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: '20px',
+    borderRadius: 'var(--borderRadius)',
     backgroundColor: 'var(--alpha5)'
   },
   logo: {

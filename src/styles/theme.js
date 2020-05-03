@@ -38,7 +38,10 @@ const shadows = [
   createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)
 ]
 
+const linearGradient = (color1, color2, degree = 315) => `linear-gradient(${degree}deg, ${color1} 0%, ${color2} 100%)`
+
 export default {
   spacing: (...size) => size.map(s => (s === 'auto' ? 'auto' : s * 8 + 'px')).join(' '),
+  linearGradient,
   shadows
 }

@@ -31,7 +31,7 @@ body {
   --alpha5: rgba(0, 0, 0, 0.5);
 
   /** variables **/
-  --borderRadius: 6px;
+  --borderRadius: 8px;
 
   /** shade === darker **/
   /** tint === lighter **/
