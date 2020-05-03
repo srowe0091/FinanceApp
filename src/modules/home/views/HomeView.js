@@ -50,7 +50,7 @@ const Home = () => {
         </div>
 
         <div className={classes.transactions}>
-          {map(t => <TransactionEntry key={t.id} {...t} />)(transactions)}
+          {map(t => <TransactionEntry key={t._id} {...t} />)(transactions)}
         </div>
       </IonContent>
 

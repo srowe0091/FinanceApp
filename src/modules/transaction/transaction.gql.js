@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const TransactionFragment = gql`
   fragment TransactionFragment on Transaction {
-    id
+    _id
     paid
     group
     amount

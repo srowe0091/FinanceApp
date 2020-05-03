@@ -21,7 +21,7 @@ const Users = () => {
     <IonContent fullscreen color="background">
       <div className={classes.wrapper}>
         {map(d => (
-          <IonCard key={d.id} color="medium" className={classes.card}>
+          <IonCard key={d._id} color="medium" className={classes.card}>
             <IonItem color="transparent" lines="none">
               <IonIcon size="large" slot="start" icon={personCircle} className={classes.icon} />
               <IonCardTitle>{d.email}</IonCardTitle>

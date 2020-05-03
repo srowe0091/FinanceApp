@@ -34,7 +34,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const TransactionEntry = ({ id, amount, description, createdAt, onCheckboxClick, checked, group }) => {
+export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckboxClick, checked, group }) => {
   const classes = useTransactionStyles()
   return (
     <IonItem color="medium" lines="none" className={clsx(classes.transaction, { [classes.group]: group })}>
@@ -57,14 +57,14 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
         </span>
       </IonLabel>
       {onCheckboxClick && (
-        <IonCheckbox slot="start" className={classes.checkbox} checked={checked} onIonChange={onCheckboxClick(id)} />
+        <IonCheckbox slot="start" className={classes.checkbox} checked={checked} onIonChange={onCheckboxClick(_id)} />
       )}
     </IonItem>
   )
 }
 
 TransactionEntry.propTypes = {
-  id: PropTypes.string,
+  _id: PropTypes.string,
   amount: PropTypes.number,
   description: PropTypes.string,
   createdAt: PropTypes.string,

@@ -60,9 +60,9 @@ const PayTransaction = () => {
                 <h5 className={classes.headers}>{email}</h5>
                 {map(t => (
                   <TransactionEntry
-                    key={t.id}
+                    key={t._id}
                     onCheckboxClick={checkboxClick}
-                    checked={includes(t.id)(transactionIds)}
+                    checked={includes(t._id)(transactionIds)}
                     {...t}
                   />
                 ))(transactions[email])}

@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const UserFragment = gql`
   fragment UserFragment on User {
-    id
+    _id
     email
     dueDate
     allowance
@@ -16,6 +16,7 @@ export const GetUser = gql`
       isAdmin
       inGroup
       cards {
+        _id
         name
         dueDate
       }
@@ -28,6 +29,11 @@ export const UpdateUser = gql`
   mutation UpdateUser($input: UserInput) {
     saveUser(input: $input) {
       ...UserFragment
+      cards {
+        _id
+        name
+        dueDate
+      }
     }
   }
   ${UserFragment}
