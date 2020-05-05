@@ -9,8 +9,6 @@ import isEmpty from 'lodash/fp/isEmpty'
 import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
 
-import { checkmark } from 'ionicons/icons'
-
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
@@ -26,7 +24,10 @@ const PayTransaction = () => {
     variables: { transactionIds },
     awaitRefetchQueries: true,
     refetchQueries: ['UserTransactions', 'GroupTransactions'],
-    onCompleted: () => Pubsub.emit('TOAST_NOTIFICATION', 'Transactions Paid')
+    onCompleted: () => {
+      handleIds([])
+      Pubsub.emit('TOAST_NOTIFICATION', 'Transactions Paid')
+    }
   })
   const checkboxClick = useCallback(
     id => e => handleIds(_ids => (e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids))),
@@ -73,7 +74,7 @@ const PayTransaction = () => {
             ))
           )}
         </div>
-        {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} />}
+        {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} loading={ptLoading} />}
       </IonContent>
     </>
   )
