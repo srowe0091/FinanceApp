@@ -41,7 +41,7 @@ export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckb
       <IonLabel>
         <span className={classes.label}>
           <span>
-            <p>{description || <span color="textSecondary">(blank)</span>}</p>
+            <p wrap="break">{description || <span color="textSecondary">(blank)</span>}</p>
             <p color="textSecondary" variant="caption">
               {formatDate(createdAt)}
             </p>
