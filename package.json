@@ -25,13 +25,13 @@
   "homepage": ".",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
-    "@capacitor/android": "^2.0.1",
-    "@capacitor/core": "^2.0.1",
-    "@ionic/react": "^5.0.7",
-    "@ionic/react-router": "^5.0.7",
+    "@capacitor/android": "^2.0.2",
+    "@capacitor/core": "^2.0.2",
+    "@ionic/react": "^5.1.0",
+    "@ionic/react-router": "^5.1.0",
     "apollo-boost": "^0.4.7",
     "clsx": "^1.1.0",
-    "dayjs": "^1.8.25",
+    "dayjs": "^1.8.26",
     "formik": "^2.1.4",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
@@ -45,10 +45,10 @@
     "react-scripts": "3.4.1",
     "react-use": "^14.2.0",
     "rxjs": "^6.5.5",
-    "yup": "^0.28.4"
+    "yup": "^0.28.5"
   },
   "devDependencies": {
-    "@capacitor/cli": "2.0.1",
+    "@capacitor/cli": "2.0.2",
     "husky": "^4.2.5",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
