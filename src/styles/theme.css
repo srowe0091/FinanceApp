@@ -85,7 +85,7 @@ body {
   --ion-color-danger-tint: #f25454;
 
   /** dark **/
-  --ion-color-dark: #555c7a;
+  --ion-color-dark: #242733;
   --ion-color-dark-rgb: 32, 33, 41;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
@@ -151,12 +151,21 @@ p[display='inline'] {
   display: inline-block;
 }
 
+*[align='left'] {
+  text-align: left;
+}
+
 *[align='right'] {
   text-align: right;
 }
 
 *[align='center'] {
   text-align: center;
+}
+
+p[wrap='break'] {
+  word-break: break-word;
+  white-space: normal;
 }
 
 h1 {
