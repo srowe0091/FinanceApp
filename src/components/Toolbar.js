@@ -22,11 +22,11 @@ const useToolbarStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Toolbar = ({ children, title, back, extraToolbar }) => {
+export const Toolbar = ({ children, title, back, extraToolbar, color }) => {
   const classes = useToolbarStyles()
   return (
     <IonHeader className={classes.header}>
-      <IonToolbar>
+      <IonToolbar color={color}>
         <IonButtons className={classes.icon} slot="start">
           {back ? <IonBackButton /> : <IonMenuButton />}
         </IonButtons>

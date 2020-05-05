@@ -15,11 +15,6 @@ export const GetUser = gql`
       ...UserFragment
       isAdmin
       inGroup
-      cards {
-        _id
-        name
-        dueDate
-      }
     }
   }
   ${UserFragment}
