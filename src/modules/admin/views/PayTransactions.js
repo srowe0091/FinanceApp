@@ -9,15 +9,17 @@ import isEmpty from 'lodash/fp/isEmpty'
 import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
 
-import { useAdminViewStyles } from '../util'
+import { checkmark } from 'ionicons/icons'
+
+import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
-import { Button } from 'elements'
-import { TransactionEntry, RelativeLoader, PullToRefresh } from 'components'
+import { Fab } from 'elements'
+import { Toolbar, TransactionEntry, RelativeLoader, PullToRefresh } from 'components'
 import Pubsub from 'modules/pubsub'
 
 const PayTransaction = () => {
   const isMounted = useMountedState()
-  const classes = useAdminViewStyles()
+  const classes = usePayTransactionStyles()
   const [transactionIds, handleIds] = useState([])
   const { data, loading, refetch } = useQuery(GroupTransactions)
   const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
@@ -44,9 +46,10 @@ const PayTransaction = () => {
   }
 
   return (
-    <IonContent fullscreen color="background">
-      <PullToRefresh onRefresh={onRefresh} />
-      <div className={classes.wrapper}>
+    <>
+      <Toolbar color="dark" title="Pay Transactions" />
+      <IonContent color="background">
+        <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.transactions}>
           {isEmpty(transactions) ? (
             <IonText>
@@ -70,18 +73,9 @@ const PayTransaction = () => {
             ))
           )}
         </div>
-        {!!transactionIds.length && (
-          <Button
-            className={classes.button}
-            disabled={ptLoading || !transactionIds.length}
-            loading={ptLoading}
-            onClick={payTransaction}
-          >
-            Pay
-          </Button>
-        )}
-      </div>
-    </IonContent>
+        {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} />}
+      </IonContent>
+    </>
   )
 }
 
