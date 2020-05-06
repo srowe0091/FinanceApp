@@ -1,48 +1,70 @@
 import React, { useMemo, useCallback } from 'react'
-import { IonIcon, IonContent, IonButtons, IonButton, IonText } from '@ionic/react'
+import { IonContent, IonButtons, IonButton, IonSlides, IonSlide, IonModal } from '@ionic/react'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
+import map from 'lodash/fp/map'
 import pick from 'lodash/fp/pick'
 
-import { personCircle } from 'ionicons/icons'
-
-import { UserProfileSchema, useUpdateUser, useUserViewStyles } from '../util'
-import { Button, Input, MaskedInput } from 'elements'
-import { Toolbar } from 'components'
+import { NewCardView } from './NewCardView'
+import { useGetWallet, useWalletStyles } from '../util'
+import { Fab, Button, MaskedInput } from 'elements'
+import { Toolbar, Card } from 'components'
 import { currenyFormat } from 'utils'
+import { UserProfileSchema, useUpdateUser } from 'modules/user'
 import { useUser } from 'modules/authentication'
 
+const slideOpts = {
+  slidesPerView: 1.3,
+  initialSlide: 0,
+  spaceBetween: 20,
+  centeredSlides: true
+}
+
 const ProfileView = () => {
-  const classes = useUserViewStyles()
-  const { email, isAdmin, ...userProps } = useUser()
+  const classes = useWalletStyles()
+  const { isAdmin, ...userProps } = useUser()
   const [updateProfile, { loading: saving }] = useUpdateUser()
-  const initialValues = useMemo(() => pick(['allowance', 'dueDate'])(userProps), [userProps])
+  const { data, loading } = useGetWallet()
+  const initialValues = useMemo(() => pick(['allowance'])(userProps), [userProps])
   const [editState, toggleEditState] = useToggle(false)
-  const onSubmit = useCallback(values => updateProfile(values).finally(() => toggleEditState()), [
-    updateProfile,
-    toggleEditState
-  ])
+  const [addCardModal, toggleAddCard] = useToggle(false)
+  const onSubmit = useCallback(
+    values => {
+      const _values = {
+        allowance: values.allowance,
+        dueDate: values.dueDate,
+        cards: [
+          {
+            name: values.cardName,
+            dueDate: values.cardDueDate,
+            type: values.cardType
+          }
+        ]
+      }
+      console.log(_values)
+      toggleAddCard(false)
+      // updateProfile(_values).finally(() => toggleEditState())
+    },
+    [updateProfile, toggleEditState, toggleAddCard]
+  )
   const onReset = useCallback(() => toggleEditState(), [toggleEditState])
+
+  if (loading) {
+    return null
+  }
 
   return (
     <>
-      <Toolbar title="Profile">
+      <Toolbar title="Wallet">
         {isAdmin && !editState && (
           <IonButtons className={classes.edit} slot="primary">
-            <IonButton onClick={toggleEditState}>
-              Edit
-            </IonButton>
+            <IonButton onClick={toggleEditState}>Edit</IonButton>
           </IonButtons>
         )}
       </Toolbar>
 
       <IonContent fullscreen color="background">
         <div className={classes.container}>
-          <div className={classes.top} />
-          <div className={classes.userInfo}>
-            <IonIcon className={classes.userIcon} icon={personCircle} />
-            <IonText>{email}</IonText>
-          </div>
           <Formik
             onReset={onReset}
             onSubmit={onSubmit}
@@ -52,17 +74,6 @@ const ProfileView = () => {
           >
             {({ handleSubmit, handleReset, values, handleChange, handleBlur, isValid }) => (
               <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
-                <Input
-                  type="number"
-                  min={1}
-                  max={31}
-                  name="dueDate"
-                  placeholder="Due Date"
-                  disabled={!editState}
-                  value={values.dueDate}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
                 <MaskedInput
                   type="tel"
                   name="allowance"
@@ -73,6 +84,17 @@ const ProfileView = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
+
+                <div className={classes.cardContainer}>
+                  <IonSlides options={slideOpts}>
+                    {map(card => (
+                      <IonSlide key={card._id}>
+                        <Card {...card} />
+                      </IonSlide>
+                    ))(data?.cards)}
+                  </IonSlides>
+                </div>
+
                 {editState && (
                   <div className={classes.buttons}>
                     <Button fill="outline" color="light" disabled={saving} onClick={handleReset}>
@@ -87,6 +109,12 @@ const ProfileView = () => {
             )}
           </Formik>
         </div>
+
+        <IonModal isOpen={addCardModal}>
+          <NewCardView />
+        </IonModal>
+
+        <Fab onClick={toggleAddCard} />
       </IonContent>
     </>
   )

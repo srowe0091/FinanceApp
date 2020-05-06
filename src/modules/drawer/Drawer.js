@@ -58,7 +58,7 @@ const userLinks = [
   {
     icon: walletOutline,
     label: 'Wallet',
-    route: routes.profile
+    route: routes.wallet
   }
 ]
 

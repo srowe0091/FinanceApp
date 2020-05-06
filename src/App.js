@@ -16,7 +16,7 @@ import { AuthProvider } from 'modules/authentication/context'
 // User views
 import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
-import UserView from 'modules/user/views/UserView'
+import WalletView from 'modules/wallet/views/WalletView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 // Admin views
 import PayTransactionView from 'modules/admin/views/PayTransactions'
@@ -47,7 +47,7 @@ const App = () => (
             <DrawerMenu />
             <IonRouterOutlet>
               <AuthorizedRoute path={routes.home} component={HomeView} />
-              <AuthorizedRoute path={routes.profile} component={UserView} />
+              <AuthorizedRoute path={routes.wallet} component={WalletView} />
               <AuthorizedRoute path={routes.newTransaction} component={NewTransactionView} />
               {/* admin views */}
               <AuthorizedRoute path={routes.admin.group} component={GroupView} admin />

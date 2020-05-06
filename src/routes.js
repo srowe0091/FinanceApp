@@ -2,7 +2,7 @@ export default {
   login: '/login',
   resetPassword: '/reset-password',
   home: '/home',
-  profile: '/profile',
+  wallet: '/wallet',
   lab: '/lab',
   newTransaction: '/new-transaction',
   admin: {
