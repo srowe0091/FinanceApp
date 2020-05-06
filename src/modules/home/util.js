@@ -30,8 +30,6 @@ export const useHomeViewStyles = createUseStyles(theme => ({
 export const useHomeHooks = () => {
   const { allowance, dueDate, inGroup } = useUser()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
-  // const [toolbarTransition, toggleStyle] = useState(false)
-  // const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const { amountLeft, groupSpent, daysLeft } = useMemo(() => {
     const _amountLeft = reduce((acc, curr) => {
@@ -53,7 +51,6 @@ export const useHomeHooks = () => {
     groupSpent,
     daysLeft,
     onRefresh,
-    // scrollHandler,
     loading,
     transactions: data.transactions
   }

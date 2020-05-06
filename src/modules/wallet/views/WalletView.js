@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react'
-import { IonContent, IonButtons, IonButton, IonSlides, IonSlide, IonModal } from '@ionic/react'
+import { IonSlides, IonSlide, IonModal } from '@ionic/react'
 import { Formik } from 'formik'
 import useToggle from 'react-use/lib/useToggle'
 import map from 'lodash/fp/map'
@@ -8,7 +8,8 @@ import pick from 'lodash/fp/pick'
 import { NewCardView } from './NewCardView'
 import { useGetWallet, useWalletStyles } from '../util'
 import { Fab, Button, MaskedInput } from 'elements'
-import { Toolbar, Card } from 'components'
+import { Card } from 'components'
+import { ToolbarContent } from 'template'
 import { currenyFormat } from 'utils'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 import { useUser } from 'modules/authentication'
@@ -41,9 +42,8 @@ const ProfileView = () => {
           }
         ]
       }
-      console.log(_values)
       toggleAddCard(false)
-      // updateProfile(_values).finally(() => toggleEditState())
+      updateProfile(_values).finally(() => toggleEditState())
     },
     [updateProfile, toggleEditState, toggleAddCard]
   )
@@ -54,69 +54,59 @@ const ProfileView = () => {
   }
 
   return (
-    <>
-      <Toolbar title="Wallet">
-        {isAdmin && !editState && (
-          <IonButtons className={classes.edit} slot="primary">
-            <IonButton onClick={toggleEditState}>Edit</IonButton>
-          </IonButtons>
-        )}
-      </Toolbar>
+    <ToolbarContent title="Wallet">
+      <div className={classes.container}>
+        <Formik
+          onReset={onReset}
+          onSubmit={onSubmit}
+          initialValues={initialValues}
+          validationSchema={UserProfileSchema}
+          validateOnMount
+        >
+          {({ handleSubmit, handleReset, values, handleChange, handleBlur, isValid }) => (
+            <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
+              <MaskedInput
+                type="tel"
+                name="allowance"
+                placeholder="Bi-Weekly Budget"
+                disabled={!editState}
+                format={currenyFormat}
+                value={values.allowance}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
 
-      <IonContent fullscreen color="background">
-        <div className={classes.container}>
-          <Formik
-            onReset={onReset}
-            onSubmit={onSubmit}
-            initialValues={initialValues}
-            validationSchema={UserProfileSchema}
-            validateOnMount
-          >
-            {({ handleSubmit, handleReset, values, handleChange, handleBlur, isValid }) => (
-              <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
-                <MaskedInput
-                  type="tel"
-                  name="allowance"
-                  placeholder="Bi-Weekly Budget"
-                  disabled={!editState}
-                  format={currenyFormat}
-                  value={values.allowance}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
+              <div className={classes.cardContainer}>
+                <IonSlides options={slideOpts}>
+                  {map(card => (
+                    <IonSlide key={card._id}>
+                      <Card {...card} />
+                    </IonSlide>
+                  ))(data?.cards)}
+                </IonSlides>
+              </div>
 
-                <div className={classes.cardContainer}>
-                  <IonSlides options={slideOpts}>
-                    {map(card => (
-                      <IonSlide key={card._id}>
-                        <Card {...card} />
-                      </IonSlide>
-                    ))(data?.cards)}
-                  </IonSlides>
+              {editState && (
+                <div className={classes.buttons}>
+                  <Button fill="outline" color="light" disabled={saving} onClick={handleReset}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={saving || !isValid} loading={saving}>
+                    Submit
+                  </Button>
                 </div>
+              )}
+            </form>
+          )}
+        </Formik>
+      </div>
 
-                {editState && (
-                  <div className={classes.buttons}>
-                    <Button fill="outline" color="light" disabled={saving} onClick={handleReset}>
-                      Cancel
-                    </Button>
-                    <Button type="submit" disabled={saving || !isValid} loading={saving}>
-                      Submit
-                    </Button>
-                  </div>
-                )}
-              </form>
-            )}
-          </Formik>
-        </div>
+      <IonModal isOpen={addCardModal}>
+        <NewCardView />
+      </IonModal>
 
-        <IonModal isOpen={addCardModal}>
-          <NewCardView />
-        </IonModal>
-
-        <Fab onClick={toggleAddCard} />
-      </IonContent>
-    </>
+      <Fab onClick={toggleAddCard} />
+    </ToolbarContent>
   )
 }
 

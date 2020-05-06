@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
-import { IonContent, IonText, useIonViewWillEnter } from '@ionic/react'
+import { IonText, useIonViewWillEnter } from '@ionic/react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import useMountedState from 'react-use/lib/useMountedState'
 import map from 'lodash/fp/map'
@@ -12,7 +12,8 @@ import includes from 'lodash/fp/includes'
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
-import { Toolbar, TransactionEntry, RelativeLoader, PullToRefresh } from 'components'
+import { ToolbarContent } from 'template'
+import { TransactionEntry, RelativeLoader, PullToRefresh } from 'components'
 import Pubsub from 'modules/pubsub'
 
 const PayTransaction = () => {
@@ -47,36 +48,33 @@ const PayTransaction = () => {
   }
 
   return (
-    <>
-      <Toolbar color="dark" title="Pay Transactions" />
-      <IonContent color="background" fullscreen>
-        <PullToRefresh onRefresh={onRefresh} />
-        <div className={classes.transactions}>
-          {isEmpty(transactions) ? (
-            <IonText>
-              <h5 align="center" className={classes.emptyView}>
-                No transactions
-              </h5>
-            </IonText>
-          ) : (
-            Object.keys(transactions).map(email => (
-              <Fragment key={email}>
-                <h5 className={classes.headers}>{email}</h5>
-                {map(t => (
-                  <TransactionEntry
-                    key={t._id}
-                    onCheckboxClick={checkboxClick}
-                    checked={includes(t._id)(transactionIds)}
-                    {...t}
-                  />
-                ))(transactions[email])}
-              </Fragment>
-            ))
-          )}
-        </div>
-        {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} loading={ptLoading} />}
-      </IonContent>
-    </>
+    <ToolbarContent title="Pay Transactions">
+      <PullToRefresh onRefresh={onRefresh} />
+      <div className={classes.transactions}>
+        {isEmpty(transactions) ? (
+          <IonText>
+            <h5 align="center" className={classes.emptyView}>
+              No transactions
+            </h5>
+          </IonText>
+        ) : (
+          Object.keys(transactions).map(email => (
+            <Fragment key={email}>
+              <h5 className={classes.headers}>{email}</h5>
+              {map(t => (
+                <TransactionEntry
+                  key={t._id}
+                  onCheckboxClick={checkboxClick}
+                  checked={includes(t._id)(transactionIds)}
+                  {...t}
+                />
+              ))(transactions[email])}
+            </Fragment>
+          ))
+        )}
+      </div>
+      {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} loading={ptLoading} />}
+    </ToolbarContent>
   )
 }
 
