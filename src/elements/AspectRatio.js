@@ -4,13 +4,13 @@ import { createUseStyles } from 'react-jss'
 
 const useAspectRatioStyles = createUseStyles({
   wrapper: {
-    width: ({ maxWidth }) => maxWidth ? `${maxWidth}px` : '100%',
+    width: ({ maxWidth }) => (maxWidth ? `${maxWidth}px` : '100%'),
     display: 'inline-block',
     position: 'relative',
     '&:after': {
       content: '""',
       display: 'block',
-      paddingTop: ({ ratio }) => `${(1 / ratio) * 100}%`,
+      paddingTop: ({ ratio }) => `${(1 / ratio) * 100}%`
     }
   },
   main: {

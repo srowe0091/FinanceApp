@@ -18,8 +18,8 @@ export const ScheduleNotification = async () => {
   LocalNotifications.schedule({
     notifications: [
       {
-        title: "Title",
-        body: "Body",
+        title: 'Title',
+        body: 'Body',
         id: 1,
         schedule: {
           // repeats: true,
@@ -28,7 +28,7 @@ export const ScheduleNotification = async () => {
             day: 14
           }
         },
-        actionTypeId: "",
+        actionTypeId: '',
         extra: null
       }
     ]

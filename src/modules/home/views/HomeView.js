@@ -12,16 +12,7 @@ const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
 
 const Home = () => {
   const classes = useHomeViewStyles()
-  const {
-    amountLeft,
-    groupSpent,
-    daysLeft,
-    onRefresh,
-    toolbarTransition,
-    scrollHandler,
-    transactions,
-    loading
-  } = useHomeHooks()
+  const { amountLeft, groupSpent, daysLeft, onRefresh, scrollHandler, transactions, loading } = useHomeHooks()
 
   if (loading) {
     return <FullPageLoader />
@@ -29,7 +20,7 @@ const Home = () => {
 
   return (
     <>
-      <Toolbar transition={toolbarTransition} />
+      <Toolbar />
 
       <IonContent color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
         <PullToRefresh onRefresh={onRefresh} />

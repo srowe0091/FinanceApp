@@ -1,12 +1,5 @@
 import React, { useCallback } from 'react'
-import {
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonTitle,
-  IonMenuButton,
-  IonContent
-} from '@ionic/react'
+import { IonHeader, IonToolbar, IonButtons, IonTitle, IonMenuButton, IonContent } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
 import { Button } from 'elements'

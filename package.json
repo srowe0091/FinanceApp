@@ -6,6 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "pretty": "prettier --write \"src/**/*.js\"",
     "android:start": "npx cap open android",
     "android:copy": "ionic capacitor copy android",
     "android:initial": "ionic capacitor add android"

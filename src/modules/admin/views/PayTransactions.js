@@ -49,7 +49,7 @@ const PayTransaction = () => {
   return (
     <>
       <Toolbar color="dark" title="Pay Transactions" />
-      <IonContent color="background">
+      <IonContent color="background" fullscreen>
         <PullToRefresh onRefresh={onRefresh} />
         <div className={classes.transactions}>
           {isEmpty(transactions) ? (

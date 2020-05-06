@@ -20,7 +20,7 @@ const useInputStyles = createUseStyles(theme => ({
       opacity: 0.5
     },
     '&[disabled]': {
-      opacity: .5
+      opacity: 0.5
     }
   }
 }))
