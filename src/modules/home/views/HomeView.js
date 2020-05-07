@@ -5,7 +5,7 @@ import map from 'lodash/fp/map'
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
-import { TransactionEntry, FullPageLoader, PullToRefresh } from 'components'
+import { TransactionEntry, PullToRefresh } from 'components'
 import { formatDate } from 'utils'
 import routes from 'routes'
 
@@ -15,12 +15,8 @@ const Home = () => {
   const classes = useHomeViewStyles()
   const { amountLeft, groupSpent, daysLeft, onRefresh, transactions, loading } = useHomeHooks()
 
-  if (loading) {
-    return <FullPageLoader />
-  }
-
   return (
-    <ToolbarContent>
+    <ToolbarContent loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
 
       <div className={classes.card}>

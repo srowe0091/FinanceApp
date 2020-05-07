@@ -6,7 +6,6 @@ import map from 'lodash/fp/map'
 
 import { useGroupStyles } from '../util'
 import { UsersInGroup } from '../admin.gql'
-import { RelativeLoader } from 'components'
 import { ToolbarContent } from 'template'
 import { currency, determineDays } from 'utils'
 
@@ -14,12 +13,8 @@ const Users = () => {
   const classes = useGroupStyles()
   const { data, loading } = useQuery(UsersInGroup)
 
-  if (loading) {
-    return <RelativeLoader />
-  }
-
   return (
-    <ToolbarContent title="Group">
+    <ToolbarContent title="Group" loading={loading}>
       <div className={classes.wrapper}>
         {map(d => (
           <IonCard key={d._id} color="medium" className={classes.card}>

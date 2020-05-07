@@ -49,12 +49,8 @@ const ProfileView = () => {
   )
   const onReset = useCallback(() => toggleEditState(), [toggleEditState])
 
-  if (loading) {
-    return null
-  }
-
   return (
-    <ToolbarContent title="Wallet">
+    <ToolbarContent title="Wallet" loading={loading}>
       <div className={classes.container}>
         <Formik
           onReset={onReset}

@@ -13,7 +13,7 @@ import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
-import { TransactionEntry, RelativeLoader, PullToRefresh } from 'components'
+import { TransactionEntry, PullToRefresh } from 'components'
 import Pubsub from 'modules/pubsub'
 
 const PayTransaction = () => {
@@ -43,12 +43,8 @@ const PayTransaction = () => {
     }
   })
 
-  if (loading) {
-    return <RelativeLoader />
-  }
-
   return (
-    <ToolbarContent title="Pay Transactions">
+    <ToolbarContent title="Pay Transactions" loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
       <div className={classes.transactions}>
         {isEmpty(transactions) ? (
