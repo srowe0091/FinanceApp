@@ -41,7 +41,7 @@ const NewTransactionPage = ({ history }) => {
   return (
     <ToolbarContent back title="New Transaction">
       <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
-        {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
+        {({ handleSubmit, values, handleChange, handleBlur, isValid, isSubmitting }) => (
           <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">
             <MaskedInput
               autoFocus
@@ -55,7 +55,7 @@ const NewTransactionPage = ({ history }) => {
             />
             <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
             {inGroup && <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />}
-            <Button type="submit" className={classes.button} disabled={loading || !isValid} loading={loading}>
+            <Button type="submit" className={classes.button} disabled={isSubmitting || !isValid} loading={loading}>
               Submit
             </Button>
           </form>

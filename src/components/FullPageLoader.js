@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
-import { IonSpinner, IonContent } from '@ionic/react'
+import { IonSpinner } from '@ionic/react'
 
 const useFullPageLoaderStyles = createUseStyles({
   container: {
