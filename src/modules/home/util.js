@@ -12,7 +12,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     textAlign: 'center',
     width: '80%',
     height: theme.spacing(21),
-    margin: theme.spacing(1, 'auto', 0),
+    margin: theme.spacing(0, 'auto'),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',

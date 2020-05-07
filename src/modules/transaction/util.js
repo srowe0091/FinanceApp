@@ -9,7 +9,6 @@ export const useNewTransactionViewStyles = createUseStyles(theme => ({
   wrapper: {
     height: '100%',
     margin: theme.spacing(0, 2),
-    paddingTop: theme.spacing(2),
     position: 'relative',
     display: 'flex',
     alignItems: 'center',

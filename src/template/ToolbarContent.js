@@ -1,26 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { createUseStyles } from 'react-jss'
 import { IonContent } from '@ionic/react'
 
 import { Toolbar, RelativeLoader } from 'components'
 import { useToolbarTransition } from 'utils'
 
+export const useWalletStyles = createUseStyles(theme => ({
+  container: {
+    marginTop: theme.spacing(3)
+  }
+}))
+
 export const ToolbarContent = ({ children, toolbarChildren, title, back, loading }) => {
+  const classes = useWalletStyles()
   const { toolbarTransition, scrollHandler } = useToolbarTransition()
   return (
     <>
       <Toolbar back={back} title={title} transition={toolbarTransition}>
         {toolbarChildren}
       </Toolbar>
-      {loading ? (
-        <IonContent color="background" fullscreen>
-          <RelativeLoader />
-        </IonContent>
-      ) : (
-        <IonContent color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
-          {children}
-        </IonContent>
-      )}
+
+      <div className={classes.container} />
+
+      {loading && <RelativeLoader />}
+
+      <IonContent color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
+        {children}
+      </IonContent>
     </>
   )
 }

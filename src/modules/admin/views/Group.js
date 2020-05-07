@@ -15,7 +15,7 @@ const Users = () => {
 
   return (
     <ToolbarContent title="Group" loading={loading}>
-      <div className={classes.wrapper}>
+      <div className={classes.container}>
         {map(d => (
           <IonCard key={d._id} color="medium" className={classes.card}>
             <IonItem color="transparent" lines="none">

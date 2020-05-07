@@ -4,7 +4,7 @@ export const usePayTransactionStyles = createUseStyles(theme => ({
   transactions: {
     flex: 1,
     overflow: 'auto',
-    padding: theme.spacing(2, 2, 8)
+    margin: theme.spacing(0, 2, 8)
   },
   headers: {
     marginBottom: theme.spacing(1)
@@ -21,7 +21,7 @@ export const useGroupStyles = createUseStyles(theme => ({
   icon: {
     marginRight: theme.spacing(1)
   },
-  wrapper: {
-    margin: theme.spacing(2, 2, 0)
+  container: {
+    margin: theme.spacing(0, 2)
   }
 }))
