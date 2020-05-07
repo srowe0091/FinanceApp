@@ -38,24 +38,29 @@ const useStyles = createUseStyles(theme => ({
     alignItems: 'flex-end',
     justifyContent: 'space-between'
   },
+  details: {
+    right: theme.spacing(2),
+    bottom: theme.spacing(2),
+    position: 'absolute'
+  },
   VISA: {
     background: 'linear-gradient(135deg, #6d87e7 0%, #6bcbe1 100%)',
-    boxShadow: '0px 5px 20px -5px #2d97bd',
+    boxShadow: '0px 10px 20px -5px #2d97bd',
     '&::before': cardTitle(theme.spacing(1), 'VISA')
   },
   DISCOVER: {
     background: 'linear-gradient(135deg, #dd581c 0%, #fba321 100%)',
-    boxShadow: '0px 5px 20px -5px #dd581c',
+    boxShadow: '0px 10px 20px -5px #dd581c',
     '&::before': cardTitle(theme.spacing(1), 'DISCOVER')
   },
   MASTERCARD: {
     background: 'linear-gradient(135deg, #e52e29 0%, #f89d2d 100%)',
-    boxShadow: '0px 5px 20px -5px #f5742d',
+    boxShadow: '0px 10px 20px -5px #f5742d',
     '&::before': cardTitle(theme.spacing(1), 'MASTERCARD')
   },
   AMERICAN_EXPRESS: {
     background: 'linear-gradient(135deg, #01aae3 0%, #27256c 100%)',
-    boxShadow: '0px 5px 20px -5px #2e1c92',
+    boxShadow: '0px 10px 20px -5px #2e1c92',
     '&::before': cardTitle(theme.spacing(1), 'AMEX')
   }
 }))
@@ -67,6 +72,7 @@ export const Card = ({ name, type, dueDate, createdAt }) => {
     <AspectRatio ratio={7 / 4} maxWidth={350}>
       <div className={clsx(classes.container, classes[type])}>
         <IonText>{name}</IonText>
+
         <IonText align="left">
           <p display="inline" className={classes.opacityText}>
             Due Date:
@@ -74,18 +80,18 @@ export const Card = ({ name, type, dueDate, createdAt }) => {
           &nbsp;
           <p display="inline">{dueDate}</p>
         </IonText>
-        <div className={classes.cardFooter}>
-          <IonText align="left">
-            <p display="inline" className={classes.opacityText}>
-              Date Added:
-            </p>
-            &nbsp;
-            <p display="inline">{_createdDate}</p>
-          </IonText>
-          <Button color="medium" size="small">
-            Details
-          </Button>
-        </div>
+
+        <IonText align="left">
+          <p display="inline" className={classes.opacityText}>
+            Date Added:
+          </p>
+          &nbsp;
+          <p display="inline">{_createdDate}</p>
+        </IonText>
+
+        <Button color="medium" size="small" className={classes.details}>
+          Details
+        </Button>
       </div>
     </AspectRatio>
   )
