@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ThemeProvider } from 'react-jss'
+import some from 'lodash/fp/some'
 
 import theme from './styles/theme'
 import routes from 'routes'
@@ -31,17 +32,21 @@ const client = new ApolloClient({
         Authorization: localStorage.getItem('session')
       }
     })
+  },
+  onError: ({ graphQLErrors }) => {
+    const isLoggedOut = some(['extensions.code', 'UNAUTHENTICATED'])(graphQLErrors)
+    if (isLoggedOut) {
+      return (window.location.href = routes.login)
+    }
+    // TODO: handle automatic renewal of sessions
   }
-  // onError: ({ graphQLErrors }) => {
-  //   // handle when session expires during GraphQL request
-  // }
 })
 
 const App = () => (
   <IonApp>
-    <ApolloProvider client={client}>
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <ApolloProvider client={client}>
+        <AuthProvider>
           <IonReactRouter>
             <ToastNotification />
             <DrawerMenu />
@@ -58,9 +63,9 @@ const App = () => (
               <Redirect exact from="/" to={routes.login} />
             </IonRouterOutlet>
           </IonReactRouter>
-        </ThemeProvider>
-      </AuthProvider>
-    </ApolloProvider>
+        </AuthProvider>
+      </ApolloProvider>
+    </ThemeProvider>
   </IonApp>
 )
 
