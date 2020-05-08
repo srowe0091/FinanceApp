@@ -11,7 +11,7 @@ const useInputStyles = createUseStyles(theme => ({
     color: 'var(--white)',
     outline: 'none',
     border: 'none',
-    background: '#1e2029',
+    background: 'var(--ion-color-medium)',
     padding: theme.spacing(1.25),
     borderRadius: 'var(--borderRadius)',
     marginBottom: theme.spacing(2),

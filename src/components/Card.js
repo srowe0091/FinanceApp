@@ -65,11 +65,11 @@ const useStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Card = ({ name, type, dueDate, createdAt }) => {
+export const Card = ({ className, name = 'Name of Card', type, dueDate = 'XX', createdAt }) => {
   const classes = useStyles(type)
-  const _createdDate = useMemo(() => formatDate(createdAt, 'MM/YYYY'), [createdAt])
+  const _createdDate = useMemo(() => (createdAt ? formatDate(createdAt, 'MM/YYYY') : 'XX/XXXX'), [createdAt])
   return (
-    <AspectRatio ratio={7 / 4} maxWidth={350}>
+    <AspectRatio className={className} ratio={7 / 4} maxWidth={350}>
       <div className={clsx(classes.container, classes[type])}>
         <IonText>{name}</IonText>
 
@@ -89,15 +89,18 @@ export const Card = ({ name, type, dueDate, createdAt }) => {
           <p display="inline">{_createdDate}</p>
         </IonText>
 
-        <Button color="medium" size="small" className={classes.details}>
-          Details
-        </Button>
+        {createdAt && (
+          <Button color="medium" size="small" className={classes.details}>
+            Details
+          </Button>
+        )}
       </div>
     </AspectRatio>
   )
 }
 
 Card.propTypes = {
+  className: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
   dueDate: PropTypes.number,

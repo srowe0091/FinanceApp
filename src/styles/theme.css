@@ -95,7 +95,7 @@ body {
   --ion-color-dark-tint: #3a3b43;
 
   /** medium **/
-  --ion-color-medium: rgba(0, 0, 0, 0.35);
+  --ion-color-medium: rgba(0, 0, 0, 0.30);
   --ion-color-medium-rgb: 0, 0, 0;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
