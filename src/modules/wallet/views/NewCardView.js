@@ -1,60 +1,77 @@
 import React, { useCallback } from 'react'
 import { Formik, Form } from 'formik'
-import { IonItem, IonLabel, IonSelect, IonSelectOption, IonContent } from '@ionic/react'
+import { IonContent } from '@ionic/react'
+import { useMutation } from '@apollo/react-hooks'
 
-import { NewCardSchema, initialNewCard } from '../util'
-import { Button, Input } from 'elements'
+import { SaveNewCard } from '../wallet.gql'
+import { NewCardSchema, initialNewCard, useNewCardViewStyles } from '../util'
+import { Button, Input, Select } from 'elements'
+import { Card } from 'components'
+import { daysInMonth } from 'utils'
 
-export const NewCardView = () => {
-  const onSubmit = useCallback(values => {
-    //   const _values = {
-    //     allowance: values.allowance,
-    //     dueDate: values.dueDate,
-    //     cards: [
-    //       {
-    //         name: values.cardName,
-    //         dueDate: values.cardDueDate,
-    //         type: values.cardType
-    //       }
-    //     ]
-    //   }
-    //   console.log(_values)
-    //   toggleAddCard(false)
-    //   updateProfile(_values).finally(() => toggleEditState())
-  }, [])
+const selectOptions = [
+  { value: 'VISA', label: 'Visa' },
+  { value: 'MASTERCARD', label: 'MasterCard' },
+  { value: 'DISCOVER', label: 'Discover' },
+  { value: 'AMERICAN_EXPRESS', label: 'American Express' }
+]
+
+export const NewCardView = ({ onClose }) => {
+  const classes = useNewCardViewStyles()
+  const [saveNewCard] = useMutation(SaveNewCard, {
+    awaitRefetchQueries: true,
+    refetchQueries: ['GetWallet']
+  })
+
+  const onSubmit = useCallback(
+    values => {
+      const variables = {
+        input: {
+          name: values.cardName,
+          dueDate: parseInt(values.cardDueDate),
+          type: values.cardType
+        }
+      }
+      saveNewCard({ variables }).then(() => onClose(false))
+    },
+    [saveNewCard, onClose]
+  )
 
   return (
     <IonContent color="dark">
       <Formik onSubmit={onSubmit} initialValues={initialNewCard} validationSchema={NewCardSchema} validateOnMount>
-        {({ values, handleBlur, handleChange, handleSubmit }) => (
-          <Form>
+        {({ values, handleBlur, handleChange, isValid, isSubmitting }) => (
+          <Form className={classes.container}>
+            <Card className={classes.card} type={values.cardType} />
             <Input
               name="cardName"
               placeholder="Card Name"
-              value={values.name}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <Input
-              type="number"
-              max={31}
-              name="cardDueDate"
-              placeholder="Due Date"
-              value={values.cardDueDate}
+              value={values.cardName}
               onBlur={handleBlur}
               onChange={handleChange}
             />
 
-            <IonItem>
-              <IonLabel>Card type</IonLabel>
-              <IonSelect name="cardType" value={values.cardType} interface="popover" onIonChange={handleChange}>
-                <IonSelectOption value="VISA">Visa</IonSelectOption>
-                <IonSelectOption value="DISCOVER">Discover</IonSelectOption>
-                <IonSelectOption value="MASTERCARD">MasterCard</IonSelectOption>
-                <IonSelectOption value="AMERICAN_EXPRESS">American Express</IonSelectOption>
-              </IonSelect>
-            </IonItem>
-            <Button onClick={handleSubmit}>Save</Button>
+            <Select
+              name="cardDueDate"
+              label="Due Date"
+              className={classes.select}
+              value={values.cardDueDate}
+              options={daysInMonth}
+              onChange={handleChange}
+            />
+
+            <Select
+              name="cardType"
+              label="Card Type"
+              className={classes.select}
+              value={values.cardType}
+              options={selectOptions}
+              onChange={handleChange}
+            />
+
+            <Button type="submit" className={classes.button} loading={isSubmitting} disabled={!isValid || isSubmitting}>
+              Save
+            </Button>
           </Form>
         )}
       </Formik>

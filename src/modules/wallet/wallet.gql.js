@@ -18,3 +18,12 @@ export const GetWallet = gql`
   }
   ${CardFragment}
 `
+
+export const SaveNewCard = gql`
+  mutation SaveNewCard($input: CardInput!) {
+    saveNewCard(input: $input) {
+      ...CardFragment
+    }
+  }
+  ${CardFragment}
+`

@@ -9,15 +9,15 @@ export const useGetWallet = () => {
 }
 
 export const NewCardSchema = yup.object().shape({
-  name: yup.string().required(),
-  type: yup.string().required(),
-  dueDate: yup.number().required().min(0).max(31)
+  cardName: yup.string().required(),
+  cardDueDate: yup.string().required(),
+  cardType: yup.string().required()
 })
 
 export const initialNewCard = {
-  name: '',
+  cardName: '',
   cardDueDate: '',
-  cardType: ''
+  cardType: 'VISA'
 }
 
 export const useWalletStyles = createUseStyles(theme => ({
@@ -26,5 +26,34 @@ export const useWalletStyles = createUseStyles(theme => ({
     '& .swiper-container': {
       overflow: 'visible'
     }
+  },
+  add: {
+    marginRight: theme.spacing(2)
+  }
+}))
+
+export const useNewCardViewStyles = createUseStyles(theme => ({
+  container: {
+    padding: theme.spacing(6, 2, 2),
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  card: {
+    width: '300px',
+    alignSelf: 'center',
+    marginBottom: theme.spacing(8)
+  },
+  select: {
+    marginBottom: theme.spacing(2)
+  },
+  button: {
+    marginTop: 'auto'
+  },
+  close: {
+    top: theme.spacing(2),
+    right: theme.spacing(2),
+    position: 'absolute'
   }
 }))
