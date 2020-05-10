@@ -1,12 +1,5 @@
 import * as yup from 'yup'
-import { useQuery } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
-
-import { GetWallet } from './wallet.gql'
-
-export const useGetWallet = () => {
-  return useQuery(GetWallet)
-}
 
 export const NewCardSchema = yup.object().shape({
   cardName: yup.string().required(),
@@ -27,8 +20,8 @@ export const useWalletStyles = createUseStyles(theme => ({
       overflow: 'visible'
     }
   },
-  add: {
-    marginRight: theme.spacing(2)
+  icons: {
+    fontSize: theme.spacing(3)
   }
 }))
 
