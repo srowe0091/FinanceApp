@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { IonPage, IonContent, IonText } from '@ionic/react'
-import { Formik } from 'formik'
+import { Formik, Form } from 'formik'
 import { Redirect } from 'react-router-dom'
 import useToggle from 'react-use/lib/useToggle'
 
@@ -52,8 +52,8 @@ const LoginView = () => {
             initialValues={initialValues}
             isInitialValid={false}
           >
-            {({ handleSubmit, handleChange, handleBlur, errors, isSubmitting, isValid }) => (
-              <form onSubmit={handleSubmit}>
+            {({ handleChange, handleBlur, errors, isSubmitting, isValid }) => (
+              <Form>
                 <Input
                   autoFocus
                   name="email"
@@ -86,7 +86,7 @@ const LoginView = () => {
                 >
                   Login
                 </Button>
-              </form>
+              </Form>
             )}
           </Formik>
         </div>

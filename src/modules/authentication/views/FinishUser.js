@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { IonText, IonContent, IonModal } from '@ionic/react'
-import { Formik } from 'formik'
+import { Formik, Form } from 'formik'
 
 import { useFinishUserProfileStyles } from '../util'
 import { Button, Input, MaskedInput } from 'elements'
@@ -31,8 +31,8 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
             initialValues={initialValues}
             validationSchema={UserProfileSchema}
           >
-            {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
-              <form onSubmit={handleSubmit} autoComplete="off">
+            {({ values, handleChange, handleBlur, isValid }) => (
+              <Form autoComplete="off">
                 <Input
                   type="number"
                   min={1}
@@ -56,7 +56,7 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
                 <Button type="submit" className={classes.button} loading={saving} disabled={!isValid || saving}>
                   Save
                 </Button>
-              </form>
+              </Form>
             )}
           </Formik>
         </div>

@@ -8,7 +8,7 @@ import { useToolbarTransition } from 'utils'
 
 export const useWalletStyles = createUseStyles(theme => ({
   container: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(4)
   }
 }))
 

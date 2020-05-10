@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
 import { Formik, Form } from 'formik'
 import { IonContent } from '@ionic/react'
 import { useMutation } from '@apollo/react-hooks'
@@ -77,4 +78,8 @@ export const NewCardView = ({ onClose }) => {
       </Formik>
     </IonContent>
   )
+}
+
+NewCardView.propTypes = {
+  onClose: PropTypes.func
 }
