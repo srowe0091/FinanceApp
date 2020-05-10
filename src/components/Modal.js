@@ -6,9 +6,6 @@ import { close } from 'ionicons/icons'
 
 export const useModalStyles = createUseStyles(theme => ({
   container: {
-    '&:focus': {
-      outline: 'none'
-    },
     '& > .modal-wrapper': {
       background: 'transparent'
     }
