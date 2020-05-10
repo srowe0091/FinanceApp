@@ -8,6 +8,7 @@ import map from 'lodash/fp/map'
 const useSelectStyles = createUseStyles(theme => ({
   select: {
     '--min-height': '38px',
+    width: '100%',
     marginBottom: theme.spacing(2),
     borderRadius: 'var(--borderRadius)'
   },
@@ -16,7 +17,7 @@ const useSelectStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Select = ({ className, label, name, onChange, value, options }) => {
+export const Select = ({ className, label, name, onChange, value, options, type = 'action-sheet', ...rest }) => {
   const classes = useSelectStyles()
   return (
     <IonItem color="medium" className={clsx(classes.select, className)}>
@@ -24,9 +25,10 @@ export const Select = ({ className, label, name, onChange, value, options }) => 
       <IonSelect
         name={name}
         value={value}
-        interface="action-sheet"
+        interface={type}
         onIonChange={onChange}
         interfaceOptions={{ className: classes.actionSheet }}
+        {...rest}
       >
         {map(o => (
           <IonSelectOption key={o.value} value={o.value}>
@@ -44,6 +46,7 @@ Select.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
