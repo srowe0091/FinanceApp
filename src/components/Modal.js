@@ -6,6 +6,9 @@ import { close } from 'ionicons/icons'
 
 export const useModalStyles = createUseStyles(theme => ({
   container: {
+    '&:focus': {
+      outline: 'none'
+    },
     '& > .modal-wrapper': {
       background: 'transparent'
     }
@@ -23,7 +26,7 @@ export const Modal = ({ isOpen, onClose, children }) => {
   return (
     <IonModal isOpen={isOpen} onClose={onClose} className={classes.container}>
       <IonIcon color="light" size="large" icon={close} className={classes.close} onClick={onClose} />
-      {children}
+      {React.cloneElement(children, { onClose })}
     </IonModal>
   )
 }
