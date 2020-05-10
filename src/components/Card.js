@@ -19,6 +19,7 @@ const cardTitle = (spacing, content) => ({
 })
 
 const defaultTagStyling = {
+  content: '""',
   width: '45%',
   height: '95%',
   display: 'block',
@@ -26,7 +27,6 @@ const defaultTagStyling = {
   position: 'absolute',
   clip: 'rect(1px, 25px, 20px, 1px)',
   background: 'transparent',
-  content: '""',
   borderBottomRightRadius: '100%',
   boxShadow: '0px 0px 0px 20px var(--gray7)'
 }
