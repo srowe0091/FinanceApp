@@ -25,14 +25,10 @@ const Wallet = () => {
   const ref = useRef()
   const { cards, defaultCard } = useWallet()
   const [addCardModal, toggleAddCard] = useToggle(false)
-  const [optionsDropdown, setShowPopover] = useState({})
+  const [popoverEvent, setShowPopover] = useState(null)
   const key = useMemo(() => hash(JSON.stringify(cards)), [cards])
 
-  const openPopover = useCallback(async e => {
-    e.persist()
-    const isFirst = await ref.current.isBeginning()
-    setShowPopover({ event: e.nativeEvent, disableOption: isFirst })
-  }, [])
+  const openPopover = useCallback(e => setShowPopover(e.nativeEvent), [])
   const closePopover = useCallback(() => setShowPopover({}), [])
 
   const [udpatePreferences] = useUpdatePreferences()
@@ -67,11 +63,9 @@ const Wallet = () => {
         <NewCardView />
       </Modal>
 
-      <Popover event={optionsDropdown.event} onClose={closePopover}>
+      <Popover event={popoverEvent} onClose={closePopover}>
         <IonItem onClick={toggleAddCard}>Add New Card</IonItem>
-        <IonItem onClick={setCardAsDefault} disabled={optionsDropdown.disableOption}>
-          Set Default Card
-        </IonItem>
+        <IonItem onClick={setCardAsDefault}>Set Default Card</IonItem>
       </Popover>
     </ToolbarContent>
   )
