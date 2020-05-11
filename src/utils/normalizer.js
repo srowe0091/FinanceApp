@@ -5,7 +5,7 @@ export const formatDate = (date, format = 'M/D/YYYY') => dayjs(date).format(form
 
 export const pluralize = (count, string) => (1 === count ? string : `${string}s`)
 
-export const determineDays = dueDate => {
+export const determineDays = (dueDate, count) => {
   const now = new Date()
   const nextPaymentDate =
     dayjs().date() <= dueDate ? dayjs().set('date', dueDate) : dayjs().set('date', dueDate).add(1, 'month')
@@ -16,6 +16,8 @@ export const determineDays = dueDate => {
   }
 
   const _daysLeft = difference >= 15 ? difference - 15 : difference
+
+  if (count) return _daysLeft
   return `${_daysLeft} ${pluralize(_daysLeft, 'day')} left`
 }
 

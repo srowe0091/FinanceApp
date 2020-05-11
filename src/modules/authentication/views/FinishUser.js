@@ -9,8 +9,7 @@ import { currenyFormat } from 'utils'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
 const initialValues = {
-  allowance: 0,
-  dueDate: ''
+  allowance: 0
 }
 
 export const FinishUserModal = ({ isOpen, closeModal }) => {
@@ -33,16 +32,6 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
           >
             {({ values, handleChange, handleBlur, isValid }) => (
               <Form autoComplete="off">
-                <Input
-                  type="number"
-                  min={1}
-                  max={31}
-                  name="dueDate"
-                  placeholder="Due Date"
-                  value={values.dueDate}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
                 <MaskedInput
                   type="tel"
                   name="allowance"

@@ -4,7 +4,6 @@ export const UserFragment = gql`
   fragment UserFragment on User {
     _id
     email
-    dueDate
     allowance
   }
 `

@@ -20,7 +20,7 @@ export const useInitializeAuth = () => {
     try {
       const response = await client.query({ query: GetUser })
       const user = response?.data?.me || {}
-      if (!user.dueDate || !user.allowance) {
+      if (!user.allowance) {
         dispatch({ type: 'COMPLETE_PROFILE', payload: user })
         return
       }

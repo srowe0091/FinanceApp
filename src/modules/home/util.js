@@ -1,11 +1,14 @@
 import { useCallback, useMemo } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
+import map from 'lodash/fp/map'
+import minBy from 'lodash/fp/minBy'
 import reduce from 'lodash/fp/reduce'
 
 import { determineDays } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
+import { useWallet } from 'modules/wallet'
 
 export const useHomeViewStyles = createUseStyles(theme => ({
   card: {
@@ -28,10 +31,11 @@ export const useHomeViewStyles = createUseStyles(theme => ({
 }))
 
 export const useHomeHooks = () => {
-  const { allowance, dueDate, inGroup } = useUser()
+  const { allowance, inGroup } = useUser()
+  const { cards, loading: walletLoading } = useWallet()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const { amountLeft, groupSpent, daysLeft } = useMemo(() => {
+  const { amountLeft, groupSpent } = useMemo(() => {
     const _amountLeft = reduce((acc, curr) => {
       if (!curr.group) {
         acc = acc + curr.amount
@@ -41,17 +45,24 @@ export const useHomeHooks = () => {
 
     return {
       groupSpent: (data.groupSpent / 100).toFixed(2),
-      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2),
-      daysLeft: determineDays(dueDate)
+      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2)
     }
-  }, [dueDate, data, allowance])
+  }, [data, allowance])
+
+  const daysLeft = useMemo(() => {
+    const cardsDaysLeft = map(d => ({ ...d, daysLeft: determineDays(d.dueDate, true) }))(cards)
+    if (cardsDaysLeft.length) {
+      const closestCardDueDate = minBy('dueDate')(cardsDaysLeft)
+      return `${closestCardDueDate.name} - ${determineDays(closestCardDueDate.dueDate)}`
+    }
+  }, [cards])
 
   return {
     amountLeft,
     groupSpent,
     daysLeft,
     onRefresh,
-    loading,
+    loading: loading || walletLoading,
     transactions: data.transactions
   }
 }
