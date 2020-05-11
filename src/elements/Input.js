@@ -14,7 +14,7 @@ const useInputStyles = createUseStyles(theme => ({
     background: 'var(--ion-color-medium)',
     padding: theme.spacing(1.25),
     borderRadius: 'var(--borderRadius)',
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     '&::placeholder': {
       color: 'var(--gray7)',
       opacity: 0.5

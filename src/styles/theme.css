@@ -116,7 +116,7 @@ body {
   --ion-toolbar-color: var(--white);
 }
 
-ion-popover:focus, ion-backdrop:focus, ion-modal:focus {
+ion-popover:focus, ion-backdrop:focus, ion-modal:focus, ion-toast:focus {
   outline: none;
 }
 

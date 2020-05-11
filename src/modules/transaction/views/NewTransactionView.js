@@ -1,25 +1,22 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/react-hooks'
-import { Formik } from 'formik'
+import { Formik, Form } from 'formik'
+import map from 'lodash/fp/map'
 import replace from 'lodash/fp/replace'
 
 import { TransactionSchema, useNewTransactionViewStyles } from '../util'
 import { NewTransaction } from '../transaction.gql'
 import { ToolbarContent } from 'template'
-import { Input, Button, MaskedInput, Checkbox } from 'elements'
+import { Input, Button, MaskedInput, Checkbox, Select } from 'elements'
 import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
-
-const initialValues = {
-  amount: 0,
-  description: '',
-  group: false
-}
+import { useWallet } from 'modules/wallet'
 
 const NewTransactionPage = ({ history }) => {
   const classes = useNewTransactionViewStyles()
   const { isAdmin, inGroup } = useUser()
+  const { cards, defaultCard, loading: walletLoading } = useWallet()
   const [saveTransaction, { loading }] = useMutation(NewTransaction, {
     awaitRefetchQueries: true,
     refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['GroupTransactions'] : [])
@@ -38,11 +35,21 @@ const NewTransactionPage = ({ history }) => {
     [saveTransaction, history]
   )
 
+  const initialValues = useMemo(() => ({ amount: 0, description: '', group: false, card: defaultCard }), [defaultCard])
+
+  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card._id }))(cards), [cards])
+
   return (
     <ToolbarContent back title="New Transaction">
-      <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={TransactionSchema} validateOnMount>
-        {({ handleSubmit, values, handleChange, handleBlur, isValid, isSubmitting }) => (
-          <form className={classes.wrapper} onSubmit={handleSubmit} autoComplete="off">
+      <Formik
+        validateOnMount
+        enableReinitialize
+        onSubmit={onSubmit}
+        initialValues={initialValues}
+        validationSchema={TransactionSchema}
+      >
+        {({ values, handleChange, handleBlur, isValid, isSubmitting }) => (
+          <Form className={classes.wrapper} autoComplete="off">
             <MaskedInput
               autoFocus
               type="tel"
@@ -53,12 +60,25 @@ const NewTransactionPage = ({ history }) => {
               onBlur={handleBlur}
               onChange={handleChange}
             />
+
             <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
+
+            <Select
+              type="popover"
+              name="card"
+              label={walletLoading ? 'Loading...' : 'Put on Card'}
+              value={walletLoading ? '' : values.card}
+              options={cardOptions}
+              onChange={handleChange}
+              disabled={walletLoading}
+            />
+
             {inGroup && <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />}
+
             <Button type="submit" className={classes.button} disabled={isSubmitting || !isValid} loading={loading}>
               Submit
             </Button>
-          </form>
+          </Form>
         )}
       </Formik>
     </ToolbarContent>
