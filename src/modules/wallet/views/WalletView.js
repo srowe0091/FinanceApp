@@ -29,7 +29,7 @@ const Wallet = () => {
   const key = useMemo(() => hash(JSON.stringify(cards)), [cards])
 
   const openPopover = useCallback(e => setShowPopover(e.nativeEvent), [])
-  const closePopover = useCallback(() => setShowPopover({}), [])
+  const closePopover = useCallback(() => setShowPopover(null), [])
 
   const [udpatePreferences] = useUpdatePreferences()
 
