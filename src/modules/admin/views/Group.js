@@ -53,7 +53,7 @@ const Users = () => {
                           Next Payment:
                         </IonText>
                         <br />
-                        {determineDays(d.dueDate)}
+                        {determineDays(card.dueDate)}
                       </p>
                     </span>
                   ))(d.cards)}
