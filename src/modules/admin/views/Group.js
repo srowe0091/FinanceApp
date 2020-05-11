@@ -13,8 +13,6 @@ const Users = () => {
   const classes = useGroupStyles()
   const { data, loading } = useQuery(UsersInGroup)
 
-  console.log(data)
-
   return (
     <ToolbarContent title="Group" loading={loading}>
       <div className={classes.container}>
@@ -33,7 +31,7 @@ const Users = () => {
                 <IonText color="primary" variant="caption">
                   Allowance:
                 </IonText>
-                {' '}
+                &nbsp;
                 {currency(d.allowance)}
               </p>
             </IonItem>
