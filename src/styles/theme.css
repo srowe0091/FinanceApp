@@ -133,22 +133,22 @@ p {
   line-height: 1.5;
 }
 
-p[variant='body2'] {
+*[variant='body2'] {
   font-size: 0.875rem;
   line-height: 1.43;
 }
 
-p[variant='subtitle1'] {
+*[variant='subtitle1'] {
   font-size: 1rem;
   line-height: 1.75;
 }
 
-p[variant='subtitle2'] {
+*[variant='subtitle2'] {
   font-size: 0.875rem;
   line-height: 1.57;
 }
 
-p[variant='caption'] {
+*[variant='caption'] {
   font-size: 0.7rem;
   line-height: 1.66;
 }

@@ -20,6 +20,11 @@ export const UsersInGroup = gql`
     admin {
       usersInGroup {
         ...UserFragment
+        cards {
+          _id
+          name
+          dueDate
+        }
       }
     }
   }

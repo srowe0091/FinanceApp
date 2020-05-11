@@ -1,5 +1,5 @@
 import React from 'react'
-import { IonCard, IonCardTitle, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react'
+import { IonCard, IonCardTitle, IonItem, IonIcon, IonLabel, IonButton, IonText } from '@ionic/react'
 import { pencil, personCircle } from 'ionicons/icons'
 import { useQuery } from '@apollo/react-hooks'
 import map from 'lodash/fp/map'
@@ -12,6 +12,8 @@ import { currency, determineDays } from 'utils'
 const Users = () => {
   const classes = useGroupStyles()
   const { data, loading } = useQuery(UsersInGroup)
+
+  console.log(data)
 
   return (
     <ToolbarContent title="Group" loading={loading}>
@@ -27,20 +29,39 @@ const Users = () => {
             </IonItem>
 
             <IonItem color="transparent" lines="none">
-              <IonLabel color="light">
-                <p variant="body2">
-                  {d.allowance && d.dueDate ? (
-                    <>
-                      Allowance: {currency(d.allowance)}
-                      <br />
-                      Next Payment: {determineDays(d.dueDate)}
-                    </>
-                  ) : (
-                    "Profile hasn't been completed"
-                  )}
-                </p>
-              </IonLabel>
+              <p variant="body2">
+                <IonText color="primary" variant="caption">
+                  Allowance:
+                </IonText>
+                {' '}
+                {currency(d.allowance)}
+              </p>
             </IonItem>
+
+            {d.cards && (
+              <IonItem color="transparent" lines="none">
+                <div className={classes.userCardsContainer}>
+                  {map(card => (
+                    <span key={card._id} className={classes.userCards}>
+                      <p display="inline">
+                        <IonText color="primary" variant="caption">
+                          Card Name:
+                        </IonText>
+                        <br />
+                        {card.name}
+                      </p>
+                      <p display="inline">
+                        <IonText color="primary" variant="caption">
+                          Next Payment:
+                        </IonText>
+                        <br />
+                        {determineDays(d.dueDate)}
+                      </p>
+                    </span>
+                  ))(d.cards)}
+                </div>
+              </IonItem>
+            )}
           </IonCard>
         ))(data?.admin?.usersInGroup)}
       </div>

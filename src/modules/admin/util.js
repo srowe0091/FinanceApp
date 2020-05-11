@@ -15,13 +15,27 @@ export const usePayTransactionStyles = createUseStyles(theme => ({
 }))
 
 export const useGroupStyles = createUseStyles(theme => ({
+  container: {
+    margin: theme.spacing(0, 2)
+  },
   card: {
     marginBottom: theme.spacing(2)
   },
   icon: {
     marginRight: theme.spacing(1)
   },
-  container: {
-    margin: theme.spacing(0, 2)
+  userCardsContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  userCards: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: theme.spacing(1, 0),
+    borderTop: '1px solid var(--gray7)',
+    '& p': {
+      flex: 1
+    }
   }
 }))

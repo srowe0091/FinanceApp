@@ -47,10 +47,10 @@ const LoginView = () => {
         <div className={classes.form}>
           <Logo className={classes.logo} />
           <Formik
+            validateOnMount
             onSubmit={submitHandler}
             validationSchema={LoginSchema}
             initialValues={initialValues}
-            isInitialValid={false}
           >
             {({ handleChange, handleBlur, errors, isSubmitting, isValid }) => (
               <Form>
