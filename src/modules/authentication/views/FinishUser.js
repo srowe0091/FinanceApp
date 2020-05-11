@@ -4,7 +4,7 @@ import { IonText, IonContent, IonModal } from '@ionic/react'
 import { Formik, Form } from 'formik'
 
 import { useFinishUserProfileStyles } from '../util'
-import { Button, Input, MaskedInput } from 'elements'
+import { Button, MaskedInput } from 'elements'
 import { currenyFormat } from 'utils'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
