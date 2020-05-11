@@ -25,3 +25,11 @@ export const currenyFormat = value => {
   const number = parseInt(replace(/\D/g)('')(value), '10')
   return [currency(number), number]
 }
+
+export const hash = s => {
+  let h = 0,
+    l = s.length,
+    i = 0
+  if (l > 0) while (i < l) h = ((h << 5) - h + s.charCodeAt(i++)) | 0
+  return h
+}
