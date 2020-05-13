@@ -28,7 +28,7 @@ const useTransactionStyles = createUseStyles(theme => ({
       left: 0,
       bottom: 0,
       position: 'absolute',
-      zIndex: 10,
+      zIndex: 5,
       backgroundColor: 'var(--ion-color-primary)'
     }
   },
