@@ -23,7 +23,7 @@ const slideOpts = {
 const Wallet = () => {
   const classes = useWalletStyles()
   const ref = useRef()
-  const { cards, defaultCard } = useWallet()
+  const { cards, defaultCard, loading } = useWallet()
   const [addCardModal, toggleAddCard] = useToggle(false)
   const [popoverEvent, setShowPopover] = useState(null)
   const key = useMemo(() => hash(JSON.stringify(cards)), [cards])
@@ -51,6 +51,13 @@ const Wallet = () => {
     >
       <div className={classes.container}>
         <IonSlides key={key} ref={ref} options={slideOpts}>
+          {!loading && cards.length === 0 && (
+            <div className={classes.emptyWallet}>
+              <h6 align="center">
+                No Cards added
+              </h6>
+            </div>
+          )}
           {map(card => (
             <IonSlide key={card._id}>
               <Card {...card} isDefault={defaultCard === card._id} />
@@ -65,7 +72,9 @@ const Wallet = () => {
 
       <Popover event={popoverEvent} onClose={closePopover}>
         <IonItem onClick={toggleAddCard}>Add New Card</IonItem>
-        <IonItem onClick={setCardAsDefault}>Set Default Card</IonItem>
+        <IonItem onClick={setCardAsDefault} disabled={!cards.length}>
+          Set Default Card
+        </IonItem>
       </Popover>
     </ToolbarContent>
   )

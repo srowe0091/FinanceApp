@@ -31,6 +31,9 @@ const useTransactionStyles = createUseStyles(theme => ({
       zIndex: 10,
       backgroundColor: 'var(--ion-color-primary)'
     }
+  },
+  textSpacing: {
+    marginRight: theme.spacing(1)
   }
 }))
 
@@ -40,7 +43,7 @@ export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckb
     <IonItem color="medium" lines="none" className={clsx(classes.transaction, { [classes.group]: group })}>
       <IonLabel>
         <span className={classes.label}>
-          <span>
+          <span className={classes.textSpacing}>
             <p wrap="break">{description || <span color="textSecondary">(blank)</span>}</p>
             <p color="textSecondary" variant="caption">
               {formatDate(createdAt)}

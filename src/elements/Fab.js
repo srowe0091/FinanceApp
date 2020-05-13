@@ -5,7 +5,11 @@ import { IonFab, IonFabButton, IonIcon, IonText, IonSpinner } from '@ionic/react
 
 import { add } from 'ionicons/icons'
 
-const useFabStyles = createUseStyles({
+const useFabStyles = createUseStyles(theme => ({
+  container: {
+    padding: theme.spacing(0.5),
+    overflow: 'hidden'
+  },
   fab: {
     position: 'relative',
     borderRadius: '50%',
@@ -21,16 +25,16 @@ const useFabStyles = createUseStyles({
     position: 'absolute',
     transform: 'scale(1.2)'
   }
-})
+}))
 
 export const Fab = ({ icon = add, text, loading, disabled, ...props }) => {
   const classes = useFabStyles()
   return (
-    <IonFab vertical="bottom" horizontal="end" slot="fixed">
+    <IonFab vertical="bottom" horizontal="end" slot="fixed" className={classes.container}>
       <div className={classes.fab}>
         {loading && <IonSpinner color="light" className={classes.spinner} name="crescent" />}
         <IonFabButton {...props} disabled={loading || disabled}>
-          {text ? <IonText>{text}</IonText> : <IonIcon icon={icon} />}
+          {text ? <IonText>{text}</IonText> : <IonIcon size="large" className={classes.icon} icon={icon} />}
         </IonFabButton>
       </div>
     </IonFab>

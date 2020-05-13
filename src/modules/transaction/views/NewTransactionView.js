@@ -8,16 +8,18 @@ import replace from 'lodash/fp/replace'
 import { TransactionSchema, useNewTransactionViewStyles } from '../util'
 import { NewTransaction } from '../transaction.gql'
 import { ToolbarContent } from 'template'
-import { Input, Button, MaskedInput, Checkbox, Select } from 'elements'
+import { Input, MaskedInput, Checkbox, Select, Fab } from 'elements'
 import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
+
+import dollarSign from 'styles/icons/dollarSign.svg'
 
 const NewTransactionPage = ({ history }) => {
   const classes = useNewTransactionViewStyles()
   const { isAdmin, inGroup } = useUser()
   const { cards, defaultCard, loading: walletLoading } = useWallet()
-  const [saveTransaction, { loading }] = useMutation(NewTransaction, {
+  const [saveTransaction] = useMutation(NewTransaction, {
     awaitRefetchQueries: true,
     refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['GroupTransactions'] : [])
   })
@@ -48,7 +50,7 @@ const NewTransactionPage = ({ history }) => {
         initialValues={initialValues}
         validationSchema={TransactionSchema}
       >
-        {({ values, handleChange, handleBlur, isValid, isSubmitting }) => (
+        {({ values, handleChange, handleBlur, handleSubmit, isValid, isSubmitting }) => (
           <Form className={classes.wrapper} autoComplete="off">
             <MaskedInput
               autoFocus
@@ -75,9 +77,7 @@ const NewTransactionPage = ({ history }) => {
 
             {inGroup && <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />}
 
-            <Button type="submit" className={classes.button} disabled={isSubmitting || !isValid} loading={loading}>
-              Submit
-            </Button>
+            <Fab icon={dollarSign} onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
           </Form>
         )}
       </Formik>

@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks'
 
 import { SaveNewCard } from '../wallet.gql'
 import { NewCardSchema, initialNewCard, useNewCardViewStyles } from '../util'
-import { Button, Input, Select } from 'elements'
+import { Input, Select, Fab } from 'elements'
 import { Card } from 'components'
 import { daysInMonth } from 'utils'
 
@@ -41,7 +41,7 @@ export const NewCardView = ({ onClose }) => {
   return (
     <IonContent color="dark">
       <Formik onSubmit={onSubmit} initialValues={initialNewCard} validationSchema={NewCardSchema} validateOnMount>
-        {({ values, handleBlur, handleChange, isValid, isSubmitting }) => (
+        {({ values, handleBlur, handleChange, handleSubmit, isValid, isSubmitting }) => (
           <Form className={classes.container}>
             <Card className={classes.card} type={values.cardType} />
             <Input
@@ -70,9 +70,7 @@ export const NewCardView = ({ onClose }) => {
               onChange={handleChange}
             />
 
-            <Button type="submit" className={classes.button} loading={isSubmitting} disabled={!isValid || isSubmitting}>
-              Save
-            </Button>
+            <Fab onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
           </Form>
         )}
       </Formik>

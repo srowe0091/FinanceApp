@@ -9,7 +9,7 @@ export const Popover = ({ event, onClose, children }) => {
       showBackdrop={false}
       event={event}
       isOpen={!!event}
-      onDidDismiss={onClose}
+      onWillDismiss={onClose}
     >
       <div onClick={popoverController.dismiss}>{children}</div>
     </IonPopover>

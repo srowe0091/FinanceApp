@@ -15,22 +15,23 @@ export const initialNewCard = {
 
 export const useWalletStyles = createUseStyles(theme => ({
   container: {
-    height: '100%',
     '& .swiper-container': {
       overflow: 'visible'
     }
   },
   icons: {
     fontSize: theme.spacing(3)
+  },
+  emptyWallet: {
+    width: '100%',
+    display: 'block'
   }
 }))
 
 export const useNewCardViewStyles = createUseStyles(theme => ({
   container: {
     padding: theme.spacing(6, 2, 2),
-    height: '100%',
     display: 'flex',
-    justifyContent: 'center',
     flexDirection: 'column'
   },
   card: {
