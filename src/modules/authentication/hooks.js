@@ -3,6 +3,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
+import { StorageContainer } from 'utils'
 import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
@@ -30,11 +31,11 @@ export const useInitializeAuth = () => {
     }
   }, [client, dispatch])
 
-  useEffect(() => {
-    const _sessionId = localStorage.getItem('session')
-    if (_sessionId) {
+  const getCurrentSession = useCallback(async () => {
+    const _sessionId = await StorageContainer.get('session')
+    if (_sessionId.value) {
       fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
-        headers: { Authorization: _sessionId }
+        headers: { Authorization: _sessionId.value }
       })
         .then(checkErrors)
         .then(handleGetUser)
@@ -43,6 +44,10 @@ export const useInitializeAuth = () => {
       dispatch({ type: 'STOP_LOADING' })
     }
   }, [dispatch, handleGetUser])
+
+  useEffect(() => {
+    getCurrentSession()
+  }, [getCurrentSession])
 
   const handleLogin = useCallback(
     (email, password) =>
@@ -56,24 +61,25 @@ export const useInitializeAuth = () => {
         .then(checkErrors)
         .then(res => {
           const { session } = JSON.parse(res)
-          localStorage.setItem('session', session)
-          return handleGetUser()
-        }),
+          return StorageContainer.set('session', session)
+        })
+        .then(() => handleGetUser()),
     [handleGetUser]
   )
 
   const handleLogout = useCallback(
-    () =>
-      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
-        method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('session') }
-      })
+    async () =>
+      StorageContainer.get('session')
+        .then(_sessionId =>
+          fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
+            method: 'DELETE',
+            headers: { Authorization: _sessionId.value }
+          })
+        )
         .then(checkErrors)
         .then(() => client.clearStore())
-        .then(() => {
-          localStorage.removeItem('session')
-          dispatch({ type: 'LOGOUT' })
-        }),
+        .then(() => StorageContainer.remove('session'))
+        .then(() => dispatch({ type: 'LOGOUT' })),
     [client, dispatch]
   )
 

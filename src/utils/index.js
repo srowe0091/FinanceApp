@@ -1,4 +1,5 @@
 export * from './helper'
 export * from './constant'
 export * from './normalizer'
+export * from './storage'
 export { default as textMappings } from './textMappings'
