@@ -22,7 +22,6 @@ import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 // Admin views
 import PayTransactionView from 'modules/admin/views/PayTransactions'
 import GroupView from 'modules/admin/views/Group'
-// import LabView from 'modules/lab/views/LabView'
 
 const App = () => (
   <IonApp>
@@ -39,8 +38,6 @@ const App = () => (
               {/* admin views */}
               <AuthorizedRoute path={routes.admin.group} component={GroupView} admin />
               <AuthorizedRoute path={routes.admin.payTransaction} component={PayTransactionView} admin />
-              {/* <AuthorizedRoute path={routes.admin.users} component={AdminView} admin /> */}
-              {/* <AuthorizedRoute path={routes.lab} component={LabView} /> */}
               <Route path={routes.login} component={LoginView} />
               <Redirect exact from="/" to={routes.login} />
             </IonRouterOutlet>
