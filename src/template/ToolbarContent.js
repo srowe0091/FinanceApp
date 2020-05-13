@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
-import { IonContent } from '@ionic/react'
+import { IonContent, useIonViewWillEnter } from '@ionic/react'
 
 import { Toolbar, RelativeLoader } from 'components'
 import { useToolbarTransition } from 'utils'
@@ -14,7 +14,17 @@ export const useWalletStyles = createUseStyles(theme => ({
 
 export const ToolbarContent = ({ children, toolbarChildren, title, back, loading }) => {
   const classes = useWalletStyles()
+  const ref = useRef()
   const { toolbarTransition, scrollHandler } = useToolbarTransition()
+
+  useIonViewWillEnter(() => {
+    try {
+      ref.current.scrollToTop()
+    } catch (err) {
+      console.error(err)
+    }
+  })
+
   return (
     <>
       <Toolbar back={back} title={title} transition={toolbarTransition}>
@@ -25,7 +35,7 @@ export const ToolbarContent = ({ children, toolbarChildren, title, back, loading
 
       {loading && <RelativeLoader />}
 
-      <IonContent color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
+      <IonContent ref={ref} color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
         {children}
       </IonContent>
     </>
