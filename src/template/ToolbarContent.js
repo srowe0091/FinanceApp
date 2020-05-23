@@ -8,7 +8,7 @@ import { useToolbarTransition } from 'utils'
 
 export const userToolbarContentStyles = createUseStyles(theme => ({
   container: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(1)
   }
 }))
 
