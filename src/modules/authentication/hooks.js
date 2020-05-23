@@ -13,6 +13,8 @@ const checkErrors = response => {
   return response.text()
 }
 
+const AppId = process.env.REACT_APP_ID
+
 export const useInitializeAuth = () => {
   const [state, dispatch] = useAuthReducer()
   const client = useApolloClient()
@@ -35,7 +37,7 @@ export const useInitializeAuth = () => {
     const _sessionId = await StorageContainer.get('session')
     if (_sessionId.value) {
       fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
-        headers: { Authorization: _sessionId.value }
+        headers: { AppId, Authorization: _sessionId.value }
       })
         .then(checkErrors)
         .then(handleGetUser)
@@ -55,6 +57,7 @@ export const useInitializeAuth = () => {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         headers: {
+          AppId,
           'Content-Type': 'application/json'
         }
       })
@@ -73,7 +76,7 @@ export const useInitializeAuth = () => {
         .then(_sessionId =>
           fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
             method: 'DELETE',
-            headers: { Authorization: _sessionId.value }
+            headers: { AppId, Authorization: _sessionId.value }
           })
         )
         .then(checkErrors)
