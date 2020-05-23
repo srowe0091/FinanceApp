@@ -10,7 +10,8 @@ export const client = new ApolloClient({
     const sessiodId = await StorageContainer.get('session')
     operation.setContext({
       headers: {
-        Authorization: sessiodId.value
+        Authorization: sessiodId.value,
+        AppId: process.env.REACT_APP_ID
       }
     })
   },
