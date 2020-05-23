@@ -1,15 +1,22 @@
 import React from 'react'
-import { IonText } from '@ionic/react'
+import { IonText, IonSlides, IonSlide } from '@ionic/react'
 import map from 'lodash/fp/map'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
-import { TransactionEntry, PullToRefresh } from 'components'
+import { TransactionEntry, PullToRefresh, Card } from 'components'
 import { formatDate } from 'utils'
 import routes from 'routes'
 
 const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
+
+const slideOpts = {
+  slidesPerView: 1,
+  initialSlide: 0,
+  centeredSlides: true,
+  pager: true
+}
 
 const Home = () => {
   const classes = useHomeViewStyles()
@@ -20,9 +27,6 @@ const Home = () => {
       <PullToRefresh onRefresh={onRefresh} />
 
       <div className={classes.card}>
-        <IonText>
-          <p>{todayDate}</p>
-        </IonText>
         <span>
           <IonText>
             <h2>
@@ -35,10 +39,26 @@ const Home = () => {
             </IonText>
           )}
         </span>
+
         <IonText>
-          <p>{daysLeft}</p>
+          <p>{todayDate}</p>
         </IonText>
       </div>
+
+      <IonSlides key={daysLeft.length} pager options={slideOpts} className={classes.dueDateContainer}>
+        {map(c => (
+          <IonSlide key={c._id} className={classes.slide}>
+            <Card small type={c.type} className={classes.miniCard} />
+            <IonText align="left">
+              <p>{c.name}</p>
+              <p variant="caption" color="textSecondary">
+                {c.text}
+              </p>
+            </IonText>
+            <div />
+          </IonSlide>
+        ))(daysLeft)}
+      </IonSlides>
 
       <div className={classes.transactions}>{map(t => <TransactionEntry key={t._id} {...t} />)(transactions)}</div>
       <Fab routerLink={routes.newTransaction} />

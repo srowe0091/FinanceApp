@@ -7,7 +7,7 @@ import map from 'lodash/fp/map'
 import { useGroupStyles } from '../util'
 import { UsersInGroup } from '../admin.gql'
 import { ToolbarContent } from 'template'
-import { currency, determineDays } from 'utils'
+import { currency, calculateDays } from 'utils'
 
 const Users = () => {
   const classes = useGroupStyles()
@@ -53,7 +53,7 @@ const Users = () => {
                           Next Payment:
                         </IonText>
                         <br />
-                        {determineDays(card.dueDate)}
+                        {calculateDays(card.dueDate).text}
                       </p>
                     </span>
                   ))(d.cards)}

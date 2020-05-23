@@ -2,10 +2,11 @@ import { useCallback, useMemo } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
 import map from 'lodash/fp/map'
-import minBy from 'lodash/fp/minBy'
+import sortBy from 'lodash/fp/sortBy'
+import compose from 'lodash/fp/compose'
 import reduce from 'lodash/fp/reduce'
 
-import { determineDays } from 'utils'
+import { calculateDays } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -25,8 +26,25 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     borderRadius: 'var(--borderRadius)'
   },
   transactions: {
-    margin: theme.spacing(4, 2, 0),
+    margin: theme.spacing(0, 2),
     paddingBottom: theme.spacing(7)
+  },
+  dueDateContainer: {
+    width: '70%',
+    padding: theme.spacing(1, 0),
+    margin: theme.spacing(2, 'auto'),
+    backgroundColor: 'var(--alpha25)',
+    borderRadius: 'var(--borderRadius)',
+    '& > .swiper-pagination': {
+      bottom: '5px'
+    }
+  },
+  slide: {
+    alignSelf: 'center',
+    padding: theme.spacing(0, 2, 2)
+  },
+  miniCard: {
+    marginRight: theme.spacing(2)
   }
 }))
 
@@ -49,13 +67,15 @@ export const useHomeHooks = () => {
     }
   }, [data, allowance])
 
-  const daysLeft = useMemo(() => {
-    const cardsDaysLeft = map(d => ({ ...d, daysLeft: determineDays(d.dueDate, true) }))(cards)
-    if (cardsDaysLeft.length) {
-      const closestCardDueDate = minBy('dueDate')(cardsDaysLeft)
-      return `${closestCardDueDate.name} - ${determineDays(closestCardDueDate.dueDate)}`
-    }
-  }, [cards])
+  const daysLeft = useMemo(
+    () =>
+      compose(
+        sortBy('count'),
+        map(d => Object.assign({}, d, calculateDays(d.dueDate, true)))
+      )(cards),
+    [cards]
+  )
+  console.log(daysLeft)
 
   return {
     amountLeft,
