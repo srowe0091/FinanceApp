@@ -37,7 +37,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckboxClick, checked, group }) => {
+export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckboxClick, checked, group, card }) => {
   const classes = useTransactionStyles()
   return (
     <IonItem color="medium" lines="none" className={clsx(classes.transaction, { [classes.group]: group })}>
@@ -51,11 +51,9 @@ export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckb
           </span>
           <span>
             <p>${(amount / 100).toFixed(2)}</p>
-            {group && (
-              <p color="textSecondary" variant="caption" align="right">
-                group
-              </p>
-            )}
+            <p color="textSecondary" variant="caption" align="right">
+              {card?.name}
+            </p>
           </span>
         </span>
       </IonLabel>
@@ -73,5 +71,6 @@ TransactionEntry.propTypes = {
   createdAt: PropTypes.string,
   checked: PropTypes.bool,
   onCheckboxClick: PropTypes.func,
-  group: PropTypes.bool
+  group: PropTypes.bool,
+  card: PropTypes.object
 }

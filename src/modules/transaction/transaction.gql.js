@@ -8,6 +8,9 @@ export const TransactionFragment = gql`
     amount
     createdAt
     description
+    card {
+      name
+    }
   }
 `
 
