@@ -95,12 +95,36 @@ const useStyles = createUseStyles(theme => ({
     background: 'linear-gradient(135deg, #01aae3 0%, #27256c 100%)',
     boxShadow: '0px 10px 20px -5px #2e1c92',
     '&::before': cardTitle(theme.spacing(2), 'AMEX')
+  },
+  mini: {
+    padding: '2px 6px',
+    boxShadow: 'none',
+    borderRadius: '6px',
+    '&::before': {
+      content: 'none'
+    }
   }
 }))
 
-export const Card = ({ className, type, createdAt, isDefault, dueDate = 'XX', name = 'Name of Card' }) => {
-  const classes = useStyles(type)
+const cardMap = {
+  VISA: 'Visa',
+  DISCOVER: 'Discover',
+  MASTERCARD: 'MC',
+  AMERICAN_EXPRESS: 'Amex'
+}
+
+export const Card = ({ className, type, createdAt, isDefault, small, dueDate = 'XX', name = 'Name of Card' }) => {
+  const classes = useStyles()
   const _createdDate = useMemo(() => (createdAt ? formatDate(createdAt, 'MM/YYYY') : 'XX/XXXX'), [createdAt])
+
+  if (small) {
+    return (
+      <div className={clsx(classes.mini, classes[type], className)}>
+        <p>{cardMap[type]}</p>
+      </div>
+    )
+  }
+
   return (
     <AspectRatio className={className} ratio={7 / 4} maxWidth={350}>
       <div className={clsx(classes.container, classes[type])}>
@@ -142,6 +166,7 @@ Card.propTypes = {
   type: PropTypes.string,
   createdAt: PropTypes.string,
   isDefault: PropTypes.bool,
+  small: PropTypes.bool,
   name: PropTypes.string,
   dueDate: PropTypes.number
 }
