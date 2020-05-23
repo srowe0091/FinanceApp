@@ -8,7 +8,7 @@ const PreferenceFragment = gql`
 `
 
 export const GetPreferences = gql`
-  query GetWallet {
+  query GetPreferences {
     preferences {
       ...PreferenceFragment
     }

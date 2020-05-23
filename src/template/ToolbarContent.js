@@ -6,14 +6,14 @@ import { IonContent, useIonViewWillEnter } from '@ionic/react'
 import { Toolbar, RelativeLoader } from 'components'
 import { useToolbarTransition } from 'utils'
 
-export const useWalletStyles = createUseStyles(theme => ({
+export const userToolbarContentStyles = createUseStyles(theme => ({
   container: {
     marginTop: theme.spacing(4)
   }
 }))
 
 export const ToolbarContent = ({ children, toolbarChildren, title, back, loading }) => {
-  const classes = useWalletStyles()
+  const classes = userToolbarContentStyles()
   const ref = useRef()
   const { toolbarTransition, scrollHandler } = useToolbarTransition()
 

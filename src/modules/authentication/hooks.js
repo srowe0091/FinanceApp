@@ -3,7 +3,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
-import { StorageContainer } from 'utils'
+import { StorageContainer } from 'lib/Capacitor'
 import { GetUser } from 'modules/user'
 
 const checkErrors = response => {

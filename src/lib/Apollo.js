@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-boost'
 import some from 'lodash/fp/some'
 
-import { StorageContainer } from 'utils'
+import { StorageContainer } from 'lib/Capacitor'
 import routes from 'routes'
 
 export const client = new ApolloClient({
