@@ -13,8 +13,9 @@ import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
-import { TransactionEntry, PullToRefresh } from 'components'
+import { PullToRefresh } from 'components'
 import Pubsub from 'modules/pubsub'
+import { TransactionEntry } from 'modules/transaction'
 
 const PayTransaction = () => {
   const isMounted = useMountedState()

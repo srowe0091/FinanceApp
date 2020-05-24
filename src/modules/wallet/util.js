@@ -39,9 +39,6 @@ export const useNewCardViewStyles = createUseStyles(theme => ({
     alignSelf: 'center',
     marginBottom: theme.spacing(8)
   },
-  select: {
-    marginBottom: theme.spacing(2)
-  },
   button: {
     marginTop: 'auto'
   },
