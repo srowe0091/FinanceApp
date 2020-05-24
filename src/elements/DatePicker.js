@@ -1,0 +1,28 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { createUseStyles } from 'react-jss'
+import { IonDatetime, IonItem, IonIcon } from '@ionic/react'
+
+import { calendarOutline } from 'ionicons/icons'
+
+const useDatePickerStyles = createUseStyles(theme => ({
+  datePicker: {
+    width: '100%',
+    marginBottom: 'var(--inputSpacing)',
+    borderRadius: 'var(--borderRadius)'
+  }
+}))
+
+export const DatePicker = ({ onChange, ...props }) => {
+  const classes = useDatePickerStyles()
+  return (
+    <IonItem color="medium" className={classes.datePicker}>
+      <IonDatetime displayFormat="M/D/YYYY" onIonChange={onChange} {...props} />
+      <IonIcon icon={calendarOutline} slot="end" />
+    </IonItem>
+  )
+}
+
+DatePicker.propTypes = {
+  onChange: PropTypes.func
+}
