@@ -35,6 +35,7 @@ body {
 
   /** variables **/
   --borderRadius: 8px;
+  --inputSpacing: 24px;
 
   /** shade === darker **/
   /** tint === lighter **/

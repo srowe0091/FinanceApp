@@ -8,13 +8,14 @@ const useInputStyles = createUseStyles(theme => ({
   input: {
     flex: 'none',
     width: '100%',
+    minHeight: '48px',
     color: 'var(--white)',
     outline: 'none',
     border: 'none',
     background: 'var(--ion-color-medium)',
     padding: theme.spacing(1.25),
     borderRadius: 'var(--borderRadius)',
-    marginBottom: theme.spacing(3),
+    marginBottom: 'var(--inputSpacing)',
     '&::placeholder': {
       color: 'var(--gray7)',
       opacity: 0.5
