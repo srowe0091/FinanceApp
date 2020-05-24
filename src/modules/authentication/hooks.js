@@ -3,6 +3,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
+import { StorageContainer } from 'lib/Capacitor'
 import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
@@ -12,6 +13,8 @@ const checkErrors = response => {
   return response.text()
 }
 
+const AppId = process.env.REACT_APP_ID
+
 export const useInitializeAuth = () => {
   const [state, dispatch] = useAuthReducer()
   const client = useApolloClient()
@@ -20,7 +23,7 @@ export const useInitializeAuth = () => {
     try {
       const response = await client.query({ query: GetUser })
       const user = response?.data?.me || {}
-      if (!user.dueDate || !user.allowance) {
+      if (!user.allowance) {
         dispatch({ type: 'COMPLETE_PROFILE', payload: user })
         return
       }
@@ -30,11 +33,11 @@ export const useInitializeAuth = () => {
     }
   }, [client, dispatch])
 
-  useEffect(() => {
-    const _sessionId = localStorage.getItem('session')
-    if (_sessionId) {
+  const getCurrentSession = useCallback(async () => {
+    const _sessionId = await StorageContainer.get('session')
+    if (_sessionId.value) {
       fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
-        headers: { Authorization: _sessionId }
+        headers: { AppId, Authorization: _sessionId.value }
       })
         .then(checkErrors)
         .then(handleGetUser)
@@ -44,36 +47,42 @@ export const useInitializeAuth = () => {
     }
   }, [dispatch, handleGetUser])
 
+  useEffect(() => {
+    getCurrentSession()
+  }, [getCurrentSession])
+
   const handleLogin = useCallback(
     (email, password) =>
       fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         headers: {
+          AppId,
           'Content-Type': 'application/json'
         }
       })
         .then(checkErrors)
         .then(res => {
           const { session } = JSON.parse(res)
-          localStorage.setItem('session', session)
-          return handleGetUser()
-        }),
+          return StorageContainer.set('session', session)
+        })
+        .then(() => handleGetUser()),
     [handleGetUser]
   )
 
   const handleLogout = useCallback(
-    () =>
-      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
-        method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('session') }
-      })
+    async () =>
+      StorageContainer.get('session')
+        .then(_sessionId =>
+          fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
+            method: 'DELETE',
+            headers: { AppId, Authorization: _sessionId.value }
+          })
+        )
         .then(checkErrors)
         .then(() => client.clearStore())
-        .then(() => {
-          localStorage.removeItem('session')
-          dispatch({ type: 'LOGOUT' })
-        }),
+        .then(() => StorageContainer.remove('session'))
+        .then(() => dispatch({ type: 'LOGOUT' })),
     [client, dispatch]
   )
 

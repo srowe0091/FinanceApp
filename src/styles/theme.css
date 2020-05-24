@@ -1,5 +1,5 @@
-/* Ionic Variables and Theming. For more info, please see:
-http://ionicframework.com/docs/theming/ */
+@import './colors.css';
+@import './fonts/font-face.css';
 
 * {
   margin: 0;
@@ -26,6 +26,7 @@ body {
   --gray5: #bebebe;
   --gray6: #9c9c9c;
   --gray7: #6d6d6d;
+  --gray8: #424242;
   --themeGray1: #2d2f38;
   --themeGray2: #202129;
   --alpha0: rgba(0, 0, 0, 0);
@@ -33,23 +34,21 @@ body {
   --alpha5: rgba(0, 0, 0, 0.5);
 
   /** variables **/
-  --borderRadius: 6px;
+  --borderRadius: 8px;
 
   /** shade === darker **/
   /** tint === lighter **/
 
-  /** #313347 + #60637e **/
-
   /** primary **/
-  --ion-color-primary: #02b25f;
-  --ion-color-primary-rgb: 2, 178, 95;
+  --ion-color-primary: #63c1de;
+  --ion-color-primary-rgb: 18, 162, 208;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #009946;
-  --ion-color-primary-tint: #02b25f;
+  --ion-color-primary-shade: #108fb7;
+  --ion-color-primary-tint: #2aabd5;
 
   /** secondary **/
-  --ion-color-secondary: #004ec2;
+  --ion-color-secondary: #614ee2;
   --ion-color-secondary-rgb: 73, 71, 214;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -89,7 +88,7 @@ body {
   --ion-color-danger-tint: #f25454;
 
   /** dark **/
-  --ion-color-dark: #202129;
+  --ion-color-dark: #242733;
   --ion-color-dark-rgb: 32, 33, 41;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
@@ -97,8 +96,8 @@ body {
   --ion-color-dark-tint: #3a3b43;
 
   /** medium **/
-  --ion-color-medium: #2d2f38;
-  --ion-color-medium-rgb: 45, 47, 56;
+  --ion-color-medium: rgba(0, 0, 0, 0.30);
+  --ion-color-medium-rgb: 0, 0, 0;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
   --ion-color-medium-shade: #14161f;
@@ -118,6 +117,10 @@ body {
   --ion-toolbar-color: var(--white);
 }
 
+ion-popover:focus, ion-backdrop:focus, ion-modal:focus, ion-toast:focus {
+  outline: none;
+}
+
 *[color='textSecondary'] {
   color: var(--gray6);
 }
@@ -131,28 +134,32 @@ p {
   line-height: 1.5;
 }
 
-p[variant='body2'] {
+*[variant='body2'] {
   font-size: 0.875rem;
   line-height: 1.43;
 }
 
-p[variant='subtitle1'] {
+*[variant='subtitle1'] {
   font-size: 1rem;
   line-height: 1.75;
 }
 
-p[variant='subtitle2'] {
+*[variant='subtitle2'] {
   font-size: 0.875rem;
   line-height: 1.57;
 }
 
-p[variant='caption'] {
+*[variant='caption'] {
   font-size: 0.7rem;
   line-height: 1.66;
 }
 
 p[display='inline'] {
   display: inline-block;
+}
+
+*[align='left'] {
+  text-align: left;
 }
 
 *[align='right'] {
@@ -163,6 +170,11 @@ p[display='inline'] {
   text-align: center;
 }
 
+p[wrap='break'] {
+  word-break: break-word;
+  white-space: normal;
+}
+
 h1 {
   font-size: 3.5rem;
   font-weight: 300;
@@ -170,7 +182,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.375rem;
+  font-size: 2.5rem;
   font-weight: 300;
   line-height: 1.2;
 }

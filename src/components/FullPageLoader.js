@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
-import { IonSpinner, IonContent } from '@ionic/react'
+import { IonSpinner } from '@ionic/react'
 
 const useFullPageLoaderStyles = createUseStyles({
   container: {
@@ -35,7 +35,7 @@ const useRelativeLoaderStyles = createUseStyles({
     right: 0,
     bottom: 0,
     position: 'absolute',
-    zIndex: 100,
+    zIndex: 5,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
@@ -45,10 +45,8 @@ const useRelativeLoaderStyles = createUseStyles({
 export const RelativeLoader = () => {
   const classes = useRelativeLoaderStyles()
   return (
-    <IonContent color="dark">
-      <div className={classes.container}>
-        <IonSpinner color="primary" className={classes.loading} />
-      </div>
-    </IonContent>
+    <div className={classes.container}>
+      <IonSpinner color="primary" className={classes.loading} />
+    </div>
   )
 }

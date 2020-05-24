@@ -1,16 +1,15 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { IonText, IonContent, IonModal } from '@ionic/react'
-import { Formik } from 'formik'
+import { Formik, Form } from 'formik'
 
 import { useFinishUserProfileStyles } from '../util'
-import { Button, Input, MaskedInput } from 'elements'
+import { Button, MaskedInput } from 'elements'
 import { currenyFormat } from 'utils'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
 const initialValues = {
-  allowance: 0,
-  dueDate: ''
+  allowance: 0
 }
 
 export const FinishUserModal = ({ isOpen, closeModal }) => {
@@ -31,18 +30,8 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
             initialValues={initialValues}
             validationSchema={UserProfileSchema}
           >
-            {({ handleSubmit, values, handleChange, handleBlur, isValid }) => (
-              <form onSubmit={handleSubmit} autoComplete="off">
-                <Input
-                  type="number"
-                  min={1}
-                  max={31}
-                  name="dueDate"
-                  placeholder="Due Date"
-                  value={values.dueDate}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
+            {({ values, handleChange, handleBlur, isValid }) => (
+              <Form autoComplete="off">
                 <MaskedInput
                   type="tel"
                   name="allowance"
@@ -56,7 +45,7 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
                 <Button type="submit" className={classes.button} loading={saving} disabled={!isValid || saving}>
                   Save
                 </Button>
-              </form>
+              </Form>
             )}
           </Formik>
         </div>

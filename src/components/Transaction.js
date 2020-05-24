@@ -64,7 +64,15 @@ const EditTransaction = ({ id, description, group, createdAt }) => {
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            {inGroup && <Checkbox color="medium" label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />}
+            {inGroup && (
+              <Checkbox
+                color="medium"
+                label="Group Purchase"
+                name="group"
+                checked={values.group}
+                onChange={handleChange}
+              />
+            )}
 
             <IonItem>
               <IonDatetime displayFormat="M/D/YYYY" value={createdAt}></IonDatetime>
@@ -95,7 +103,7 @@ EditTransaction.propTypes = {
 const useTransactionStyles = createUseStyles(theme => ({
   transaction: {
     marginBottom: theme.spacing(2),
-    borderRadius: theme.spacing(1),
+    borderRadius: 'var(--borderRadius)',
     boxShadow: '0px 2px 5px -2px var(--black)'
   },
   label: {
@@ -114,16 +122,19 @@ const useTransactionStyles = createUseStyles(theme => ({
       left: 0,
       bottom: 0,
       position: 'absolute',
-      zIndex: 10,
+      zIndex: 5,
       backgroundColor: 'var(--ion-color-primary)'
     }
   },
   popover: {
-    '--background': 'var(--ion-color-medium)'
+    '--background': 'var(--ion-color-dark)'
+  },
+  textSpacing: {
+    marginRight: theme.spacing(1)
   }
 }))
 
-export const TransactionEntry = ({ id, amount, description, createdAt, onCheckboxClick, checked, group }) => {
+export const TransactionEntry = ({ _id, amount, description, createdAt, onCheckboxClick, checked, group, card }) => {
   const classes = useTransactionStyles()
   const [popoverState, togglePoppover] = useToggle(false)
 
@@ -133,19 +144,17 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
         <IonItem color="medium" lines="none" className={clsx(classes.transaction, { [classes.group]: group })}>
           <IonLabel>
             <span className={classes.label}>
-              <span>
-                <p>{description || <span color="textSecondary">(blank)</span>}</p>
+              <span className={classes.textSpacing}>
+                <p wrap="break">{description || <span color="textSecondary">(blank)</span>}</p>
                 <p color="textSecondary" variant="caption">
                   {formatDate(createdAt)}
                 </p>
               </span>
               <span>
                 <p>${(amount / 100).toFixed(2)}</p>
-                {group && (
-                  <p color="textSecondary" variant="caption" align="right">
-                    group
-                  </p>
-                )}
+                <p color="textSecondary" variant="caption" align="right">
+                  {card?.name}
+                </p>
               </span>
             </span>
           </IonLabel>
@@ -154,24 +163,25 @@ export const TransactionEntry = ({ id, amount, description, createdAt, onCheckbo
               slot="start"
               className={classes.checkbox}
               checked={checked}
-              onIonChange={onCheckboxClick(id)}
+              onIonChange={onCheckboxClick(_id)}
             />
           )}
         </IonItem>
       </LongPress>
       <IonModal isOpen={popoverState} onDidDismiss={togglePoppover} className={classes.popover}>
-        <EditTransaction id={id} amount={amount} description={description} group={group} createdAt={createdAt} />
+        <EditTransaction id={_id} amount={amount} description={description} group={group} createdAt={createdAt} />
       </IonModal>
     </>
   )
 }
 
 TransactionEntry.propTypes = {
-  id: PropTypes.string,
+  _id: PropTypes.string,
   amount: PropTypes.number,
   description: PropTypes.string,
   createdAt: PropTypes.string,
   checked: PropTypes.bool,
   onCheckboxClick: PropTypes.func,
-  group: PropTypes.bool
+  group: PropTypes.bool,
+  card: PropTypes.object
 }

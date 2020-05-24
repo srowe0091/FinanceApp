@@ -1,54 +1,58 @@
-import { useCallback, useState, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
+import map from 'lodash/fp/map'
+import sortBy from 'lodash/fp/sortBy'
+import compose from 'lodash/fp/compose'
 import reduce from 'lodash/fp/reduce'
 
-import { determineDays } from 'utils'
+import { calculateDays } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
+import { useWallet } from 'modules/wallet'
 
 export const useHomeViewStyles = createUseStyles(theme => ({
-  top: {
-    width: '100%',
-    height: theme.spacing(23),
-    top: 0,
-    position: 'absolute',
-    background: 'linear-gradient(140deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%)',
-    '&:before': {
-      content: '""',
-      display: 'block',
-      width: '100%',
-      height: theme.spacing(12),
-      background: 'linear-gradient(to bottom, var(--alpha0) 0%, var(--themeGray2) 100%)',
-      position: 'absolute',
-      bottom: '-1px'
-    }
-  },
   card: {
     textAlign: 'center',
     width: '80%',
-    height: theme.spacing(20),
-    margin: theme.spacing(2, 'auto', 0),
+    height: theme.spacing(21),
+    margin: theme.spacing(0, 'auto'),
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     position: 'relative',
-    background: 'var(--white)',
-    borderRadius: '20px'
+    background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-secondary)'),
+    boxShadow: '0px 4px 10px -4px var(--black)',
+    borderRadius: 'var(--borderRadius)'
   },
   transactions: {
-    margin: theme.spacing(4, 2, 0),
+    margin: theme.spacing(0, 2),
     paddingBottom: theme.spacing(7)
+  },
+  dueDateContainer: {
+    width: '100%',
+    padding: theme.spacing(1, 0),
+    margin: theme.spacing(2, 'auto'),
+    borderRadius: 'var(--borderRadius)',
+    '& > .swiper-pagination': {
+      bottom: '5px'
+    }
+  },
+  slide: {
+    alignSelf: 'center',
+    padding: theme.spacing(0, 2, 2)
+  },
+  miniCard: {
+    marginRight: theme.spacing(2)
   }
 }))
 
 export const useHomeHooks = () => {
-  const { allowance, dueDate, inGroup } = useUser()
+  const { allowance, inGroup } = useUser()
+  const { cards, loading: walletLoading } = useWallet()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
-  const [toolbarTransition, toggleStyle] = useState(false)
-  const scrollHandler = useCallback(e => toggleStyle(e.detail.scrollTop > 40), [])
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const { amountLeft, groupSpent, daysLeft } = useMemo(() => {
+  const { amountLeft, groupSpent } = useMemo(() => {
     const _amountLeft = reduce((acc, curr) => {
       if (!curr.group) {
         acc = acc + curr.amount
@@ -58,19 +62,25 @@ export const useHomeHooks = () => {
 
     return {
       groupSpent: (data.groupSpent / 100).toFixed(2),
-      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2),
-      daysLeft: determineDays(dueDate)
+      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2)
     }
-  }, [dueDate, data, allowance])
+  }, [data, allowance])
+
+  const daysLeft = useMemo(
+    () =>
+      compose(
+        sortBy('count'),
+        map(d => Object.assign({}, d, calculateDays(d.dueDate, true)))
+      )(cards),
+    [cards]
+  )
 
   return {
     amountLeft,
     groupSpent,
     daysLeft,
     onRefresh,
-    toolbarTransition,
-    scrollHandler,
-    loading,
+    loading: loading || walletLoading,
     transactions: data.transactions
   }
 }

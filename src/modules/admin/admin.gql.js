@@ -20,6 +20,11 @@ export const UsersInGroup = gql`
     admin {
       usersInGroup {
         ...UserFragment
+        cards {
+          _id
+          name
+          dueDate
+        }
       }
     }
   }
@@ -30,7 +35,7 @@ export const PayTransactions = gql`
   mutation PayTransactions($transactionIds: [ID]!) {
     admin {
       payTransactions(transactionIds: $transactionIds) {
-        id
+        _id
       }
     }
   }

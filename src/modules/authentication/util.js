@@ -4,14 +4,8 @@ import * as yup from 'yup'
 import bgd from 'media/logo_background.png'
 
 export const LoginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email('Invalid Email Address')
-    .required(),
-  password: yup
-    .string()
-    .min(5)
-    .required()
+  email: yup.string().email('Invalid Email Address').required(),
+  password: yup.string().min(5).required()
 })
 
 export const useLoginViewStyle = createUseStyles(theme => ({
@@ -23,7 +17,7 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     margin: theme.spacing(4, 4, 0),
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: '20px',
+    borderRadius: 'var(--borderRadius)',
     backgroundColor: 'var(--alpha5)'
   },
   logo: {
