@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import { IonContent, useIonViewWillEnter } from '@ionic/react'
+import isFunction from 'lodash/fp/isFunction'
 
 import { Toolbar, RelativeLoader } from 'components'
 import { useToolbarTransition } from 'utils'
@@ -19,7 +20,7 @@ export const ToolbarContent = ({ children, toolbarChildren, title, back, loading
 
   useIonViewWillEnter(() => {
     try {
-      ref.current.scrollToTop()
+      if (isFunction(ref?.current?.scrollToTop)) ref.current.scrollToTop()
     } catch (err) {
       console.error(err)
     }
