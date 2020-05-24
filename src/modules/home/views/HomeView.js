@@ -50,12 +50,11 @@ const Home = () => {
           <IonSlide key={c._id} className={classes.slide}>
             <Card small type={c.type} className={classes.miniCard} />
             <IonText align="left">
-              <p>{c.name}</p>
+              <p variant="subtitle1">{c.name}</p>
               <p variant="caption" color="textSecondary">
                 {c.text}
               </p>
             </IonText>
-            <div />
           </IonSlide>
         ))(daysLeft)}
       </IonSlides>

@@ -97,7 +97,7 @@ const useStyles = createUseStyles(theme => ({
     '&::before': cardTitle(theme.spacing(2), 'AMEX')
   },
   mini: {
-    padding: '2px 6px',
+    padding: '4px 10px',
     boxShadow: 'none',
     borderRadius: '6px',
     '&::before': {

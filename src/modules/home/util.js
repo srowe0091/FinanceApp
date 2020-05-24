@@ -19,7 +19,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     margin: theme.spacing(0, 'auto'),
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     position: 'relative',
     background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-secondary)'),
     boxShadow: '0px 4px 10px -4px var(--black)',
@@ -30,12 +30,10 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     paddingBottom: theme.spacing(7)
   },
   dueDateContainer: {
-    width: '70%',
+    width: '100%',
     padding: theme.spacing(1, 0),
     margin: theme.spacing(2, 'auto'),
-    backgroundColor: 'var(--alpha25)',
     borderRadius: 'var(--borderRadius)',
-    boxShadow: '0px 2px 5px -2px var(--black)',
     '& > .swiper-pagination': {
       bottom: '5px'
     }
@@ -76,7 +74,6 @@ export const useHomeHooks = () => {
       )(cards),
     [cards]
   )
-  console.log(daysLeft)
 
   return {
     amountLeft,
