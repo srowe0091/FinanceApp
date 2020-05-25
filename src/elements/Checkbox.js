@@ -13,7 +13,7 @@ const useCheckboxStyle = createUseStyles(theme => ({
   }
 }))
 
-export const Checkbox = ({ label, onChange, ...rest }) => {
+export const Checkbox = ({ label, onChange, color, ...rest }) => {
   const classes = useCheckboxStyle()
   return (
     <IonItem lines="none" className={classes.item} color="transparent">
@@ -25,5 +25,6 @@ export const Checkbox = ({ label, onChange, ...rest }) => {
 
 Checkbox.propTypes = {
   label: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  color: PropTypes.string
 }

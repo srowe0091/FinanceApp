@@ -5,17 +5,19 @@ import { IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import map from 'lodash/fp/map'
 
-const useSelectStyles = createUseStyles(theme => ({
+const useSelectStyles = createUseStyles({
   select: {
-    '--min-height': '38px',
+    '--min-height': '48px',
+    '--border-width': 0,
     width: '100%',
-    marginBottom: theme.spacing(2),
-    borderRadius: 'var(--borderRadius)'
+    marginBottom: 'var(--inputSpacing)',
+    borderRadius: 'var(--borderRadius)',
+    boxShadow: 'var(--boxShadow)'
   },
   actionSheet: {
     '--max-height': '300px'
   }
-}))
+})
 
 export const Select = ({ className, label, name, onChange, value, options, type = 'action-sheet', ...rest }) => {
   const classes = useSelectStyles()

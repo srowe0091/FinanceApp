@@ -6,7 +6,7 @@ export const TransactionFragment = gql`
     paid
     group
     amount
-    createdAt
+    date
     description
     card {
       name
@@ -27,6 +27,15 @@ export const UserTransactions = gql`
 export const NewTransaction = gql`
   mutation NewTransaction($input: TransactionInput!) {
     saveTransaction(input: $input) {
+      ...TransactionFragment
+    }
+  }
+  ${TransactionFragment}
+`
+
+export const UpdateTransaction = gql`
+  mutation UpdateTransaction($input: TransactionInput!) {
+    updateTransaction(input: $input) {
       ...TransactionFragment
     }
   }

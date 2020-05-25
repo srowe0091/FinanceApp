@@ -5,9 +5,10 @@ import map from 'lodash/fp/map'
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
-import { TransactionEntry, PullToRefresh, Card } from 'components'
+import { PullToRefresh, Card } from 'components'
 import { formatDate } from 'utils'
 import routes from 'routes'
+import { TransactionEntry } from 'modules/transaction'
 
 const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
 

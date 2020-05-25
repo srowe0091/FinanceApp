@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/react-hooks'
 import map from 'lodash/fp/map'
 import sortBy from 'lodash/fp/sortBy'
+import orderBy from 'lodash/fp/orderBy'
 import compose from 'lodash/fp/compose'
 import reduce from 'lodash/fp/reduce'
 
@@ -81,6 +82,6 @@ export const useHomeHooks = () => {
     daysLeft,
     onRefresh,
     loading: loading || walletLoading,
-    transactions: data.transactions
+    transactions: orderBy(['date'])(['desc'])(data.transactions)
   }
 }

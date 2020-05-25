@@ -55,7 +55,6 @@ export const NewCardView = ({ onClose }) => {
             <Select
               name="cardDueDate"
               label="Due Date"
-              className={classes.select}
               value={values.cardDueDate}
               options={daysInMonth}
               onChange={handleChange}
