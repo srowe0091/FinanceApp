@@ -81,6 +81,6 @@ export const useHomeHooks = () => {
     daysLeft,
     onRefresh,
     loading: loading || walletLoading,
-    transactions: data.transactions
+    transactions: sortBy('date')(data.transactions)
   }
 }

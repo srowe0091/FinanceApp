@@ -75,13 +75,13 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
         </IonItem>
       </LongPress>
       <EditTransaction
+        id={_id}
         isOpen={popoverState}
         onClose={togglePoppover}
-        id={_id}
         amount={amount}
-        description={description}
-        group={group}
         date={date}
+        group={group}
+        description={description}
       />
     </>
   )
