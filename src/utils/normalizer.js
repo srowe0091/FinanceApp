@@ -11,7 +11,7 @@ export const pluralize = (count, string) => (1 === count ? string : `${string}s`
 
 export const or = (...func) => val => some(f => f(val))(func)
 
-export const customConstant = text => count => ({ text, count })
+const customConstant = text => count => ({ text, count })
 
 const _determineDays = cond([
   [or(isEqual(15), isEqual(0)), customConstant('Submit Payment Today')],

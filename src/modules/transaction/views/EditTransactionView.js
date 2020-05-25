@@ -5,12 +5,14 @@ import { createUseStyles } from 'react-jss'
 import { IonText, IonContent } from '@ionic/react'
 import { Formik, Form } from 'formik'
 import set from 'lodash/fp/set'
+import noop from 'lodash/fp/noop'
 
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
 import { Input, Checkbox, Fab, DatePicker } from 'elements'
 import { Modal } from 'components'
+import { currency } from 'utils'
 import { useUser } from 'modules/authentication'
 import Pubsub from 'modules/pubsub'
 
@@ -32,7 +34,7 @@ const useEditTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const EditTransaction = ({ isOpen, id, description, group, date, onClose }) => {
+export const EditTransaction = ({ isOpen, onClose, amount, id, description, group, date }) => {
   const classes = useEditTransactionStyles()
   const { inGroup } = useUser()
   const [updateTransaction] = useMutation(UpdateTransaction)
@@ -49,6 +51,7 @@ export const EditTransaction = ({ isOpen, id, description, group, date, onClose 
     },
     [updateTransaction, onClose]
   )
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <IonContent color="dark">
@@ -59,6 +62,8 @@ export const EditTransaction = ({ isOpen, id, description, group, date, onClose 
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ handleSubmit, handleBlur, handleChange, isValid, values, isSubmitting }) => (
               <Form className={classes.form}>
+                <Input disabled placeholder="Amount" value={currency(amount)} onChange={noop} onBlur={noop} />
+
                 <Input
                   name="description"
                   placeholder="memo"
