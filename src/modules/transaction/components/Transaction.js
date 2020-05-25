@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
-import { IonItem, IonLabel, IonCheckbox } from '@ionic/react'
+import { IonItem, IonLabel, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react'
 import useToggle from 'react-use/lib/useToggle'
+import useClickAway from 'react-use/lib/useClickAway'
 
 import { EditTransaction } from '../views/EditTransactionView'
-import { LongPress } from 'components'
 import { formatDate } from 'utils'
+import isFunction from 'lodash/fp/isFunction'
 
 const useTransactionStyles = createUseStyles(theme => ({
   transaction: {
     marginBottom: theme.spacing(2),
+    overflow: 'auto',
     borderRadius: 'var(--borderRadius)',
     boxShadow: '0px 2px 5px -2px var(--black)'
   },
@@ -41,13 +43,23 @@ const useTransactionStyles = createUseStyles(theme => ({
 }))
 
 export const TransactionEntry = ({ _id, amount, description, date, onCheckboxClick, checked, group, card }) => {
+  const ref = useRef(null)
   const classes = useTransactionStyles()
   const [popoverState, togglePoppover] = useToggle(false)
 
+  const openEdit = useCallback(() => {
+    if (isFunction(ref?.current?.closeOpened)) ref.current.closeOpened()
+    togglePoppover(true)
+  }, [togglePoppover])
+
+  useClickAway(ref, () => {
+    if (isFunction(ref?.current?.closeOpened)) ref.current.closeOpened()
+  })
+
   return (
-    <>
-      <LongPress onTrigger={togglePoppover}>
-        <IonItem color="medium" lines="none" className={clsx(classes.transaction, { [classes.group]: group })}>
+    <div className={classes.transaction}>
+      <IonItemSliding ref={ref}>
+        <IonItem color="medium" lines="none" className={clsx({ [classes.group]: group })}>
           <IonLabel>
             <span className={classes.label}>
               <span className={classes.textSpacing}>
@@ -73,7 +85,14 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
             />
           )}
         </IonItem>
-      </LongPress>
+
+        <IonItemOptions side="end" onIonSwipe={openEdit}>
+          <IonItemOption expandable onClick={openEdit}>
+            Edit
+          </IonItemOption>
+        </IonItemOptions>
+      </IonItemSliding>
+
       <EditTransaction
         id={_id}
         isOpen={popoverState}
@@ -83,7 +102,7 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
         group={group}
         description={description}
       />
-    </>
+    </div>
   )
 }
 
