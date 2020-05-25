@@ -36,6 +36,7 @@ body {
   /** variables **/
   --borderRadius: 8px;
   --inputSpacing: 24px;
+  --boxShadow: 0px 2px 5px -1px var(--black);
 
   /** shade === darker **/
   /** tint === lighter **/
@@ -89,7 +90,7 @@ body {
   --ion-color-danger-tint: #f25454;
 
   /** dark **/
-  --ion-color-dark: #242733;
+  --ion-color-dark: #282b38;
   --ion-color-dark-rgb: 32, 33, 41;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
@@ -97,7 +98,7 @@ body {
   --ion-color-dark-tint: #3a3b43;
 
   /** medium **/
-  --ion-color-medium: rgba(0, 0, 0, 0.30);
+  --ion-color-medium: #2c2f40;
   --ion-color-medium-rgb: 0, 0, 0;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;

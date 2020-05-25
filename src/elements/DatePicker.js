@@ -5,13 +5,15 @@ import { IonDatetime, IonItem, IonIcon } from '@ionic/react'
 
 import { calendarOutline } from 'ionicons/icons'
 
-const useDatePickerStyles = createUseStyles(theme => ({
+const useDatePickerStyles = createUseStyles({
   datePicker: {
+    '--border-width': 0,
     width: '100%',
     marginBottom: 'var(--inputSpacing)',
-    borderRadius: 'var(--borderRadius)'
+    borderRadius: 'var(--borderRadius)',
+    boxShadow: 'var(--boxShadow)'
   }
-}))
+})
 
 export const DatePicker = ({ onChange, ...props }) => {
   const classes = useDatePickerStyles()
