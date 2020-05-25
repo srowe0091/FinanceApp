@@ -47,13 +47,17 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
   const classes = useTransactionStyles()
   const [popoverState, togglePoppover] = useToggle(false)
 
-  const openEdit = useCallback(() => {
+  const closeSlide = useCallback(() => {
     if (isFunction(ref?.current?.closeOpened)) ref.current.closeOpened()
+  }, [])
+
+  const openEdit = useCallback(() => {
+    closeSlide()
     togglePoppover(true)
-  }, [togglePoppover])
+  }, [togglePoppover, closeSlide])
 
   useClickAway(ref, () => {
-    if (isFunction(ref?.current?.closeOpened)) ref.current.closeOpened()
+    closeSlide()
   })
 
   return (
