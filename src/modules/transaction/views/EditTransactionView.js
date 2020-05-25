@@ -4,15 +4,14 @@ import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { IonText, IonContent } from '@ionic/react'
 import { Formik, Form } from 'formik'
-import set from 'lodash/fp/set'
-import noop from 'lodash/fp/noop'
+import replace from 'lodash/fp/replace'
 
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
-import { Input, Checkbox, Fab, DatePicker } from 'elements'
+import { Input, Checkbox, Fab, DatePicker, MaskedInput } from 'elements'
 import { Modal } from 'components'
-import { currency } from 'utils'
+import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
 import Pubsub from 'modules/pubsub'
 
@@ -31,6 +30,10 @@ const useEditTransactionStyles = createUseStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
+  },
+  moneyInput: {
+    textAlign: 'center',
+    fontSize: '50px'
   }
 }))
 
@@ -38,11 +41,24 @@ export const EditTransaction = ({ isOpen, onClose, amount, id, description, grou
   const classes = useEditTransactionStyles()
   const { inGroup } = useUser()
   const [updateTransaction] = useMutation(UpdateTransaction)
-  const initialValues = useMemo(() => ({ description, group, date, _id: id }), [description, group, date, id])
+  const initialValues = useMemo(() => ({ description, group, date, amount, _id: id }), [
+    description,
+    group,
+    date,
+    amount,
+    id
+  ])
 
   const onSubmit = useCallback(
     (values, { setSubmitting }) => {
-      updateTransaction(set('variables.input')(values)({}))
+      updateTransaction({
+        variables: {
+          input: {
+            ...values,
+            amount: parseInt(replace(/\D/g)('')(values.amount), '10'),
+          }
+        }
+      })
         .then(() => onClose())
         .catch(err => {
           setSubmitting(false)
@@ -61,8 +77,17 @@ export const EditTransaction = ({ isOpen, onClose, amount, id, description, grou
           </IonText>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ handleSubmit, handleBlur, handleChange, isValid, values, isSubmitting }) => (
-              <Form className={classes.form}>
-                <Input disabled placeholder="Amount" value={currency(amount)} onChange={noop} onBlur={noop} />
+              <Form className={classes.form} autoComplete="off">
+                <MaskedInput
+                  autoFocus
+                  type="tel"
+                  name="amount"
+                  className={classes.moneyInput}
+                  format={currenyFormat}
+                  value={values.amount}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
 
                 <Input
                   name="description"
@@ -98,6 +123,7 @@ EditTransaction.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   id: PropTypes.string,
+  amount: PropTypes.number,
   description: PropTypes.string,
   group: PropTypes.bool,
   date: PropTypes.string

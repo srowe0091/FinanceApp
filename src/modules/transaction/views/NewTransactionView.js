@@ -24,12 +24,12 @@ const NewTransactionPage = ({ history }) => {
     refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['GroupTransactions'] : [])
   })
   const onSubmit = useCallback(
-    ({ amount, ...values }) => {
+    values => {
       saveTransaction({
         variables: {
           input: {
-            amount: parseInt(replace(/\D/g)('')(amount), '10'),
-            ...values
+            ...values,
+            amount: parseInt(replace(/\D/g)('')(values.amount), '10')
           }
         }
       }).then(() => history.goBack())
