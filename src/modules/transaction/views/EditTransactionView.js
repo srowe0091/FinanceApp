@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
@@ -41,13 +41,6 @@ export const EditTransaction = ({ isOpen, onClose, amount, id, description, grou
   const classes = useEditTransactionStyles()
   const { inGroup } = useUser()
   const [updateTransaction] = useMutation(UpdateTransaction)
-  const initialValues = useMemo(() => ({ description, group, date, amount, _id: id }), [
-    description,
-    group,
-    date,
-    amount,
-    id
-  ])
 
   const onSubmit = useCallback(
     (values, { setSubmitting }) => {
@@ -75,7 +68,7 @@ export const EditTransaction = ({ isOpen, onClose, amount, id, description, grou
           <IonText color="light">
             <h5 className={classes.header}>Edit Transaction</h5>
           </IonText>
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          <Formik initialValues={{ description, group, date, amount, _id: id }} onSubmit={onSubmit}>
             {({ handleSubmit, handleBlur, handleChange, isValid, values, isSubmitting }) => (
               <Form className={classes.form} autoComplete="off">
                 <MaskedInput
