@@ -16,7 +16,7 @@ const customConstant = text => count => ({ text, count })
 const _determineDays = cond([
   [or(isEqual(15), isEqual(0)), customConstant('Submit Payment Today')],
   [isEqual(1), customConstant('Payment Due Tomorrow')],
-  [stubTrue, v => customConstant(`${v >= 15 ? v - 15 : v} days left`)(v)]
+  [stubTrue, v => customConstant(`${v} days left`)(v)]
 ])
 
 export const calculateDays = dueDate => {
@@ -25,7 +25,7 @@ export const calculateDays = dueDate => {
     dayjs().date() <= dueDate ? dayjs().set('date', dueDate) : dayjs().set('date', dueDate).add(1, 'month')
   const difference = dayjs(nextPaymentDate).diff(now, 'day')
 
-  return _determineDays(difference)
+  return _determineDays(difference >= 15 ? difference - 15 : difference)
 }
 
 export const currency = number => `$${(number / 100).toFixed(2)}`
