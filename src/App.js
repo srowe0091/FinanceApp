@@ -18,10 +18,11 @@ import { AuthProvider } from 'modules/authentication/context'
 import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
 import WalletView from 'modules/wallet/views/WalletView'
+import BillsView from 'modules/bills/views/BillsView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 // Admin views
-import PayTransactionView from 'modules/admin/views/PayTransactions'
-import GroupView from 'modules/admin/views/Group'
+import PayTransactionView from 'modules/admin/views/PayTransactionsView'
+import GroupView from 'modules/admin/views/GroupView'
 
 const App = () => (
   <IonApp>
@@ -34,6 +35,7 @@ const App = () => (
             <IonRouterOutlet>
               <AuthorizedRoute path={routes.home} component={HomeView} />
               <AuthorizedRoute path={routes.wallet} component={WalletView} />
+              <AuthorizedRoute path={routes.bills} component={BillsView} />
               <AuthorizedRoute path={routes.newTransaction} component={NewTransactionView} />
               {/* admin views */}
               <AuthorizedRoute path={routes.admin.group} component={GroupView} admin />

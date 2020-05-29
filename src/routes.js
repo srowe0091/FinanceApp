@@ -3,8 +3,9 @@ export default {
   resetPassword: '/reset-password',
   home: '/home',
   wallet: '/wallet',
-  lab: '/lab',
+  bills: '/bills',
   newTransaction: '/new-transaction',
+  lab: '/lab',
   admin: {
     group: '/admin/group',
     payTransaction: '/admin/pay-transaction'
