@@ -12,7 +12,7 @@ export const userToolbarContentStyles = createUseStyles(theme => ({
   topSpacing: {
     marginTop: theme.spacing(1)
   },
-  wrapper: {
+  container: {
     margin: theme.spacing(0, 2)
   }
 }))
@@ -37,7 +37,7 @@ export const ToolbarContent = ({ children, toolbarChildren, title, back, loading
       {loading && <RelativeLoader />}
 
       <IonContent ref={ref} color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
-        <div className={clsx(!removeBorder && classes.wrapper)}>{children}</div>
+        <div className={clsx(!removeBorder && classes.container)}>{children}</div>
       </IonContent>
     </>
   )

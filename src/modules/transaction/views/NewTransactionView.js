@@ -51,7 +51,7 @@ const NewTransactionPage = ({ history }) => {
         validationSchema={TransactionSchema}
       >
         {({ values, handleChange, handleBlur, handleSubmit, isValid, isSubmitting }) => (
-          <Form className={classes.wrapper} autoComplete="off">
+          <Form className={classes.container} autoComplete="off">
             <MaskedInput
               autoFocus
               type="tel"

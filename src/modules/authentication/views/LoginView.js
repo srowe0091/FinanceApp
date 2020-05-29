@@ -43,7 +43,7 @@ const LoginView = () => {
 
   return (
     <IonPage>
-      <IonContent fullscreen className={classes.wrapper}>
+      <IonContent fullscreen className={classes.container}>
         <div className={classes.form}>
           <Logo className={classes.logo} />
           <Formik

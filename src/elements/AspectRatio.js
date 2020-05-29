@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
 
 const useAspectRatioStyles = createUseStyles({
-  wrapper: {
+  container: {
     width: ({ maxWidth }) => (maxWidth ? `${maxWidth}px` : '100%'),
     display: 'inline-block',
     position: 'relative',
@@ -26,7 +26,7 @@ const useAspectRatioStyles = createUseStyles({
 export const AspectRatio = ({ className, children, ratio, maxWidth }) => {
   const classes = useAspectRatioStyles({ ratio, maxWidth })
   return (
-    <div className={clsx(classes.wrapper, className)}>
+    <div className={clsx(classes.container, className)}>
       <div className={classes.main}>{children}</div>
     </div>
   )

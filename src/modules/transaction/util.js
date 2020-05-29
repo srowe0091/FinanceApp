@@ -6,8 +6,8 @@ export const TransactionSchema = yup.object().shape({
   card: yup.string().required()
 })
 
-export const useNewTransactionViewStyles = createUseStyles(theme => ({
-  wrapper: {
+export const useNewTransactionViewStyles = createUseStyles({
+  container: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column'
@@ -16,4 +16,4 @@ export const useNewTransactionViewStyles = createUseStyles(theme => ({
     textAlign: 'center',
     fontSize: '70px'
   }
-}))
+})

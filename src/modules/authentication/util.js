@@ -9,7 +9,7 @@ export const LoginSchema = yup.object().shape({
 })
 
 export const useLoginViewStyle = createUseStyles(theme => ({
-  wrapper: {
+  container: {
     '--background': `url(${bgd}) top / 170% 160% no-repeat`
   },
   form: {
