@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
-import { IonItem, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption, IonText } from '@ionic/react'
+import { IonItem, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react'
 import useToggle from 'react-use/lib/useToggle'
 import useClickAway from 'react-use/lib/useClickAway'
 import isFunction from 'lodash/fp/isFunction'
@@ -74,11 +74,7 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
               </p>
             </span>
             <span align="right">
-              <IonText color="primary">
-                <strong>
-                  <p>${(amount / 100).toFixed(2)}</p>
-                </strong>
-              </IonText>
+              <p>${(amount / 100).toFixed(2)}</p>
               <p color="textSecondary" variant="caption">
                 {card?.name}
               </p>
