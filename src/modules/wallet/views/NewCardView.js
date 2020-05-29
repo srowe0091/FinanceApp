@@ -17,7 +17,7 @@ const selectOptions = [
   { value: 'AMERICAN_EXPRESS', label: 'American Express' }
 ]
 
-export const NewCardView = ({ onClose }) => {
+export const NewCardView = ({ dismissModal }) => {
   const classes = useNewCardViewStyles()
   const [saveNewCard] = useMutation(SaveNewCard, {
     awaitRefetchQueries: true,
@@ -33,9 +33,9 @@ export const NewCardView = ({ onClose }) => {
           type: values.cardType
         }
       }
-      saveNewCard({ variables }).then(() => onClose(false))
+      saveNewCard({ variables }).then(() => dismissModal())
     },
-    [saveNewCard, onClose]
+    [saveNewCard, dismissModal]
   )
 
   return (
@@ -78,5 +78,5 @@ export const NewCardView = ({ onClose }) => {
 }
 
 NewCardView.propTypes = {
-  onClose: PropTypes.func
+  dismissModal: PropTypes.func
 }

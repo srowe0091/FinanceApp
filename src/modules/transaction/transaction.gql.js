@@ -9,6 +9,7 @@ export const TransactionFragment = gql`
     date
     description
     card {
+      _id
       name
     }
   }

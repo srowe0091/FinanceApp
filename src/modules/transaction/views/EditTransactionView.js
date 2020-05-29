@@ -1,18 +1,19 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/react-hooks'
 import { createUseStyles } from 'react-jss'
 import { IonText, IonContent } from '@ionic/react'
 import { Formik, Form } from 'formik'
+import map from 'lodash/fp/map'
 import replace from 'lodash/fp/replace'
 
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
-import { Input, Checkbox, Fab, DatePicker, MaskedInput } from 'elements'
-import { Modal } from 'components'
+import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select } from 'elements'
 import { currenyFormat } from 'utils'
 import { useUser } from 'modules/authentication'
+import { useWallet } from 'modules/wallet'
 import Pubsub from 'modules/pubsub'
 
 const useEditTransactionStyles = createUseStyles(theme => ({
@@ -37,10 +38,13 @@ const useEditTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const EditTransaction = ({ isOpen, onClose, amount, id, description, group, date }) => {
+export const EditTransaction = ({ dismissModal, ...cardValues }) => {
   const classes = useEditTransactionStyles()
   const { inGroup } = useUser()
+  const { cards, loading: walletLoading } = useWallet()
   const [updateTransaction] = useMutation(UpdateTransaction)
+
+  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card._id }))(cards), [cards])
 
   const onSubmit = useCallback(
     (values, { setSubmitting }) => {
@@ -48,74 +52,81 @@ export const EditTransaction = ({ isOpen, onClose, amount, id, description, grou
         variables: {
           input: {
             ...values,
-            amount: parseInt(replace(/\D/g)('')(values.amount), '10'),
+            amount: parseInt(replace(/\D/g)('')(values.amount), '10')
           }
         }
       })
-        .then(() => onClose())
+        .then(() => dismissModal())
         .catch(err => {
           setSubmitting(false)
           Pubsub.emit('TOAST_NOTIFICATION', err)
         })
     },
-    [updateTransaction, onClose]
+    [updateTransaction, dismissModal]
   )
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <IonContent color="dark">
-        <div className={classes.container}>
-          <IonText color="light">
-            <h5 className={classes.header}>Edit Transaction</h5>
-          </IonText>
-          <Formik initialValues={{ description, group, date, amount, _id: id }} onSubmit={onSubmit}>
-            {({ handleSubmit, handleBlur, handleChange, isValid, values, isSubmitting }) => (
-              <Form className={classes.form} autoComplete="off">
-                <MaskedInput
-                  autoFocus
-                  type="tel"
-                  name="amount"
-                  className={classes.moneyInput}
-                  format={currenyFormat}
-                  value={values.amount}
-                  onBlur={handleBlur}
+    <IonContent color="dark">
+      <div className={classes.container}>
+        <IonText color="light">
+          <h5 className={classes.header}>Edit Transaction</h5>
+        </IonText>
+        <Formik enableReinitialize initialValues={cardValues} onSubmit={onSubmit}>
+          {({ handleSubmit, handleBlur, handleChange, isValid, values, isSubmitting }) => (
+            <Form className={classes.form} autoComplete="off">
+              <MaskedInput
+                autoFocus
+                type="tel"
+                name="amount"
+                className={classes.moneyInput}
+                format={currenyFormat}
+                value={values.amount}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+
+              <Input
+                name="description"
+                placeholder="memo"
+                value={values.description || ''}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+
+              <Select
+                type="popover"
+                name="card"
+                label={walletLoading ? 'Loading...' : 'Put on Card'}
+                value={walletLoading ? '' : values.card}
+                options={cardOptions}
+                onChange={handleChange}
+                disabled={walletLoading}
+              />
+
+              <DatePicker name="date" value={values.date} onChange={handleChange} />
+
+              {inGroup && (
+                <Checkbox
+                  color="medium"
+                  label="Group Purchase"
+                  name="group"
+                  checked={values.group}
                   onChange={handleChange}
                 />
+              )}
 
-                <Input
-                  name="description"
-                  placeholder="memo"
-                  value={values.description || ''}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-
-                <DatePicker name="date" value={values.date} onChange={handleChange} />
-
-                {inGroup && (
-                  <Checkbox
-                    color="medium"
-                    label="Group Purchase"
-                    name="group"
-                    checked={values.group}
-                    onChange={handleChange}
-                  />
-                )}
-
-                <Fab onClick={handleSubmit} icon={checkmark} disabled={!isValid} loading={isSubmitting} />
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </IonContent>
-    </Modal>
+              <Fab onClick={handleSubmit} icon={checkmark} disabled={!isValid} loading={isSubmitting} />
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </IonContent>
   )
 }
 
 EditTransaction.propTypes = {
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  id: PropTypes.string,
+  dismissModal: PropTypes.func,
+  _id: PropTypes.string,
   amount: PropTypes.number,
   description: PropTypes.string,
   group: PropTypes.bool,

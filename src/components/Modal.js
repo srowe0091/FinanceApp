@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { modalController } from '@ionic/core'
 import { IonModal, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { close } from 'ionicons/icons'
@@ -20,10 +21,11 @@ export const useModalStyles = createUseStyles(theme => ({
 
 export const Modal = ({ isOpen, onClose, children }) => {
   const classes = useModalStyles()
+
   return (
-    <IonModal isOpen={isOpen} onClose={onClose} className={classes.container}>
-      <IonIcon color="light" size="large" icon={close} className={classes.close} onClick={onClose} />
-      {React.cloneElement(children, { onClose })}
+    <IonModal isOpen={isOpen} onWillDismiss={onClose} className={classes.container}>
+      <IonIcon color="light" size="large" icon={close} className={classes.close} onClick={modalController.dismiss} />
+      {React.cloneElement(children, { dismissModal: modalController.dismiss })}
     </IonModal>
   )
 }

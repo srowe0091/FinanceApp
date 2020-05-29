@@ -5,10 +5,11 @@ import { createUseStyles } from 'react-jss'
 import { IonItem, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption, IonText } from '@ionic/react'
 import useToggle from 'react-use/lib/useToggle'
 import useClickAway from 'react-use/lib/useClickAway'
+import isFunction from 'lodash/fp/isFunction'
 
 import { EditTransaction } from '../views/EditTransactionView'
 import { formatDate } from 'utils'
-import isFunction from 'lodash/fp/isFunction'
+import { Modal } from 'components'
 
 const useTransactionStyles = createUseStyles(theme => ({
   transaction: {
@@ -46,7 +47,7 @@ const useTransactionStyles = createUseStyles(theme => ({
 export const TransactionEntry = ({ _id, amount, description, date, onCheckboxClick, checked, group, card }) => {
   const ref = useRef(null)
   const classes = useTransactionStyles()
-  const [popoverState, togglePoppover] = useToggle(false)
+  const [modalState, toggleModal] = useToggle(false)
 
   const closeSlide = useCallback(() => {
     if (isFunction(ref?.current?.closeOpened)) ref.current.closeOpened()
@@ -54,8 +55,8 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
 
   const openEdit = useCallback(() => {
     closeSlide()
-    togglePoppover(true)
-  }, [togglePoppover, closeSlide])
+    toggleModal(true)
+  }, [toggleModal, closeSlide])
 
   useClickAway(ref, () => {
     closeSlide()
@@ -74,7 +75,9 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
             </span>
             <span align="right">
               <IonText color="primary">
-                <strong><p>${(amount / 100).toFixed(2)}</p></strong>
+                <strong>
+                  <p>${(amount / 100).toFixed(2)}</p>
+                </strong>
               </IonText>
               <p color="textSecondary" variant="caption">
                 {card?.name}
@@ -98,15 +101,9 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
         </IonItemOptions>
       </IonItemSliding>
 
-      <EditTransaction
-        id={_id}
-        isOpen={popoverState}
-        onClose={togglePoppover}
-        amount={amount}
-        date={date}
-        group={group}
-        description={description}
-      />
+      <Modal isOpen={modalState} onClose={toggleModal}>
+        <EditTransaction {...{ _id, amount, date, group, description, card: card._id }} />
+      </Modal>
     </div>
   )
 }
