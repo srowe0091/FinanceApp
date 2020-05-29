@@ -15,7 +15,7 @@ import { useWallet } from 'modules/wallet'
 export const useHomeViewStyles = createUseStyles(theme => ({
   card: {
     textAlign: 'center',
-    width: '80%',
+    width: '85%',
     height: theme.spacing(21),
     margin: theme.spacing(0, 'auto'),
     display: 'flex',
@@ -27,8 +27,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     borderRadius: 'var(--borderRadius)'
   },
   transactions: {
-    margin: theme.spacing(0, 2),
-    paddingBottom: theme.spacing(7)
+    paddingBottom: theme.spacing(8)
   },
   dueDateContainer: {
     width: '100%',

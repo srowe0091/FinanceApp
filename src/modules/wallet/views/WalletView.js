@@ -14,7 +14,7 @@ import { hash } from 'utils'
 import { useUpdatePreferences } from 'modules/preferences'
 
 const slideOpts = {
-  slidesPerView: 1.2,
+  slidesPerView: 1.1,
   initialSlide: 0,
   spaceBetween: 20,
   centeredSlides: true

@@ -8,7 +8,6 @@ export const TransactionSchema = yup.object().shape({
 
 export const useNewTransactionViewStyles = createUseStyles(theme => ({
   wrapper: {
-    padding: theme.spacing(0, 2),
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column'
