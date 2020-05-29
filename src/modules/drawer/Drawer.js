@@ -10,7 +10,8 @@ import {
   personCircleOutline,
   logOutOutline,
   walletOutline,
-  cardOutline
+  cardOutline,
+  documentsOutline
 } from 'ionicons/icons'
 
 import routes from 'routes'
@@ -39,13 +40,6 @@ const useDrawerMenuStyles = createUseStyles(theme => ({
   logout: {
     marginTop: 'auto',
     marginBottom: theme.spacing(1)
-  },
-  adminSection: {
-    marginTop: theme.spacing(1),
-    '& h6': {
-      paddingLeft: theme.spacing(2),
-      margin: theme.spacing(1, 0)
-    }
   }
 }))
 
@@ -59,6 +53,11 @@ const userLinks = [
     icon: walletOutline,
     label: 'Wallet',
     route: routes.wallet
+  },
+  {
+    icon: documentsOutline,
+    label: 'Bills',
+    route: routes.bills
   }
 ]
 
@@ -113,14 +112,9 @@ export const DrawerMenu = () => {
             <IonIcon className={classes.userIcon} icon={personCircleOutline} />
             {email}
           </div>
-          {userLinks.map(renderItem)}
 
-          {isAdmin && (
-            <div className={classes.adminSection}>
-              <h6>Admin</h6>
-              {adminLinks.map(renderItem)}
-            </div>
-          )}
+          {userLinks.map(renderItem)}
+          {isAdmin && adminLinks.map(renderItem)}
 
           <IonItem button lines="none" color="transparent" onClick={handleLogout} className={classes.logout}>
             <IonIcon slot="start" className={classes.icon} icon={logOutOutline} />
