@@ -50,7 +50,7 @@ body {
   --ion-color-primary-tint: #2aabd5;
 
   /** secondary **/
-  --ion-color-secondary: #614ee2;
+  --ion-color-secondary: #34ea4f;
   --ion-color-secondary-rgb: 73, 71, 214;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -58,7 +58,7 @@ body {
   --ion-color-secondary-tint: #6361f0;
 
   /** tertiary **/
-  --ion-color-tertiary: #277550;
+  --ion-color-tertiary: #614ee2;
   --ion-color-tertiary-rgb: 39, 117, 80;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;

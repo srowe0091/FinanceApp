@@ -22,7 +22,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'space-around',
     position: 'relative',
-    background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-secondary)'),
+    background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-tertiary)'),
     boxShadow: '0px 4px 10px -4px var(--black)',
     borderRadius: 'var(--borderRadius)'
   },
