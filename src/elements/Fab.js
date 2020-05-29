@@ -33,7 +33,7 @@ export const Fab = ({ icon = add, text, loading, disabled, ...props }) => {
     <IonFab vertical="bottom" horizontal="end" slot="fixed" className={classes.container}>
       <div className={classes.fab}>
         {loading && <IonSpinner color="light" className={classes.spinner} name="crescent" />}
-        <IonFabButton {...props} disabled={loading || disabled}>
+        <IonFabButton disabled={loading || disabled} {...props}>
           {text ? <IonText>{text}</IonText> : <IonIcon size="large" className={classes.icon} icon={icon} />}
         </IonFabButton>
       </div>
