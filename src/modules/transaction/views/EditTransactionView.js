@@ -5,13 +5,12 @@ import { createUseStyles } from 'react-jss'
 import { IonText, IonContent } from '@ionic/react'
 import { Formik, Form } from 'formik'
 import map from 'lodash/fp/map'
-import replace from 'lodash/fp/replace'
 
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
 import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select } from 'elements'
-import { currenyFormat } from 'utils'
+import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
 import Pubsub from 'modules/pubsub'
@@ -52,7 +51,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
         variables: {
           input: {
             ...values,
-            amount: parseInt(replace(/\D/g)('')(values.amount), '10')
+            amount: toNumber(values.amount)
           }
         }
       })

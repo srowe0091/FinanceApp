@@ -1,8 +1,8 @@
 import * as yup from 'yup'
 import { useMutation } from '@apollo/react-hooks'
 import { useCallback } from 'react'
-import replace from 'lodash/fp/replace'
 
+import { toNumber } from 'utils'
 import { UpdateUser } from 'modules/user'
 import { useAuthentication } from 'modules/authentication'
 
@@ -26,7 +26,7 @@ export const useUpdateUser = () => {
       _updateProfile({
         variables: {
           input: {
-            allowance: parseInt(replace(/\D/g)('')(allowance), '10'),
+            allowance: toNumber(allowance),
             ...values
           }
         }

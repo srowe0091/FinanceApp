@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/react-hooks'
 import { Formik, Form } from 'formik'
 import map from 'lodash/fp/map'
-import replace from 'lodash/fp/replace'
 
 import { TransactionSchema, useNewTransactionViewStyles } from '../util'
 import { NewTransaction } from '../transaction.gql'
 import { ToolbarContent } from 'template'
 import { Input, MaskedInput, Checkbox, Select, Fab } from 'elements'
-import { currenyFormat } from 'utils'
+import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
 
@@ -29,7 +28,7 @@ const NewTransactionPage = ({ history }) => {
         variables: {
           input: {
             ...values,
-            amount: parseInt(replace(/\D/g)('')(values.amount), '10')
+            amount: toNumber(values.amount)
           }
         }
       }).then(() => history.goBack())

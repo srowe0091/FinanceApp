@@ -11,6 +11,8 @@ export const pluralize = (count, string) => (1 === count ? string : `${string}s`
 
 export const or = (...func) => val => some(f => f(val))(func)
 
+export const toNumber = str => parseInt(replace(/\D/g)('')(str), '10')
+
 const customConstant = text => count => ({ text, count })
 
 const _determineDays = cond([
@@ -31,7 +33,7 @@ export const calculateDays = dueDate => {
 export const currency = number => `$${(number / 100).toFixed(2)}`
 
 export const currenyFormat = value => {
-  const number = parseInt(replace(/\D/g)('')(value), '10')
+  const number = toNumber(value)
   return [currency(number), number]
 }
 
