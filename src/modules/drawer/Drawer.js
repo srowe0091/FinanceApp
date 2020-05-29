@@ -4,15 +4,7 @@ import { IonMenu, IonContent, IonItem, IonLabel, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { useLocation } from 'react-router-dom'
 
-import {
-  homeOutline,
-  peopleOutline,
-  personCircleOutline,
-  logOutOutline,
-  walletOutline,
-  cardOutline,
-  documentsOutline
-} from 'ionicons/icons'
+import { home, people, personCircle, logOut, wallet, card, documents } from 'ionicons/icons'
 
 import routes from 'routes'
 import { PAGE_ID } from 'utils'
@@ -45,17 +37,17 @@ const useDrawerMenuStyles = createUseStyles(theme => ({
 
 const userLinks = [
   {
-    icon: homeOutline,
+    icon: home,
     label: 'Home',
     route: routes.home
   },
   {
-    icon: walletOutline,
+    icon: wallet,
     label: 'Wallet',
     route: routes.wallet
   },
   {
-    icon: documentsOutline,
+    icon: documents,
     label: 'Bills',
     route: routes.bills
   }
@@ -63,13 +55,13 @@ const userLinks = [
 
 const adminLinks = [
   {
-    icon: cardOutline,
+    icon: card,
     label: 'Pay',
     route: routes.admin.payTransaction
   },
   {
     // TODO: add condition if user is not in a group
-    icon: peopleOutline,
+    icon: people,
     label: 'Group',
     route: routes.admin.group
   }
@@ -109,7 +101,7 @@ export const DrawerMenu = () => {
       <IonContent color="md-background">
         <div className={classes.container}>
           <div className={classes.user}>
-            <IonIcon className={classes.userIcon} icon={personCircleOutline} />
+            <IonIcon className={classes.userIcon} icon={personCircle} />
             {email}
           </div>
 
@@ -117,7 +109,7 @@ export const DrawerMenu = () => {
           {isAdmin && adminLinks.map(renderItem)}
 
           <IonItem button lines="none" color="transparent" onClick={handleLogout} className={classes.logout}>
-            <IonIcon slot="start" className={classes.icon} icon={logOutOutline} />
+            <IonIcon slot="start" className={classes.icon} icon={logOut} />
             <IonLabel>Logout</IonLabel>
           </IonItem>
         </div>

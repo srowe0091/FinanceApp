@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import { IonDatetime, IonItem, IonIcon } from '@ionic/react'
 
-import { calendarOutline } from 'ionicons/icons'
+import { calendar } from 'ionicons/icons'
 
 const useDatePickerStyles = createUseStyles({
   datePicker: {
@@ -20,7 +20,7 @@ export const DatePicker = ({ onChange, ...props }) => {
   return (
     <IonItem color="medium" className={classes.datePicker}>
       <IonDatetime displayFormat="M/D/YYYY" onIonChange={onChange} {...props} />
-      <IonIcon icon={calendarOutline} slot="end" />
+      <IonIcon icon={calendar} slot="end" />
     </IonItem>
   )
 }
