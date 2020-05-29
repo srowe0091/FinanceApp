@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
-import { IonItem, IonLabel, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react'
+import { IonItem, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption, IonText } from '@ionic/react'
 import useToggle from 'react-use/lib/useToggle'
 import useClickAway from 'react-use/lib/useClickAway'
 
@@ -18,6 +18,7 @@ const useTransactionStyles = createUseStyles(theme => ({
     boxShadow: '0px 2px 5px -2px var(--black)'
   },
   label: {
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -64,22 +65,22 @@ export const TransactionEntry = ({ _id, amount, description, date, onCheckboxCli
     <div className={classes.transaction}>
       <IonItemSliding ref={ref}>
         <IonItem color="medium" lines="none" className={clsx({ [classes.group]: group })}>
-          <IonLabel>
-            <span className={classes.label}>
-              <span className={classes.textSpacing}>
-                <p wrap="break">{description || <span color="textSecondary">(blank)</span>}</p>
-                <p color="textSecondary" variant="caption">
-                  {formatDate(date)}
-                </p>
-              </span>
-              <span>
-                <p>${(amount / 100).toFixed(2)}</p>
-                <p color="textSecondary" variant="caption" align="right">
-                  {card?.name}
-                </p>
-              </span>
+          <span className={classes.label}>
+            <span className={classes.textSpacing}>
+              <p wrap="break">{description || <span color="textSecondary">(blank)</span>}</p>
+              <p color="textSecondary" variant="caption">
+                {formatDate(date)}
+              </p>
             </span>
-          </IonLabel>
+            <span align="right">
+              <IonText color="primary">
+                <strong><p>${(amount / 100).toFixed(2)}</p></strong>
+              </IonText>
+              <p color="textSecondary" variant="caption">
+                {card?.name}
+              </p>
+            </span>
+          </span>
           {onCheckboxClick && (
             <IonCheckbox
               slot="start"
