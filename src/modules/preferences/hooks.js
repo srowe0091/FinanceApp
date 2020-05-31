@@ -3,7 +3,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { GetPreferences, SavePreferemces } from 'modules/preferences'
 
 export const usePreferences = () => {
-  return useQuery(GetPreferences)
+  const { data, loading, ...rest } = useQuery(GetPreferences)
+  return {
+    preferences: data?.preferences,
+    preferencesLoading: loading,
+    ...rest
+  }
 }
 
 export const useUpdatePreferences = options => {

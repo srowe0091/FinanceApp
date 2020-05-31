@@ -1,10 +1,12 @@
 import { useCallback, useContext, useEffect } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
 import { StorageContainer } from 'lib/Capacitor'
-import { GetUser } from 'modules/user'
+import { UserFragment } from 'modules/user'
+import { PreferenceFragment } from 'modules/preferences'
 
 const checkErrors = response => {
   if (!response.ok) {
@@ -12,6 +14,19 @@ const checkErrors = response => {
   }
   return response.text()
 }
+
+const InitQuery = gql`
+  query InitQuery {
+    me {
+      ...UserFragment
+    }
+    preferences {
+      ...PreferenceFragment
+    }
+  }
+  ${UserFragment}
+  ${PreferenceFragment}
+`
 
 const AppId = process.env.REACT_APP_ID
 
@@ -21,9 +36,10 @@ export const useInitializeAuth = () => {
 
   const handleGetUser = useCallback(async () => {
     try {
-      const response = await client.query({ query: GetUser })
+      const response = await client.query({ query: InitQuery })
       const user = response?.data?.me || {}
-      if (!user.allowance) {
+      const preferences = response?.data?.preferences || {}
+      if (!preferences.allowance || !preferences.income) {
         dispatch({ type: 'COMPLETE_PROFILE', payload: user })
         return
       }
@@ -86,7 +102,7 @@ export const useInitializeAuth = () => {
     [client, dispatch]
   )
 
-  const finishProfile = useCallback(data => dispatch({ type: 'FINISHED_PROFILE', payload: data }), [dispatch])
+  const finishProfile = useCallback(data => dispatch({ type: 'FINISHED_PROFILE' }), [dispatch])
 
   return {
     ...state,

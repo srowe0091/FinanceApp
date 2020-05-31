@@ -1,9 +1,11 @@
 import gql from 'graphql-tag'
 
-const PreferenceFragment = gql`
+export const PreferenceFragment = gql`
   fragment PreferenceFragment on Preferences {
     _id
     defaultCard
+    income
+    allowance
   }
 `
 

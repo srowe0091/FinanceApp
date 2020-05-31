@@ -1,6 +1,5 @@
 import { useReducer } from 'react'
 import pick from 'lodash/fp/pick'
-import merge from 'lodash/fp/merge'
 
 const initialState = {
   isLoading: true,
@@ -9,7 +8,7 @@ const initialState = {
   user: {}
 }
 
-const sessionProps = pick(['email', 'allowance', 'isAdmin', 'inGroup', 'cards'])
+const sessionProps = pick(['email', 'isAdmin', 'inGroup'])
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -32,8 +31,7 @@ const reducer = (state, action) => {
     case 'FINISHED_PROFILE':
       return Object.assign({}, state, {
         requireProfileUpdate: false,
-        isAuthenticated: true,
-        user: sessionProps(merge(state.user)(action.payload))
+        isAuthenticated: true
       })
     default:
       return state

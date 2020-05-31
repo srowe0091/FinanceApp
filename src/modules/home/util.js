@@ -11,6 +11,7 @@ import { calculateDays } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
+import { usePreferences } from 'modules/preferences'
 
 export const useHomeViewStyles = createUseStyles(theme => ({
   card: {
@@ -48,8 +49,9 @@ export const useHomeViewStyles = createUseStyles(theme => ({
 }))
 
 export const useHomeHooks = () => {
-  const { allowance, inGroup } = useUser()
+  const { inGroup } = useUser()
   const { cards, loading: walletLoading } = useWallet()
+  const { preferences, preferencesLoading } = usePreferences()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
   const { amountLeft, groupSpent } = useMemo(() => {
@@ -62,9 +64,9 @@ export const useHomeHooks = () => {
 
     return {
       groupSpent: (data.groupSpent / 100).toFixed(2),
-      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2)
+      amountLeft: ((preferences?.allowance - _amountLeft) / 100).toFixed(2)
     }
-  }, [data, allowance])
+  }, [data, preferences])
 
   const daysLeft = useMemo(
     () =>
@@ -80,7 +82,7 @@ export const useHomeHooks = () => {
     groupSpent,
     daysLeft,
     onRefresh,
-    loading: loading || walletLoading,
+    loading: loading || walletLoading || preferencesLoading,
     transactions: orderBy(['date'])(['desc'])(data.transactions)
   }
 }

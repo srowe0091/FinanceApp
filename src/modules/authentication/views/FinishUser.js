@@ -9,6 +9,7 @@ import { currenyFormat } from 'utils'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
 const initialValues = {
+  income: 0,
   allowance: 0
 }
 
@@ -30,12 +31,22 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
             initialValues={initialValues}
             validationSchema={UserProfileSchema}
           >
-            {({ values, handleChange, handleBlur, isValid }) => (
+            {({ values, isValid, handleChange, handleBlur }) => (
               <Form autoComplete="off">
                 <MaskedInput
                   type="tel"
+                  name="income"
+                  label="Monthly Income"
+                  format={currenyFormat}
+                  value={values.income}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+
+                <MaskedInput
+                  type="tel"
                   name="allowance"
-                  placeholder="Bi-Weekly Budget"
+                  label="Bi-Weekly Budget"
                   format={currenyFormat}
                   value={values.allowance}
                   onBlur={handleBlur}
