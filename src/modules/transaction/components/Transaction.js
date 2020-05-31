@@ -20,6 +20,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   },
   label: {
     width: '100%',
+    padding: theme.spacing(1, 0.5),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -30,7 +31,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   group: {
     '&::before': {
       content: '""',
-      width: '4px',
+      width: '6px',
       top: 0,
       left: 0,
       bottom: 0,

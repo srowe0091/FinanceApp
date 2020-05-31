@@ -24,13 +24,13 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     width: '85px',
     alignSelf: 'center',
     marginBottom: theme.spacing(6),
-    borderRadius: '20px'
+    borderRadius: 'var(--borderRadius)',
   },
   errorStatus: {
     textTransform: 'uppercase'
   },
   button: {
-    marginTop: '2rem'
+    marginTop: theme.spacing(3)
   }
 }))
 

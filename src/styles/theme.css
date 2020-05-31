@@ -34,8 +34,8 @@ body {
   --alpha5: rgba(0, 0, 0, 0.5);
 
   /** variables **/
-  --borderRadius: 8px;
-  --inputSpacing: 24px;
+  --borderRadius: 16px;
+  --inputSpacing: 32px;
   --boxShadow: 0px 2px 5px -1px var(--black);
 
   /** shade === darker **/

@@ -21,7 +21,7 @@ const slideOpts = {
 
 const Home = () => {
   const classes = useHomeViewStyles()
-  const { amountLeft, groupSpent, daysLeft, onRefresh, transactions, loading } = useHomeHooks()
+  const { amountLeft, groupSpent, daysLeft, transactions, loading, onRefresh } = useHomeHooks()
 
   return (
     <ToolbarContent loading={loading}>

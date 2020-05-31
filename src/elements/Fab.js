@@ -8,7 +8,8 @@ import { add } from 'ionicons/icons'
 const useFabStyles = createUseStyles(theme => ({
   container: {
     padding: theme.spacing(0.5),
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'fixed'
   },
   fab: {
     position: 'relative',

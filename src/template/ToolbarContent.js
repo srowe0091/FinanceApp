@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
 import { IonContent, useIonViewWillEnter } from '@ionic/react'
 import isFunction from 'lodash/fp/isFunction'
@@ -17,7 +16,7 @@ export const userToolbarContentStyles = createUseStyles(theme => ({
   }
 }))
 
-export const ToolbarContent = ({ children, toolbarChildren, title, back, loading, removeBorder }) => {
+export const ToolbarContent = ({ children, toolbarChildren, title, back, loading }) => {
   const classes = userToolbarContentStyles()
   const ref = useRef()
   const { toolbarTransition, scrollHandler } = useToolbarTransition()
@@ -37,7 +36,7 @@ export const ToolbarContent = ({ children, toolbarChildren, title, back, loading
       {loading && <RelativeLoader />}
 
       <IonContent ref={ref} color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
-        <div className={clsx(!removeBorder && classes.container)}>{children}</div>
+        <div className={classes.container}>{children}</div>
       </IonContent>
     </>
   )
@@ -48,6 +47,5 @@ ToolbarContent.propTypes = {
   toolbarChildren: PropTypes.node,
   title: PropTypes.string,
   back: PropTypes.bool,
-  loading: PropTypes.bool,
-  removeBorder: PropTypes.bool
+  loading: PropTypes.bool
 }

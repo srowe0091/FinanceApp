@@ -16,7 +16,8 @@ export const usePayTransactionStyles = createUseStyles(theme => ({
 
 export const useGroupStyles = createUseStyles(theme => ({
   card: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    borderRadius: 'var(--borderRadius)'
   },
   icon: {
     marginRight: theme.spacing(1)

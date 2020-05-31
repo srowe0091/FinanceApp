@@ -1,28 +1,35 @@
 import React, { useCallback, useMemo, useRef } from 'react'
 import { useIonViewWillEnter } from '@ionic/react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
 
 const useInputStyles = createUseStyles(theme => ({
-  input: {
-    flex: 'none',
-    width: '100%',
-    minHeight: '48px',
-    color: 'var(--white)',
-    outline: 'none',
-    border: 'none',
-    background: 'var(--ion-color-medium)',
-    padding: theme.spacing(1.25),
-    borderRadius: 'var(--borderRadius)',
-    marginBottom: 'var(--inputSpacing)',
-    boxShadow: 'var(--boxShadow)',
-    '&::placeholder': {
-      color: 'var(--gray7)',
-      opacity: 0.5
+  container: {
+    position: 'relative',
+    '& input': {
+      color: 'var(--white)',
+      width: '100%',
+      padding: theme.spacing(2, 2.5),
+      marginBottom: 'var(--inputSpacing)',
+      flex: 'none',
+      border: 'none',
+      outline: 'none',
+      boxShadow: 'var(--boxShadow)',
+      borderRadius: 'var(--borderRadius)',
+      background: 'var(--ion-color-medium)',
+      '&::placeholder': {
+        color: 'var(--gray7)',
+        opacity: 0.5
+      },
+      '&[disabled]': {
+        opacity: 0.5
+      }
     },
-    '&[disabled]': {
-      opacity: 0.5
+    '& p': {
+      marginLeft: theme.spacing(2),
+      bottom: '102%',
+      position: 'absolute',
+      color: 'var(--gray4)'
     }
   }
 }))
@@ -35,22 +42,28 @@ const useAutoFocus = autoFocus => {
   return ele
 }
 
-export const Input = ({ className, onChange, onBlur, autoFocus, ...rest }) => {
+export const Input = ({ className, onChange, onBlur, autoFocus, label, ...rest }) => {
   const classes = useInputStyles()
   const element = useAutoFocus(autoFocus)
   return (
-    <input ref={element} className={clsx(className, classes.input)} onBlur={onBlur} onChange={onChange} {...rest} />
+    <div className={classes.container}>
+      <p variant="caption">
+        {label}
+      </p>
+      <input ref={element} className={className} onBlur={onBlur} onChange={onChange} {...rest} />
+    </div>
   )
 }
 
 Input.propTypes = {
   className: PropTypes.string,
+  label: PropTypes.string,
   autoFocus: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired
 }
 
-export const MaskedInput = ({ className, onChange, onBlur, format, value, autoFocus, ...rest }) => {
+export const MaskedInput = ({ className, onChange, onBlur, format, value, autoFocus, label, ...rest }) => {
   const classes = useInputStyles()
   const element = useAutoFocus(autoFocus)
 
@@ -66,19 +79,18 @@ export const MaskedInput = ({ className, onChange, onBlur, format, value, autoFo
   )
 
   return (
-    <input
-      ref={element}
-      className={clsx(className, classes.input)}
-      onBlur={onBlur}
-      onChange={_onChange}
-      value={_value}
-      {...rest}
-    />
+    <div className={classes.container}>
+      <p variant="caption">
+        {label}
+      </p>
+      <input ref={element} className={className} onBlur={onBlur} onChange={_onChange} value={_value} {...rest} />
+    </div>
   )
 }
 
 MaskedInput.propTypes = {
   className: PropTypes.string,
+  label: PropTypes.string,
   value: PropTypes.any,
   autoFocus: PropTypes.bool,
   format: PropTypes.func.isRequired,

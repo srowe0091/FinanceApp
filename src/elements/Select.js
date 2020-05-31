@@ -7,7 +7,7 @@ import map from 'lodash/fp/map'
 
 const useSelectStyles = createUseStyles({
   select: {
-    '--min-height': '48px',
+    '--min-height': '58px',
     '--border-width': 0,
     width: '100%',
     marginBottom: 'var(--inputSpacing)',
