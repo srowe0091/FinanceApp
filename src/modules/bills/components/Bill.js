@@ -32,6 +32,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   },
   label: {
     width: '100%',
+    padding: theme.spacing(1, 0.5),
     marginLeft: theme.spacing(2),
     display: 'flex',
     alignItems: 'center',
@@ -49,7 +50,6 @@ export const BillEntry = ({ name, dueDate, amount, type, notes }) => {
   return (
     <div className={classes.bill}>
       <IonItem color="medium" lines="none">
-        {console.log(type)}
         <IonIcon icon={iconMap[type] || receipt} size="large" />
         <span className={classes.label}>
           <span className={classes.textSpacing}>
