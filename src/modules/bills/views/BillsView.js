@@ -1,24 +1,33 @@
-import React, { useState, useCallback } from 'react'
-import { IonButtons, IonIcon, IonItem, IonButton } from '@ionic/react'
-import { ellipsisVertical } from 'ionicons/icons'
+import React, { useState, useCallback, useMemo } from 'react'
+import { IonButtons, IonIcon, IonItem, IonButton, IonText } from '@ionic/react'
+import { ellipsisVertical, caretUp, caretDown } from 'ionicons/icons'
 import useToggle from 'react-use/lib/useToggle'
+import dayjs from 'dayjs'
 import map from 'lodash/fp/map'
+import groupBy from 'lodash/fp/groupBy'
 
 import { BillEntry } from '../components'
 import { useBillsStyles } from '../util'
 import { useBills } from '../hooks'
 import NewBillView from './NewBillsView'
+import CalendarView from './CalendarView'
 import { Modal, Popover } from 'components'
 import { ToolbarContent } from 'template'
 
 const Bills = () => {
   const classes = useBillsStyles()
-  const { data, loading } = useBills()
+  const { bills, loading, totalBills, preferences } = useBills()
   const [addBillModal, toggleAddBill] = useToggle(false)
+  const [calendarModal, toggleCalendarModal] = useToggle(false)
   const [popoverEvent, setShowPopover] = useState(null)
 
   const openPopover = useCallback(e => setShowPopover(e.nativeEvent), [])
   const closePopover = useCallback(() => setShowPopover(null), [])
+
+  const sortedBills = useMemo(() => {
+    const todaysDate = dayjs().date()
+    return groupBy(bill => (bill.dueDate >= todaysDate ? 'UPCOMING' : 'PASSED'))(bills)
+  }, [bills])
 
   if (loading) return null
 
@@ -27,13 +36,49 @@ const Bills = () => {
       title="Bills"
       toolbarChildren={
         <IonButtons slot="end">
+          {/* <IonButton onClick={toggleCalendarModal}>
+            <IonIcon icon={calendar} />
+          </IonButton> */}
           <IonButton onClick={openPopover}>
             <IonIcon className={classes.icons} icon={ellipsisVertical} />
           </IonButton>
         </IonButtons>
       }
     >
-      <div>{map(b => <BillEntry key={b._id} {...b} />)(data?.bills)}</div>
+      <div color="medium" className={classes.panel}>
+        <IonItem color="transparent" lines="none">
+          <IonIcon icon={caretUp} color="danger" />
+          <span className={classes.monthlyInfo}>
+            <IonText color="primary" variant="caption">
+              Monthly Bills:
+            </IonText>
+            <p>${(totalBills / 100).toFixed(2)}</p>
+          </span>
+        </IonItem>
+        <IonItem color="transparent" lines="none">
+          <IonIcon icon={caretDown} color="success" />
+          <span className={classes.monthlyInfo}>
+            <IonText color="primary" variant="caption">
+              Household Income:
+            </IonText>
+            <p>${(preferences?.income / 100).toFixed(2)}</p>
+          </span>
+        </IonItem>
+      </div>
+
+      {!!sortedBills.UPCOMING && (
+        <p variant="body2" gutterbottom="1">
+          Upcoming
+        </p>
+      )}
+      {map(b => <BillEntry key={b._id} {...b} />)(sortedBills.UPCOMING)}
+
+      {!!sortedBills.PASSED && (
+        <p variant="body2" gutterbottom="1">
+          Passed
+        </p>
+      )}
+      {map(b => <BillEntry key={b._id} {...b} disabled />)(sortedBills.PASSED)}
 
       <Popover event={popoverEvent} onClose={closePopover}>
         <IonItem onClick={toggleAddBill}>Add New Bill</IonItem>
@@ -41,6 +86,10 @@ const Bills = () => {
 
       <Modal isOpen={addBillModal} onClose={toggleAddBill}>
         <NewBillView />
+      </Modal>
+    
+      <Modal isOpen={calendarModal} onClose={toggleCalendarModal}>
+        <CalendarView />
       </Modal>
     </ToolbarContent>
   )

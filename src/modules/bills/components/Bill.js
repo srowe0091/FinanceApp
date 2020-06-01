@@ -43,13 +43,13 @@ const useTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const BillEntry = ({ name, dueDate, amount, type, notes }) => {
+export const BillEntry = ({ name, dueDate, amount, type, notes, disabled }) => {
   const classes = useTransactionStyles()
   const _dueDate = useMemo(() => dayjs().date(dueDate).format('M/D'), [dueDate])
 
   return (
     <div className={classes.bill}>
-      <IonItem color="medium" lines="none">
+      <IonItem color="medium" lines="none" disabled={disabled}>
         <IonIcon icon={iconMap[type] || receipt} size="large" />
         <span className={classes.label}>
           <span className={classes.textSpacing}>
@@ -71,5 +71,6 @@ BillEntry.propTypes = {
   type: PropTypes.string,
   notes: PropTypes.string,
   amount: PropTypes.number,
-  dueDate: PropTypes.number
+  dueDate: PropTypes.number,
+  disabled: PropTypes.bool
 }

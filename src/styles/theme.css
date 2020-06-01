@@ -156,6 +156,10 @@ p {
   line-height: 1.66;
 }
 
+*[gutterbottom='1'] {
+  margin-bottom: 8px;
+}
+
 p[display='inline'] {
   display: inline-block;
 }
