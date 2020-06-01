@@ -39,7 +39,7 @@ export const useInitializeAuth = () => {
       const response = await client.query({ query: InitQuery })
       const user = response?.data?.me || {}
       const preferences = response?.data?.preferences || {}
-      if (!preferences.allowance || !preferences.income) {
+      if ((!preferences.allowance || !preferences.income) && user.isAdmin) {
         dispatch({ type: 'COMPLETE_PROFILE', payload: user })
         return
       }

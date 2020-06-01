@@ -6,9 +6,11 @@ import { createUseStyles } from 'react-jss'
 const useInputStyles = createUseStyles(theme => ({
   container: {
     position: 'relative',
+    width: '100%',
     '& input': {
       color: 'var(--white)',
       width: '100%',
+      minHeight: '58px',
       padding: theme.spacing(2, 2.5),
       marginBottom: 'var(--inputSpacing)',
       flex: 'none',
