@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router'
 import { IonText, IonContent, IonModal } from '@ionic/react'
 import { Formik, Form } from 'formik'
 
 import { useFinishUserProfileStyles } from '../util'
 import { Button, MaskedInput } from 'elements'
 import { currenyFormat } from 'utils'
+import routes from 'routes'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
 const initialValues = {
@@ -15,8 +17,17 @@ const initialValues = {
 
 export const FinishUserModal = ({ isOpen, closeModal }) => {
   const classes = useFinishUserProfileStyles()
+  const history = useHistory()
   const [updateUser, { loading: saving }] = useUpdateUser()
-  const onSubmit = useCallback(values => updateUser(values).then(() => closeModal(false)), [updateUser, closeModal])
+  const onSubmit = useCallback(
+    values => {
+      updateUser(values).then(() => {
+        closeModal(false)
+        history.go(routes.home)
+      })
+    },
+    [closeModal, history, updateUser]
+  )
 
   return (
     <IonModal isOpen={isOpen} backdropDismiss={false}>
@@ -31,7 +42,7 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
             initialValues={initialValues}
             validationSchema={UserProfileSchema}
           >
-            {({ values, isValid, handleChange, handleBlur }) => (
+            {({ values, isValid, isSubmitting, handleChange, handleBlur }) => (
               <Form autoComplete="off">
                 <MaskedInput
                   type="tel"
@@ -53,7 +64,12 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
                   onChange={handleChange}
                 />
 
-                <Button type="submit" className={classes.button} loading={saving} disabled={!isValid || saving}>
+                <Button
+                  type="submit"
+                  className={classes.button}
+                  loading={saving || isSubmitting}
+                  disabled={!isValid || saving || isSubmitting}
+                >
                   Save
                 </Button>
               </Form>

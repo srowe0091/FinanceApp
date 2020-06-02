@@ -45,11 +45,6 @@ const userLinks = [
     icon: wallet,
     label: 'Wallet',
     route: routes.wallet
-  },
-  {
-    icon: documents,
-    label: 'Bills',
-    route: routes.bills
   }
 ]
 
@@ -58,6 +53,11 @@ const adminLinks = [
     icon: card,
     label: 'Pay',
     route: routes.admin.payTransaction
+  },
+  {
+    icon: documents,
+    label: 'Bills',
+    route: routes.bills
   },
   {
     // TODO: add condition if user is not in a group

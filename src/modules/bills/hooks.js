@@ -8,7 +8,7 @@ import { usePreferences } from 'modules/preferences'
 
 export const useBills = () => {
   const { data, loading: billLoading, ...props } = useQuery(GetBills)
-  const { preferences, loading: prefLoading } = usePreferences()
+  const { preferences, preferencesLoading } = usePreferences()
 
   const totalBills = useMemo(() => sumBy('amount')(data?.bills), [data])
 
@@ -16,7 +16,7 @@ export const useBills = () => {
     preferences,
     totalBills,
     bills: sortBy('dueDate')(data?.bills),
-    loading: prefLoading || billLoading,
+    loading: preferencesLoading || billLoading,
     ...props
   }
 }
