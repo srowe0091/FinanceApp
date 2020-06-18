@@ -66,7 +66,7 @@ export const BillEntry = ({ name, dueDate, amount, type, notes, disabled }) => {
 }
 
 BillEntry.propTypes = {
-  _id: PropTypes.string,
+  id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
   notes: PropTypes.string,

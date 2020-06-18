@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from '@apollo/react-hooks'
 
-import { GetPreferences, SavePreferemces } from 'modules/preferences'
+import { GetPreferences, SavePreferences } from 'modules/preferences'
 
 export const usePreferences = () => {
   const { data, loading, ...rest } = useQuery(GetPreferences)
@@ -12,5 +12,5 @@ export const usePreferences = () => {
 }
 
 export const useUpdatePreferences = options => {
-  return useMutation(SavePreferemces, options)
+  return useMutation(SavePreferences, options)
 }

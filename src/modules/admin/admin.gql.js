@@ -1,12 +1,16 @@
 import gql from 'graphql-tag'
 
+import { CardFragment } from 'modules/wallet'
 import { TransactionFragment } from 'modules/transaction'
+import { PreferenceFragment } from 'modules/preferences'
 
 export const GroupTransactions = gql`
   query GroupTransactions {
     admin {
       groupTransactions {
-        owner
+        user {
+          email
+        }
         ...TransactionFragment
       }
     }
@@ -18,24 +22,26 @@ export const UsersInGroup = gql`
   query UsersInGroup {
     admin {
       usersInGroup {
-        _id
+        id
         email
-        allowance
         cards {
-          _id
-          name
-          dueDate
+          ...CardFragment
+        }
+        preferences {
+          ...PreferenceFragment
         }
       }
     }
   }
+  ${PreferenceFragment}
+  ${CardFragment}
 `
 
 export const PayTransactions = gql`
   mutation PayTransactions($transactionIds: [ID]!) {
     admin {
       payTransactions(transactionIds: $transactionIds) {
-        _id
+        id
       }
     }
   }

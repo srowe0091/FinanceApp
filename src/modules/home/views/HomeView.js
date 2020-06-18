@@ -48,7 +48,7 @@ const Home = () => {
 
       <IonSlides key={daysLeft.length} pager options={slideOpts} className={classes.dueDateContainer}>
         {map(c => (
-          <IonSlide key={c._id} className={classes.slide}>
+          <IonSlide key={c.id} className={classes.slide}>
             <Card small type={c.type} className={classes.miniCard} />
             <IonText align="left">
               <p variant="subtitle1">{c.name}</p>
@@ -60,7 +60,7 @@ const Home = () => {
         ))(daysLeft)}
       </IonSlides>
 
-      <div className={classes.transactions}>{map(t => <TransactionEntry key={t._id} {...t} />)(transactions)}</div>
+      <div className={classes.transactions}>{map(t => <TransactionEntry key={t.id} {...t} />)(transactions)}</div>
       <Fab routerLink={routes.newTransaction} />
     </ToolbarContent>
   )

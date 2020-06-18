@@ -71,14 +71,14 @@ const Bills = () => {
           Upcoming
         </p>
       )}
-      {map(b => <BillEntry key={b._id} {...b} />)(sortedBills.UPCOMING)}
+      {map(b => <BillEntry key={b.id} {...b} />)(sortedBills.UPCOMING)}
 
       {!!sortedBills.PASSED && (
         <p variant="body2" gutterbottom="1">
           Passed
         </p>
       )}
-      {map(b => <BillEntry key={b._id} {...b} disabled />)(sortedBills.PASSED)}
+      {map(b => <BillEntry key={b.id} {...b} disabled />)(sortedBills.PASSED)}
 
       <Popover event={popoverEvent} onClose={closePopover}>
         <IonItem onClick={toggleAddBill}>Add New Bill</IonItem>

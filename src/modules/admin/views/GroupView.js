@@ -16,13 +16,13 @@ const Users = () => {
   return (
     <ToolbarContent title="Group" loading={loading}>
       {map(d => (
-        <IonCard key={d._id} color="medium" className={classes.card}>
+        <IonCard key={d.id} color="medium" className={classes.card}>
           <IonItem color="transparent" lines="none">
             <IonIcon size="large" slot="start" icon={personCircle} className={classes.icon} />
             <IonCardTitle>{d.email}</IonCardTitle>
-            <IonButton color="light" fill="clear" slot="end">
+            {/* <IonButton color="light" fill="clear" slot="end">
               <IonIcon slot="icon-only" icon={pencil} />
-            </IonButton>
+            </IonButton> */}
           </IonItem>
 
           <IonItem color="transparent" lines="none">
@@ -31,7 +31,7 @@ const Users = () => {
                 Allowance:
               </IonText>
               &nbsp;
-              {currency(d.allowance)}
+              {currency(d.preferences?.allowance)}
             </p>
           </IonItem>
 
@@ -39,7 +39,7 @@ const Users = () => {
             <IonItem color="transparent" lines="none">
               <div className={classes.userCardsContainer}>
                 {map(card => (
-                  <span key={card._id} className={classes.userCards}>
+                  <span key={card.id} className={classes.userCards}>
                     <p display="inline">
                       <IonText color="primary" variant="caption">
                         Card Name:

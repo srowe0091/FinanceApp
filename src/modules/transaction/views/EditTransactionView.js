@@ -43,7 +43,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
   const { cards, loading: walletLoading } = useWallet()
   const [updateTransaction] = useMutation(UpdateTransaction)
 
-  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card._id }))(cards), [cards])
+  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
 
   const onSubmit = useCallback(
     (values, { setSubmitting }) => {
@@ -125,7 +125,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
 
 EditTransaction.propTypes = {
   dismissModal: PropTypes.func,
-  _id: PropTypes.string,
+  id: PropTypes.string,
   amount: PropTypes.number,
   description: PropTypes.string,
   group: PropTypes.bool,

@@ -36,7 +36,7 @@ const PayTransaction = () => {
     []
   )
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const transactions = useMemo(() => groupBy('owner')(data?.admin?.groupTransactions), [data])
+  const transactions = useMemo(() => groupBy('user.email')(data?.admin?.groupTransactions), [data])
 
   useIonViewWillEnter(() => {
     if (isMounted()) {
@@ -60,9 +60,9 @@ const PayTransaction = () => {
               <h5 className={classes.headers}>{email}</h5>
               {map(t => (
                 <TransactionEntry
-                  key={t._id}
+                  key={t.id}
                   onCheckboxClick={checkboxClick}
-                  checked={includes(t._id)(transactionIds)}
+                  checked={includes(t.id)(transactionIds)}
                   {...t}
                 />
               ))(transactions[email])}

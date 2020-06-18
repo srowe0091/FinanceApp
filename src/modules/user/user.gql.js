@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const UserFragment = gql`
   fragment UserFragment on User {
-    _id
+    id
     email
     isAdmin
     inGroup

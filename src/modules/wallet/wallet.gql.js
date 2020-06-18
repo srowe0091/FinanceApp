@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const CardFragment = gql`
   fragment CardFragment on Card {
-    _id
+    id
     name
     type
     dueDate

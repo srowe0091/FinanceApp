@@ -2,14 +2,14 @@ import gql from 'graphql-tag'
 
 export const TransactionFragment = gql`
   fragment TransactionFragment on Transaction {
-    _id
+    id
     paid
     group
     amount
     date
     description
     card {
-      _id
+      id
       name
     }
   }

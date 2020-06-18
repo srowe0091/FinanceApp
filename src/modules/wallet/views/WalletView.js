@@ -35,7 +35,7 @@ const Wallet = () => {
 
   const setCardAsDefault = useCallback(async () => {
     const index = await ref?.current?.getActiveIndex()
-    udpatePreferences(set('variables.input.defaultCard')(cards[index]._id)({}))
+    udpatePreferences(set('variables.input.defaultCard')(cards[index].id)({}))
   }, [ref, cards, udpatePreferences])
 
   return (
@@ -59,8 +59,8 @@ const Wallet = () => {
             </div>
           )}
           {map(card => (
-            <IonSlide key={card._id}>
-              <Card {...card} isDefault={defaultCard === card._id} />
+            <IonSlide key={card.id}>
+              <Card {...card} isDefault={defaultCard === card.id} />
             </IonSlide>
           ))(cards)}
         </IonSlides>

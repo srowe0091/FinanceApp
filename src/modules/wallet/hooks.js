@@ -12,11 +12,11 @@ export const useWallet = () => {
   const { data: walletData, loading: walletLoading } = useCards()
   const { preferences, preferencesLoading } = usePreferences()
 
-  const sortedCards = sortBy([item => (item._id === preferences?.defaultCard ? 0 : 1)])(walletData?.cards)
+  const sortedCards = sortBy([item => (item.id === preferences?.defaultCard?.id ? 0 : 1)])(walletData?.cards)
 
   return {
     cards: sortedCards,
-    defaultCard: preferences?.defaultCard,
+    defaultCard: preferences?.defaultCard?.id,
     loading: walletLoading || preferencesLoading
   }
 }

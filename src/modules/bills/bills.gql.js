@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 const BillFragment = gql`
   fragment BillFragment on Bill {
-    _id
+    id
     name
     amount
     dueDate
