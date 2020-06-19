@@ -10,7 +10,6 @@ const useInputStyles = createUseStyles(theme => ({
     '& input': {
       color: 'var(--white)',
       width: '100%',
-      minHeight: '58px',
       padding: theme.spacing(2, 2.5),
       marginBottom: 'var(--inputSpacing)',
       flex: 'none',

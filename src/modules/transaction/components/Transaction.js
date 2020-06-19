@@ -20,7 +20,6 @@ const useTransactionStyles = createUseStyles(theme => ({
   },
   label: {
     width: '100%',
-    padding: theme.spacing(1, 0.5),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'

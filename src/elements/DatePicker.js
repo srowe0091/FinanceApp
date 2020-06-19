@@ -8,7 +8,6 @@ import { calendar } from 'ionicons/icons'
 const useDatePickerStyles = createUseStyles({
   datePicker: {
     '--border-width': 0,
-    '--min-height': '58px',
     width: '100%',
     marginBottom: 'var(--inputSpacing)',
     borderRadius: 'var(--borderRadius)',

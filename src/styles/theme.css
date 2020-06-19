@@ -34,7 +34,7 @@ body {
   --alpha5: rgba(0, 0, 0, 0.5);
 
   /** variables **/
-  --borderRadius: 16px;
+  --borderRadius: 6px;
   --inputSpacing: 32px;
   --boxShadow: 0px 2px 5px -1px var(--black);
 
