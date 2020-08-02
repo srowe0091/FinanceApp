@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import sortBy from 'lodash/fp/sortBy'
 
 import { GetWallet } from './wallet.gql'

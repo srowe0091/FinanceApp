@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import sumBy from 'lodash/fp/sumBy'
 import sortBy from 'lodash/fp/sortBy'
 

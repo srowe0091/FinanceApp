@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import { createUseStyles } from 'react-jss'
 import { IonText, IonContent } from '@ionic/react'
 import { Formik, Form } from 'formik'

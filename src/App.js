@@ -2,7 +2,7 @@ import React from 'react'
 import { IonApp, IonRouterOutlet } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { Route, Redirect } from 'react-router-dom'
-import { ApolloProvider } from '@apollo/react-hooks'
+import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from 'react-jss'
 
 import './lib/Capacitor'

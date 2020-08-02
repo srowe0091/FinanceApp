@@ -1,7 +1,7 @@
 import React from 'react'
 import { IonCard, IonCardTitle, IonItem, IonIcon, IonButton, IonText } from '@ionic/react'
 import { pencil, personCircle } from 'ionicons/icons'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import map from 'lodash/fp/map'
 
 import { useGroupStyles } from '../util'

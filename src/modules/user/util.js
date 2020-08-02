@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import { useCallback } from 'react'
 
 import { toNumber } from 'utils'

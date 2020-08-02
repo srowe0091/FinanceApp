@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form } from 'formik'
 import { IonContent } from '@ionic/react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 
 import { SaveNewCard } from '../wallet.gql'
 import { NewCardSchema, initialNewCard, useNewCardViewStyles } from '../util'

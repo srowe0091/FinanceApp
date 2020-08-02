@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import { IonText, useIonViewWillEnter } from '@ionic/react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/client'
 import useMountedState from 'react-use/lib/useMountedState'
 import map from 'lodash/fp/map'
 import concat from 'lodash/fp/concat'

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useApolloClient } from '@apollo/client'
 import gql from 'graphql-tag'
 
 import { AuthContext } from './context'

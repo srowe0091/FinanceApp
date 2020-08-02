@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { createUseStyles } from 'react-jss'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 import map from 'lodash/fp/map'
 import sortBy from 'lodash/fp/sortBy'
 import orderBy from 'lodash/fp/orderBy'
