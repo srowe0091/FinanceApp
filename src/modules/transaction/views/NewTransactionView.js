@@ -36,7 +36,7 @@ const NewTransactionPage = ({ history }) => {
     [saveTransaction, history]
   )
 
-  const initialValues = useMemo(() => ({ amount: 0, description: '', group: false, card: defaultCard.id }), [defaultCard])
+  const initialValues = useMemo(() => ({ amount: 0, description: '', group: false, card: defaultCard }), [defaultCard])
 
   const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
 
