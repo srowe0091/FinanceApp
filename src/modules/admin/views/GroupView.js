@@ -1,6 +1,6 @@
 import React from 'react'
-import { IonCard, IonCardTitle, IonItem, IonIcon, IonButton, IonText } from '@ionic/react'
-import { pencil, personCircle } from 'ionicons/icons'
+import { IonCard, IonCardTitle, IonItem, IonIcon, IonText } from '@ionic/react'
+import { personCircle } from 'ionicons/icons'
 import { useQuery } from '@apollo/client'
 import map from 'lodash/fp/map'
 

@@ -40,8 +40,10 @@ const shadows = [
 
 const linearGradient = (color1, color2, degree = 315) => `linear-gradient(${degree}deg, ${color1} 0%, ${color2} 100%)`
 
-export default {
+const theme = {
   spacing: (...size) => size.map(s => (s === 'auto' ? 'auto' : s * 8 + 'px')).join(' '),
   linearGradient,
   shadows
 }
+
+export default theme

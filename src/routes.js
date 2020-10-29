@@ -1,4 +1,4 @@
-export default {
+const routes = {
   login: '/login',
   resetPassword: '/reset-password',
   home: '/home',
@@ -11,3 +11,5 @@ export default {
     payTransaction: '/admin/pay-transaction'
   }
 }
+
+export default routes
