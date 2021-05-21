@@ -31,7 +31,7 @@ const Users = () => {
                 Allowance:
               </IonText>
               &nbsp;
-              {currency(d.preferences?.allowance)}
+              {currency(d.allowance)}
             </p>
           </IonItem>
 

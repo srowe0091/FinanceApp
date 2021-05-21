@@ -1,13 +1,12 @@
 import gql from 'graphql-tag'
 
-import { CardFragment } from 'modules/wallet'
 import { TransactionFragment } from 'modules/transaction'
 
 export const GroupTransactions = gql`
   query GroupTransactions {
     admin {
       groupTransactions {
-        user {
+        owner {
           email
         }
         ...TransactionFragment
@@ -23,13 +22,10 @@ export const UsersInGroup = gql`
       usersInGroup {
         id
         email
-        cards {
-          ...CardFragment
-        }
+        allowance
       }
     }
   }
-  ${CardFragment}
 `
 
 export const PayTransactions = gql`

@@ -36,7 +36,7 @@ const PayTransaction = () => {
     []
   )
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const transactions = useMemo(() => groupBy('user.email')(data?.admin?.groupTransactions), [data])
+  const transactions = useMemo(() => groupBy('owner.email')(data?.admin?.groupTransactions), [data])
 
   useIonViewWillEnter(() => {
     if (isMounted()) {

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { IonButtons, IonIcon, IonItem, IonButton, IonText } from '@ionic/react'
-import { ellipsisVertical, caretUp, caretDown } from 'ionicons/icons'
+import { ellipsisVertical, caretUp, caretDown, calendar } from 'ionicons/icons'
 import useToggle from 'react-use/lib/useToggle'
 import dayjs from 'dayjs'
 import map from 'lodash/fp/map'
@@ -16,7 +16,7 @@ import { ToolbarContent } from 'template'
 
 const Bills = () => {
   const classes = useBillsStyles()
-  const { bills, loading, totalBills, preferences } = useBills()
+  const { bills, loading, totalBills, income } = useBills()
   const [addBillModal, toggleAddBill] = useToggle(false)
   const [calendarModal, toggleCalendarModal] = useToggle(false)
   const [popoverEvent, setShowPopover] = useState(null)
@@ -36,9 +36,9 @@ const Bills = () => {
       title="Bills"
       toolbarChildren={
         <IonButtons slot="end">
-          {/* <IonButton onClick={toggleCalendarModal}>
+          <IonButton onClick={toggleCalendarModal}>
             <IonIcon icon={calendar} />
-          </IonButton> */}
+          </IonButton>
           <IonButton onClick={openPopover}>
             <IonIcon className={classes.icons} icon={ellipsisVertical} />
           </IonButton>
@@ -61,7 +61,7 @@ const Bills = () => {
             <IonText color="primary" variant="caption">
               Household Income:
             </IonText>
-            <p>${(preferences?.income / 100).toFixed(2)}</p>
+            <p>${(income / 100).toFixed(2)}</p>
           </span>
         </IonItem>
       </div>
@@ -87,7 +87,7 @@ const Bills = () => {
       <Modal isOpen={addBillModal} onClose={toggleAddBill}>
         <NewBillView />
       </Modal>
-    
+
       <Modal isOpen={calendarModal} onClose={toggleCalendarModal}>
         <CalendarView />
       </Modal>
