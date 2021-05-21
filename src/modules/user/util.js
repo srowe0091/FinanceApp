@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 import { useCallback } from 'react'
 
 import { toNumber } from 'utils'
-import { SavePreferences } from 'modules/preferences'
+import { SaveUser } from 'modules/user'
 import { useAuthentication } from 'modules/authentication'
 
 export const UserProfileSchema = yup.object().shape({
@@ -13,21 +13,22 @@ export const UserProfileSchema = yup.object().shape({
 
 export const useUpdateUser = () => {
   const { finishProfile } = useAuthentication()
-  const [_updatePreferences, props] = useMutation(SavePreferences, {
+  const [_updatePreferences, props] = useMutation(SaveUser, {
     onCompleted: data => {
-      if (data?.saveUser) {
-        finishProfile(data?.saveUser)
+      if (data?.updateUser) {
+        finishProfile(data?.updateUser)
       }
     }
   })
 
   const handleUpdate = useCallback(
-    ({ allowance, income }) =>
+    ({ allowance, income, defaultCard }) =>
       _updatePreferences({
         variables: {
           input: {
-            income: toNumber(income),
-            allowance: toNumber(allowance)
+            ...(income && { income: toNumber(income) }),
+            ...(allowance && { allowance: toNumber(allowance) }),
+            ...(defaultCard && { defaultCard })
           }
         }
       }),

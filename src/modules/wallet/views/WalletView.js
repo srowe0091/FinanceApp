@@ -3,15 +3,14 @@ import { IonSlides, IonSlide, IonButtons, IonIcon, IonItem, IonButton } from '@i
 import { ellipsisVertical } from 'ionicons/icons'
 import useToggle from 'react-use/lib/useToggle'
 import map from 'lodash/fp/map'
-import set from 'lodash/fp/set'
 
 import { NewCardView } from './NewCardView'
 import { useWalletStyles } from '../util'
 import { useWallet } from '../hooks'
+import { useUpdateUser } from 'modules/user'
 import { Card, Modal, Popover } from 'components'
 import { ToolbarContent } from 'template'
 import { hash } from 'utils'
-import { useUpdatePreferences } from 'modules/preferences'
 
 const slideOpts = {
   slidesPerView: 1.1,
@@ -31,12 +30,12 @@ const Wallet = () => {
   const openPopover = useCallback(e => setShowPopover(e.nativeEvent), [])
   const closePopover = useCallback(() => setShowPopover(null), [])
 
-  const [udpatePreferences] = useUpdatePreferences()
+  const [updateUser] = useUpdateUser()
 
   const setCardAsDefault = useCallback(async () => {
     const index = await ref?.current?.getActiveIndex()
-    udpatePreferences(set('variables.input.defaultCard')(cards[index].id)({}))
-  }, [ref, cards, udpatePreferences])
+    updateUser({ defaultCard: cards[index].id })
+  }, [ref, cards, updateUser])
 
   return (
     <ToolbarContent
@@ -53,9 +52,7 @@ const Wallet = () => {
         <IonSlides key={key} ref={ref} options={slideOpts}>
           {!loading && cards.length === 0 && (
             <div className={classes.emptyWallet}>
-              <h6 align="center">
-                No Cards added
-              </h6>
+              <h6 align="center">No Cards added</h6>
             </div>
           )}
           {map(card => (

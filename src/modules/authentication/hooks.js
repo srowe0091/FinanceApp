@@ -1,12 +1,10 @@
 import { useCallback, useContext, useEffect } from 'react'
-import { useApolloClient } from '@apollo/client'
-import gql from 'graphql-tag'
+import { useApolloClient, useQuery } from '@apollo/client'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
 import { StorageContainer } from 'lib/Capacitor'
-import { UserFragment } from 'modules/user'
-import { PreferenceFragment } from 'modules/preferences'
+import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
   if (!response.ok) {
@@ -14,19 +12,6 @@ const checkErrors = response => {
   }
   return response.text()
 }
-
-const InitQuery = gql`
-  query InitQuery {
-    me {
-      ...UserFragment
-    }
-    preferences {
-      ...PreferenceFragment
-    }
-  }
-  ${UserFragment}
-  ${PreferenceFragment}
-`
 
 const AppId = process.env.REACT_APP_ID
 
@@ -36,10 +21,9 @@ export const useInitializeAuth = () => {
 
   const handleGetUser = useCallback(async () => {
     try {
-      const response = await client.query({ query: InitQuery })
+      const response = await client.query({ query: GetUser })
       const user = response?.data?.me || {}
-      const preferences = response?.data?.preferences || {}
-      if ((!preferences.allowance || !preferences.income) && user.isAdmin) {
+      if ((!user.allowance || !user.income) && user.isAdmin) {
         dispatch({ type: 'COMPLETE_PROFILE', payload: user })
         return
       }
@@ -124,6 +108,6 @@ export const useAuthentication = () => {
 }
 
 export const useUser = () => {
-  const { user } = useContext(AuthContext)
-  return user
+  const { data } = useQuery(GetUser, { fetchPolicy: 'cache-only' })
+  return data.me
 }

@@ -2,7 +2,6 @@ import gql from 'graphql-tag'
 
 import { CardFragment } from 'modules/wallet'
 import { TransactionFragment } from 'modules/transaction'
-import { PreferenceFragment } from 'modules/preferences'
 
 export const GroupTransactions = gql`
   query GroupTransactions {
@@ -27,13 +26,9 @@ export const UsersInGroup = gql`
         cards {
           ...CardFragment
         }
-        preferences {
-          ...PreferenceFragment
-        }
       }
     }
   }
-  ${PreferenceFragment}
   ${CardFragment}
 `
 

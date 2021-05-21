@@ -6,12 +6,26 @@ export const UserFragment = gql`
     email
     isAdmin
     inGroup
+    income
+    allowance
+    defaultCard {
+      id
+    }
   }
 `
 
 export const GetUser = gql`
   query GetUser {
     me {
+      ...UserFragment
+    }
+  }
+  ${UserFragment}
+`
+
+export const SaveUser = gql`
+  mutation SaveUser($input: UserInput!) {
+    updateUser(input: $input) {
       ...UserFragment
     }
   }
