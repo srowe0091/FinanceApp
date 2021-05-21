@@ -32,6 +32,12 @@ const authLink = setContext(async (_, { headers }) => {
 })
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      AdminQuery: {
+        keyFields: [['id']]
+      }
+    }
+  }),
   link: from([authLink, errorLink, httpLink])
 })

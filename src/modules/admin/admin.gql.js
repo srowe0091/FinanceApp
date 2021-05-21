@@ -7,6 +7,7 @@ export const GroupTransactions = gql`
     admin {
       groupTransactions {
         owner {
+          id
           email
         }
         ...TransactionFragment
