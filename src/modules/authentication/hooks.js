@@ -109,5 +109,5 @@ export const useAuthentication = () => {
 
 export const useUser = () => {
   const { data } = useQuery(GetUser, { fetchPolicy: 'cache-only' })
-  return data.me
+  return data?.me ?? {}
 }
