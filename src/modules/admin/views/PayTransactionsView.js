@@ -3,17 +3,20 @@ import { IonText, useIonViewWillEnter } from '@ionic/react'
 import { useQuery, useMutation } from '@apollo/client'
 import useMountedState from 'react-use/lib/useMountedState'
 import map from 'lodash/fp/map'
+import sumBy from 'lodash/fp/sumBy'
 import concat from 'lodash/fp/concat'
 import reject from 'lodash/fp/reject'
 import isEmpty from 'lodash/fp/isEmpty'
 import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
+import mapValues from 'lodash/fp/mapValues'
 
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
 import { PullToRefresh } from 'components'
+import { currency } from 'utils'
 import Pubsub from 'modules/pubsub'
 import { TransactionEntry } from 'modules/transaction'
 
@@ -36,7 +39,11 @@ const PayTransaction = () => {
     []
   )
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const transactions = useMemo(() => groupBy('owner.email')(data?.admin?.groupTransactions), [data])
+  const { transactions, totalSpent } = useMemo(() => {
+    const groupedTransactions = groupBy('owner.email')(data?.admin?.groupTransactions)
+    const totalSpent = mapValues(sumBy('amount'))(groupedTransactions)
+    return { transactions: groupedTransactions, totalSpent }
+  }, [data])
 
   useIonViewWillEnter(() => {
     if (isMounted()) {
@@ -57,7 +64,11 @@ const PayTransaction = () => {
         ) : (
           Object.keys(transactions).map(email => (
             <Fragment key={email}>
-              <h5 className={classes.headers}>{email}</h5>
+              <div>
+                <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;-&nbsp;&nbsp;
+                {currency(totalSpent[email])}
+              </div>
+
               {map(t => (
                 <TransactionEntry
                   key={t.id}
