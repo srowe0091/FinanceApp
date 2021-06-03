@@ -11,6 +11,7 @@ import { useBillsStyles } from '../util'
 import { useBills } from '../hooks'
 import NewBillView from './NewBillsView'
 import CalendarView from './CalendarView'
+import { currency } from 'utils'
 import { Modal, Popover } from 'components'
 import { ToolbarContent } from 'template'
 
@@ -52,7 +53,7 @@ const Bills = () => {
             <IonText color="primary" variant="caption">
               Monthly Bills:
             </IonText>
-            <p>${(totalBills / 100).toFixed(2)}</p>
+            <p>{currency(totalBills)}</p>
           </span>
         </IonItem>
         <IonItem color="transparent" lines="none">
@@ -61,7 +62,7 @@ const Bills = () => {
             <IonText color="primary" variant="caption">
               Household Income:
             </IonText>
-            <p>${(income / 100).toFixed(2)}</p>
+            <p>{currency(income)}</p>
           </span>
         </IonItem>
       </div>

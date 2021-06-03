@@ -31,12 +31,12 @@ const Home = () => {
         <span>
           <IonText>
             <h2>
-              <strong>${amountLeft}</strong>
+              <strong>{amountLeft}</strong>
             </h2>
           </IonText>
-          {groupSpent > 0 && (
+          {!!groupSpent && (
             <IonText>
-              <p>Group Spent: ${groupSpent}</p>
+              <p>Group Spent: {groupSpent}</p>
             </IonText>
           )}
         </span>

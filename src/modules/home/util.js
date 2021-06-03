@@ -7,7 +7,7 @@ import orderBy from 'lodash/fp/orderBy'
 import compose from 'lodash/fp/compose'
 import reduce from 'lodash/fp/reduce'
 
-import { calculateDays } from 'utils'
+import { calculateDays, currency } from 'utils'
 import { UserTransactions } from 'modules/transaction'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -61,8 +61,8 @@ export const useHomeHooks = () => {
     })(0)(data.transactions)
 
     return {
-      groupSpent: (data.groupSpent / 100).toFixed(2),
-      amountLeft: ((allowance - _amountLeft) / 100).toFixed(2)
+      groupSpent: currency(data.groupSpent),
+      amountLeft: currency(allowance - _amountLeft, true)
     }
   }, [data, allowance])
 

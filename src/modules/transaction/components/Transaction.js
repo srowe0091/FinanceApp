@@ -8,7 +8,7 @@ import useClickAway from 'react-use/lib/useClickAway'
 import isFunction from 'lodash/fp/isFunction'
 
 import { EditTransaction } from '../views/EditTransactionView'
-import { formatDate } from 'utils'
+import { formatDate, currency } from 'utils'
 import { Modal } from 'components'
 
 const useTransactionStyles = createUseStyles(theme => ({
@@ -74,7 +74,7 @@ export const TransactionEntry = ({ id, amount, description, date, onCheckboxClic
               </p>
             </span>
             <span align="right">
-              <p>${(amount / 100).toFixed(2)}</p>
+              <p>{currency(amount)}</p>
               <p color="textSecondary" variant="caption">
                 {card?.name}
               </p>
