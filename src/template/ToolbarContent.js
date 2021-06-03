@@ -36,7 +36,7 @@ export const ToolbarContent = ({ children, toolbarChildren, title, back, loading
       {loading && <RelativeLoader />}
 
       <IonContent ref={ref} color="background" fullscreen scrollEvents onIonScroll={scrollHandler}>
-        <div className={classes.container}>{children}</div>
+        <div className={classes.container}>{!loading && children}</div>
       </IonContent>
     </>
   )

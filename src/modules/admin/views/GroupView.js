@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { IonCard, IonCardTitle, IonItem, IonIcon, IonText } from '@ionic/react'
 import { personCircle } from 'ionicons/icons'
 import { useQuery } from '@apollo/client'
 import map from 'lodash/fp/map'
+import get from 'lodash/fp/get'
+import sortBy from 'lodash/fp/sortBy'
+import update from 'lodash/fp/update'
+import compose from 'lodash/fp/compose'
 
 import { useGroupStyles } from '../util'
 import { UsersInGroup } from '../admin.gql'
@@ -12,6 +16,10 @@ import { currency, calculateDays } from 'utils'
 const Users = () => {
   const classes = useGroupStyles()
   const { data, loading } = useQuery(UsersInGroup)
+  const parsedUsers = useMemo(
+    () => compose(map(update('cards')(sortBy('name'))), get('admin.usersInGroup'))(data),
+    [data]
+  )
 
   return (
     <ToolbarContent title="Group" loading={loading}>
@@ -60,7 +68,7 @@ const Users = () => {
             </IonItem>
           )}
         </IonCard>
-      ))(data?.admin?.usersInGroup)}
+      ))(parsedUsers)}
     </ToolbarContent>
   )
 }
