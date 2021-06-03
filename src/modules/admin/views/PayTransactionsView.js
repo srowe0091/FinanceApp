@@ -64,10 +64,10 @@ const PayTransaction = () => {
         ) : (
           Object.keys(transactions).map(email => (
             <Fragment key={email}>
-              <div>
+              <IonText>
                 <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;-&nbsp;&nbsp;
                 {currency(totalSpent[email])}
-              </div>
+              </IonText>
 
               {map(t => (
                 <TransactionEntry
