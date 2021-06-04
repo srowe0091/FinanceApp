@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import { IonText, useIonViewWillEnter } from '@ionic/react'
 import { useQuery, useMutation } from '@apollo/client'
-import useMountedState from 'react-use/lib/useMountedState'
+import { useMountedState } from 'react-use'
 import map from 'lodash/fp/map'
 import sumBy from 'lodash/fp/sumBy'
 import concat from 'lodash/fp/concat'

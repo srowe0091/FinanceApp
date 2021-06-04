@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { IonButtons, IonIcon, IonItem, IonButton, IonText } from '@ionic/react'
 import { ellipsisVertical, caretUp, caretDown, calendar } from 'ionicons/icons'
-import useToggle from 'react-use/lib/useToggle'
+import { useToggle } from 'react-use'
 import dayjs from 'dayjs'
 import map from 'lodash/fp/map'
 import groupBy from 'lodash/fp/groupBy'

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react'
 import { IonSlides, IonSlide, IonButtons, IonIcon, IonItem, IonButton } from '@ionic/react'
 import { ellipsisVertical } from 'ionicons/icons'
-import useToggle from 'react-use/lib/useToggle'
+import { useToggle } from 'react-use'
 import map from 'lodash/fp/map'
 
 import { NewCardView } from './NewCardView'
