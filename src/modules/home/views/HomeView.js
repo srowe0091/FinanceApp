@@ -8,6 +8,7 @@ import { ToolbarContent } from 'template'
 import { PullToRefresh, Card } from 'components'
 import { formatDate } from 'utils'
 import routes from 'routes'
+import { StaggeredList } from 'animation'
 import { TransactionEntry } from 'modules/transaction'
 
 const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
@@ -60,7 +61,13 @@ const Home = () => {
         ))(daysLeft)}
       </IonSlides>
 
-      <div className={classes.transactions}>{map(t => <TransactionEntry key={t.id} {...t} />)(transactions)}</div>
+      <div className={classes.transactions}>
+        {transactions.map((t, idx) => (
+          <StaggeredList key={t.id} index={idx}>
+            <TransactionEntry {...t} />
+          </StaggeredList>
+        ))}
+      </div>
       <Fab routerLink={routes.newTransaction} />
     </ToolbarContent>
   )

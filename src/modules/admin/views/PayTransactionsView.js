@@ -2,7 +2,6 @@ import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import { IonText, useIonViewWillEnter } from '@ionic/react'
 import { useQuery, useMutation } from '@apollo/client'
 import { useMountedState } from 'react-use'
-import map from 'lodash/fp/map'
 import sumBy from 'lodash/fp/sumBy'
 import concat from 'lodash/fp/concat'
 import reject from 'lodash/fp/reject'
@@ -14,6 +13,7 @@ import mapValues from 'lodash/fp/mapValues'
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
+import { StaggeredList } from 'animation'
 import { ToolbarContent } from 'template'
 import { PullToRefresh } from 'components'
 import { currency } from 'utils'
@@ -69,14 +69,11 @@ const PayTransaction = () => {
                 {currency(totalSpent[email])}
               </IonText>
 
-              {map(t => (
-                <TransactionEntry
-                  key={t.id}
-                  onCheckboxClick={checkboxClick}
-                  checked={includes(t.id)(transactionIds)}
-                  {...t}
-                />
-              ))(transactions[email])}
+              {transactions[email]?.map((t, idx) => (
+                <StaggeredList key={t.id} index={idx}>
+                  <TransactionEntry onCheckboxClick={checkboxClick} checked={includes(t.id)(transactionIds)} {...t} />
+                </StaggeredList>
+              ))}
             </Fragment>
           ))
         )}
