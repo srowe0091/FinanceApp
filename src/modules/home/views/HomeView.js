@@ -66,7 +66,7 @@ const Home = () => {
 
       <div className={classes.transactions}>
         {transactions.map((t, idx) => (
-          <StaggeredList key={t.id} index={idx + 10}>
+          <StaggeredList key={t.id} index={idx} delay={10}>
             <TransactionEntry {...t} />
           </StaggeredList>
         ))}

@@ -6,7 +6,7 @@ const useStaggeredListStyles = createUseStyles({
   '@keyframes staggeredList': {
     from: {
       opacity: 0,
-      transform: `scale(.7) translateY(-12px)`
+      transform: `scale(.8) translateY(150%)`
     },
     to: {
       opacity: 1,
@@ -17,9 +17,9 @@ const useStaggeredListStyles = createUseStyles({
     position: 'relative',
     animationName: '$staggeredList',
     animationDuration: 500,
-    animationDelay: ({ index }) => `${40 * index}ms`,
+    animationDelay: ({ index, delay = 0 }) => `${40 * (index + delay)}ms`,
     animationFillMode: 'backwards',
-    animationTimingFunction: 'ease-out'
+    animationTimingFunction: 'ease-in-out'
   }
 })
 
