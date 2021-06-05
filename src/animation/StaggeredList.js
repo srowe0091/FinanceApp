@@ -1,14 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import clsx from 'clsx'
 import { createUseStyles } from 'react-jss'
-import { useMountedState } from 'react-use'
+import { Base } from './Base'
 
-const useStaggeredListAnimationStyles = createUseStyles({
+const useStaggeredListStyles = createUseStyles({
   '@keyframes staggeredList': {
     from: {
       opacity: 0,
-      transform: `scale(.75)`
+      transform: `scale(.7) translateY(-12px)`
     },
     to: {
       opacity: 1,
@@ -18,20 +16,11 @@ const useStaggeredListAnimationStyles = createUseStyles({
   animate: {
     position: 'relative',
     animationName: '$staggeredList',
-    animationDuration: 250,
-    animationDelay: ({ index }) => `${50 * index}ms`,
+    animationDuration: 500,
+    animationDelay: ({ index }) => `${40 * index}ms`,
     animationFillMode: 'backwards',
     animationTimingFunction: 'ease-out'
   }
 })
 
-export const StaggeredList = ({ index, children }) => {
-  const classes = useStaggeredListAnimationStyles({ index })
-  const isMounted = useMountedState()
-  return <div className={clsx(!isMounted() && classes.animate)}>{children}</div>
-}
-
-StaggeredList.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number
-}
+export const StaggeredList = props => <Base animationStyles={useStaggeredListStyles} {...props} />
