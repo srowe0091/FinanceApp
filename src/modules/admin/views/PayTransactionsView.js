@@ -78,7 +78,7 @@ const PayTransaction = () => {
           ))
         )}
       </div>
-      {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} loading={ptLoading} />}
+      {!!transactionIds.length && <Fab disableAnimation text="PAY" onClick={payTransaction} loading={ptLoading} />}
     </ToolbarContent>
   )
 }

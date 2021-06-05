@@ -19,6 +19,7 @@ const useTransactionStyles = createUseStyles(theme => ({
   },
   label: {
     width: '100%',
+    padding: theme.spacing(1, 0.5),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -73,10 +74,7 @@ export const TransactionEntry = ({ id, amount, description, date, onCheckboxClic
               </p>
             </span>
             <span align="right">
-              <p>{currency(amount)}</p>
-              <p color="textSecondary" variant="caption">
-                {card?.name}
-              </p>
+              <p variant="subtitle1">{currency(amount)}</p>
             </span>
           </span>
           {onCheckboxClick && (
