@@ -8,7 +8,7 @@ import { ToolbarContent } from 'template'
 import { PullToRefresh, Card } from 'components'
 import { formatDate } from 'utils'
 import routes from 'routes'
-import { StaggeredList, Fade } from 'animation'
+import { StaggeredList, Fade, SlideIn } from 'animation'
 import { TransactionEntry } from 'modules/transaction'
 
 const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
@@ -48,7 +48,7 @@ const Home = () => {
           </IonText>
         </div>
       </Fade>
-      <Fade delay={150}>
+      <SlideIn duration={750}>
         <IonSlides key={daysLeft.length} pager options={slideOpts} className={classes.dueDateContainer}>
           {map(c => (
             <IonSlide key={c.id} className={classes.slide}>
@@ -62,7 +62,7 @@ const Home = () => {
             </IonSlide>
           ))(daysLeft)}
         </IonSlides>
-      </Fade>
+      </SlideIn>
 
       <div className={classes.transactions}>
         {transactions.map((t, idx) => (
