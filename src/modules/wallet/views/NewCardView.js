@@ -14,7 +14,8 @@ const selectOptions = [
   { value: 'VISA', label: 'Visa' },
   { value: 'MASTERCARD', label: 'MasterCard' },
   { value: 'DISCOVER', label: 'Discover' },
-  { value: 'AMERICAN_EXPRESS', label: 'American Express' }
+  { value: 'AMERICAN_EXPRESS', label: 'American Express' },
+  { value: 'OTHER', label: 'Other' }
 ]
 
 export const NewCardView = ({ dismissModal }) => {

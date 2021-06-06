@@ -1,9 +1,8 @@
-import { Plugins } from '@capacitor/core'
+import { App } from '@capacitor/app'
+import { Storage } from '@capacitor/storage'
 import includes from 'lodash/fp/includes'
 
 import routes from 'routes'
-
-const { App, Storage } = Plugins
 
 const _closeAppRoutes = [routes.home, routes.login]
 
