@@ -71,7 +71,7 @@ const PayTransaction = () => {
 
               {transactions[email]?.map((t, idx) => (
                 <StaggeredList key={t.id} index={idx}>
-                  <TransactionEntry onCheckboxClick={checkboxClick} checked={includes(t.id)(transactionIds)} {...t} />
+                  <TransactionEntry disableEdit onCheckboxClick={checkboxClick} checked={includes(t.id)(transactionIds)} {...t} />
                 </StaggeredList>
               ))}
             </Fragment>

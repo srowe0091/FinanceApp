@@ -44,7 +44,17 @@ const useTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const TransactionEntry = ({ id, amount, description, date, onCheckboxClick, checked, group, card }) => {
+export const TransactionEntry = ({
+  id,
+  amount,
+  description,
+  date,
+  checked,
+  group,
+  card,
+  onCheckboxClick,
+  disableEdit
+}) => {
   const ref = useRef(null)
   const classes = useTransactionStyles()
   const [modalState, toggleModal] = useToggle(false)
@@ -87,11 +97,13 @@ export const TransactionEntry = ({ id, amount, description, date, onCheckboxClic
           )}
         </IonItem>
 
-        <IonItemOptions side="end" onIonSwipe={openEdit}>
-          <IonItemOption expandable onClick={openEdit}>
-            Edit
-          </IonItemOption>
-        </IonItemOptions>
+        {!disableEdit && (
+          <IonItemOptions side="end" onIonSwipe={openEdit}>
+            <IonItemOption expandable onClick={openEdit}>
+              Edit
+            </IonItemOption>
+          </IonItemOptions>
+        )}
       </IonItemSliding>
 
       <Modal isOpen={modalState} onClose={toggleModal}>
@@ -107,7 +119,8 @@ TransactionEntry.propTypes = {
   description: PropTypes.string,
   date: PropTypes.string,
   checked: PropTypes.bool,
-  onCheckboxClick: PropTypes.func,
   group: PropTypes.bool,
-  card: PropTypes.object
+  card: PropTypes.object,
+  onCheckboxClick: PropTypes.func,
+  disableEdit: PropTypes.bool
 }

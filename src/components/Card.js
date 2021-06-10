@@ -96,6 +96,11 @@ const useStyles = createUseStyles(theme => ({
     boxShadow: '0px 10px 20px -5px #2e1c92',
     '&::before': cardTitle(theme.spacing(2), 'AMEX')
   },
+  OTHER: {
+    background: 'linear-gradient(135deg, #0078ce 0%, #3e9439 100%)',
+    boxShadow: '0px 10px 20px -5px #2e963b',
+    '&::before': cardTitle(theme.spacing(2), 'CC')
+  },
   mini: {
     padding: '4px 10px',
     boxShadow: 'none',
@@ -110,7 +115,8 @@ const cardMap = {
   VISA: 'Visa',
   DISCOVER: 'Discover',
   MASTERCARD: 'MC',
-  AMERICAN_EXPRESS: 'Amex'
+  AMERICAN_EXPRESS: 'Amex',
+  OTHER: 'CC'
 }
 
 export const Card = ({ className, type, createdAt, isDefault, small, dueDate = 'XX', name = 'Name of Card' }) => {
