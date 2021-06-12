@@ -1,23 +1,23 @@
 @font-face {
-  font-family: 'Ubuntu';
+  font-family: 'Rubik';
   font-weight: 300;
-  src: url('./Ubuntu-Light.ttf');
+  src: url('./Rubik-Light.ttf');
 }
 
 @font-face {
-  font-family: 'Ubuntu';
+  font-family: 'Rubik';
   font-weight: 400;
-  src: url('./Ubuntu-Regular.ttf');
+  src: url('./Rubik-Regular.ttf');
 }
 
 @font-face {
-  font-family: 'Ubuntu';
+  font-family: 'Rubik';
   font-weight: 500;
-  src: url('./Ubuntu-Medium.ttf');
+  src: url('./Rubik-Medium.ttf');
 }
 
 @font-face {
-  font-family: 'Ubuntu';
+  font-family: 'Rubik';
   font-weight: 700;
-  src: url('./Ubuntu-Bold.ttf');
+  src: url('./Rubik-Bold.ttf');
 }
