@@ -16,8 +16,8 @@ export const toNumber = str => parseInt(replace(/\D/g)('')(str), '10')
 const customConstant = text => count => ({ text, count })
 
 const _determineDays = cond([
-  [or(isEqual(15), isEqual(0)), customConstant('Submit Payment Today')],
-  [isEqual(1), customConstant('Payment Due Tomorrow')],
+  [or(isEqual(15), isEqual(0)), customConstant('Submit Today')],
+  [isEqual(1), customConstant('Due Tomorrow')],
   [stubTrue, v => customConstant(`${v} days left`)(v)]
 ])
 
