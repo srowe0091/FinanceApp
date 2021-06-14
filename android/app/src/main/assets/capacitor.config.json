@@ -7,7 +7,7 @@
 	"cordova": {},
 	"plugins": {
 		"SplashScreen": {
-			"launchShowDuration": 500
+			"launchShowDuration": 1000
 		},
 		"LocalNotifications": {
 			"smallIcon": "ic_launcher"
