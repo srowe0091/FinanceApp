@@ -77,7 +77,7 @@ const useStyles = createUseStyles(theme => ({
     }
   },
   VISA: {
-    background: 'linear-gradient(135deg, #6d87e7 0%, #6bcbe1 100%)',
+    background: 'linear-gradient(135deg, #1a1e5d 0%, #4270e7 100%)',
     boxShadow: '0px 10px 20px -5px #2d97bd',
     '&::before': cardTitle(theme.spacing(2), 'VISA')
   },
@@ -102,7 +102,10 @@ const useStyles = createUseStyles(theme => ({
     '&::before': cardTitle(theme.spacing(2), 'CC')
   },
   mini: {
-    padding: '4px 10px',
+    textAlign: 'center',
+    color: 'var(--white)',
+    width: '65px',
+    padding: theme.spacing(1, 0),
     boxShadow: 'none',
     borderRadius: '6px',
     '&::before': {
@@ -112,10 +115,10 @@ const useStyles = createUseStyles(theme => ({
 }))
 
 const cardMap = {
-  VISA: 'Visa',
-  DISCOVER: 'Discover',
+  VISA: 'VISA',
+  DISCOVER: 'DISC',
   MASTERCARD: 'MC',
-  AMERICAN_EXPRESS: 'Amex',
+  AMERICAN_EXPRESS: 'AMEX',
   OTHER: 'CC'
 }
 
@@ -126,7 +129,9 @@ export const Card = ({ className, type, createdAt, isDefault, small, dueDate = '
   if (small) {
     return (
       <div className={clsx(classes.mini, classes[type], className)}>
-        <p>{cardMap[type]}</p>
+        <p>
+          <strong>{cardMap[type]}</strong>
+        </p>
       </div>
     )
   }
