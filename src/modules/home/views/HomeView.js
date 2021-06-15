@@ -1,69 +1,78 @@
-import React from 'react'
-import { IonText, IonSlides, IonSlide } from '@ionic/react'
+import React, { useCallback, useState } from 'react'
+import clsx from 'clsx'
 import map from 'lodash/fp/map'
+import { IonText, IonIcon } from '@ionic/react'
+import AnimateHeight from 'react-animate-height'
+
+import { chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
-import { Fab } from 'elements'
 import { ToolbarContent } from 'template'
-import { PullToRefresh, Card } from 'components'
+import { PullToRefresh, Card, ProgressBar } from 'components'
 import { formatDate } from 'utils'
-import routes from 'routes'
-import { StaggeredList, Fade, SlideIn } from 'animation'
+import { StaggeredList } from 'animation'
 import { TransactionEntry } from 'modules/transaction'
 
 const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
 
-const slideOpts = {
-  slidesPerView: 1,
-  initialSlide: 0,
-  centeredSlides: true,
-  pager: true
-}
-
 const Home = () => {
-  const classes = useHomeViewStyles()
-  const { amountLeft, groupSpent, daysLeft, transactions, loading, onRefresh } = useHomeHooks()
+  const [expand, updateExpansion] = useState(false)
+  const { amountLeft, percentage, groupSpent, daysLeft, transactions, loading, onRefresh } = useHomeHooks()
+  const classes = useHomeViewStyles({ cardsPresent: daysLeft.length })
+
+  const handleOpen = useCallback(
+    () => !expand && daysLeft.length > 1 && updateExpansion(true),
+    [daysLeft.length, expand]
+  )
+
+  const handleClose = useCallback(() => expand && updateExpansion(false), [expand])
 
   return (
     <ToolbarContent loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
 
-      <Fade duration={750}>
-        <div className={classes.card}>
-          <span>
-            <IonText>
-              <h2>
-                <strong>{amountLeft}</strong>
-              </h2>
-            </IonText>
-            {!!groupSpent && (
-              <IonText>
-                <p>Group Spent: {groupSpent}</p>
-              </IonText>
-            )}
-          </span>
+      <div className={clsx(classes.header, expand && classes.expandedHeader)}>
+        <h2>
+          <strong>{amountLeft}</strong>
+        </h2>
 
-          <IonText>
-            <p>{todayDate}</p>
-          </IonText>
+        <ProgressBar className={classes.progressBar} percent={percentage} />
+
+        <p>{todayDate}</p>
+      </div>
+
+      <div className={clsx(classes.summary, expand && classes.expandedSummary)} onClick={handleOpen}>
+        <AnimateHeight height={expand ? 'auto' : 68} duration={550} delay={100}>
+          <div className={classes.cardList}>
+            {map(c => (
+              <div key={c.id} className={classes.card}>
+                <Card small type={c.type} className={classes.cardSpace} />
+                <IonText align="left">
+                  <h6>{c.name}</h6>
+                  <p variant="caption" color="textSecondary">
+                    {c.text}
+                  </p>
+                </IonText>
+              </div>
+            ))(daysLeft)}
+          </div>
+        </AnimateHeight>
+
+        <div className={classes.flex}>
+          <h6>{groupSpent}</h6>
+          <p variant="caption" color="textSecondary">
+            Group Spent
+          </p>
         </div>
-      </Fade>
-      <SlideIn duration={750}>
-        <IonSlides key={daysLeft.length} pager options={slideOpts} className={classes.dueDateContainer}>
-          {map(c => (
-            <IonSlide key={c.id} className={classes.slide}>
-              <Card small type={c.type} className={classes.miniCard} />
-              <IonText align="left">
-                <p variant="subtitle1">{c.name}</p>
-                <p variant="caption" color="textSecondary">
-                  {c.text}
-                </p>
-              </IonText>
-            </IonSlide>
-          ))(daysLeft)}
-        </IonSlides>
-      </SlideIn>
 
+        {daysLeft.length > 1 && (
+          <IonIcon
+            onClick={handleClose}
+            icon={chevronDown}
+            className={clsx(classes.expandIcon, expand && classes.rotateIcon)}
+          />
+        )}
+      </div>
       <div className={classes.transactions}>
         {transactions.map((t, idx) => (
           <StaggeredList key={t.id} index={idx} delay={10}>
@@ -71,7 +80,6 @@ const Home = () => {
           </StaggeredList>
         ))}
       </div>
-      <Fab delay={300} routerLink={routes.newTransaction} />
     </ToolbarContent>
   )
 }

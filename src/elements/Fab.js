@@ -9,7 +9,6 @@ import { Grow } from 'animation'
 const useFabStyles = createUseStyles(theme => ({
   container: {
     padding: theme.spacing(0.5),
-    overflow: 'hidden',
     position: 'fixed'
   },
   fab: {

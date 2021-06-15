@@ -13,37 +13,90 @@ import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
 
 export const useHomeViewStyles = createUseStyles(theme => ({
-  card: {
+  header: {
+    color: 'var(--white)',
+    textShadow: '0px 4px 4px var(--alpha5)',
     textAlign: 'center',
-    width: '85%',
-    height: theme.spacing(21),
-    margin: theme.spacing(0, 'auto'),
+    padding: theme.spacing(6, 4, 8),
     display: 'flex',
+    position: 'relative',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    position: 'relative',
-    background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-tertiary)'),
-    boxShadow: '0px 4px 10px -4px var(--black)',
-    borderRadius: 'var(--borderRadius)'
+    background: theme.linearGradient('var(--ion-color-primary)', 'var(--ion-color-secondary)'),
+    transition: theme.transition({})
+  },
+  progressBar: {
+    maxWidth: 300,
+    margin: theme.spacing(3, 'auto'),
+    filter: 'drop-shadow(0px 2px 6px var(--alpha5))'
   },
   transactions: {
-    paddingBottom: theme.spacing(8)
+    '&:before': {
+      content: '""',
+      width: '100%',
+      height: '16px',
+      left: 0,
+      position: 'absolute',
+      transform: 'translateY(-100%)',
+      backgroundColor: '#F8F8FF',
+      borderRadius: '20px 20px 0 0 '
+    },
+    backgroundColor: '#F8F8FF',
+    padding: theme.spacing(0, 2, 1)
   },
-  dueDateContainer: {
-    width: '100%',
-    padding: theme.spacing(1, 0),
-    margin: theme.spacing(2, 'auto'),
-    borderRadius: 'var(--borderRadius)',
-    '& > .swiper-pagination': {
-      bottom: '5px'
+  flex: {
+    textAlign: 'right',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  summary: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: theme.spacing(0, 2, 0),
+    backgroundColor: '#e0e9ff',
+    transition: theme.transition({}),
+    '&:before': {
+      content: '""',
+      width: '100%',
+      height: '16px',
+      left: 0,
+      position: 'absolute',
+      transform: 'translateY(-100%)',
+      backgroundColor: '#e0e9ff',
+      borderRadius: '20px 20px 0 0 '
     }
   },
-  slide: {
-    alignSelf: 'center',
-    padding: theme.spacing(0, 2, 2)
+
+  card: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(2)
   },
-  miniCard: {
-    marginRight: theme.spacing(2)
+  cardSpace: {
+    marginRight: theme.spacing(1)
+  },
+  cardList: {
+    paddingBottom: theme.spacing(4)
+  },
+  expandedSummary: {
+    marginTop: ({ cardsPresent }) => theme.spacing(-Math.min(cardsPresent, 5))
+  },
+  expandedHeader: {
+    marginTop: ({ cardsPresent }) => theme.spacing(-Math.min(cardsPresent, 6))
+  },
+  expandIcon: {
+    margin: '0 auto',
+    left: 0,
+    right: 0,
+    bottom: 18,
+    position: 'absolute',
+    transition: theme.transition({ duration: 200 })
+  },
+  rotateIcon: {
+    transform: 'rotateZ(-180deg)',
+    bottom: theme.spacing(3.5)
   }
 }))
 
@@ -52,7 +105,7 @@ export const useHomeHooks = () => {
   const { cards, loading: walletLoading } = useWallet()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const { amountLeft, groupSpent } = useMemo(() => {
+  const { amountLeft, groupSpent, percentage, transactions } = useMemo(() => {
     const _amountLeft = reduce((acc, curr) => {
       if (!curr.group) {
         acc = acc + curr.amount
@@ -60,9 +113,13 @@ export const useHomeHooks = () => {
       return acc
     })(0)(data.transactions)
 
+    const diff = allowance - _amountLeft
+
     return {
       groupSpent: currency(data.groupSpent),
-      amountLeft: currency(allowance - _amountLeft, true)
+      amountLeft: currency(diff, true),
+      percentage: diff / allowance,
+      transactions: orderBy(['date'])(['desc'])(data.transactions)
     }
   }, [data, allowance])
 
@@ -76,11 +133,12 @@ export const useHomeHooks = () => {
   )
 
   return {
+    onRefresh,
+    daysLeft,
+    percentage,
     amountLeft,
     groupSpent,
-    daysLeft,
-    onRefresh,
-    loading: loading || walletLoading,
-    transactions: orderBy(['date'])(['desc'])(data.transactions)
+    transactions,
+    loading: loading || walletLoading
   }
 }

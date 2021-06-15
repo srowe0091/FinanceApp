@@ -43,7 +43,8 @@ const linearGradient = (color1, color2, degree = 315) => `linear-gradient(${degr
 const theme = {
   spacing: (...size) => size.map(s => (s === 'auto' ? 'auto' : s * 8 + 'px')).join(' '),
   linearGradient,
-  shadows
+  shadows,
+  transition: ({ property = 'all', duration = 500, timing = 'ease-in-out' }) => `${property} ${duration}ms ${timing}`
 }
 
 export default theme
