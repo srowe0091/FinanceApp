@@ -3,9 +3,10 @@ import { createUseStyles } from 'react-jss'
 export const usePayTransactionStyles = createUseStyles(theme => ({
   transactions: {
     flex: 1,
-    paddingBottom: theme.spacing(8)
+    padding: theme.spacing(2, 2, 8)
   },
   headers: {
+    color: 'var(--white)',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -28,6 +29,9 @@ export const usePayTransactionStyles = createUseStyles(theme => ({
 }))
 
 export const useGroupStyles = createUseStyles(theme => ({
+  container: {
+    padding: theme.spacing(2)
+  },
   card: {
     marginBottom: theme.spacing(2),
     borderRadius: 'var(--borderRadius)'

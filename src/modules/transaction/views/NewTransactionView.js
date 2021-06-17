@@ -41,7 +41,7 @@ const NewTransactionPage = ({ history }) => {
   const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
 
   return (
-    <ToolbarContent back title="New Transaction">
+    <ToolbarContent>
       <Formik
         validateOnMount
         enableReinitialize

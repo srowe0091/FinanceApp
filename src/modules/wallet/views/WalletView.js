@@ -7,10 +7,10 @@ import map from 'lodash/fp/map'
 import { NewCardView } from './NewCardView'
 import { useWalletStyles } from '../util'
 import { useWallet } from '../hooks'
-import { useUpdateUser } from 'modules/user'
 import { Card, Modal, Popover } from 'components'
 import { ToolbarContent } from 'template'
 import { hash } from 'utils'
+import { useUpdateUser } from 'modules/user'
 
 const slideOpts = {
   slidesPerView: 1.1,
@@ -39,7 +39,6 @@ const Wallet = () => {
 
   return (
     <ToolbarContent
-      title="Wallet"
       toolbarChildren={
         <IonButtons slot="end">
           <IonButton onClick={openPopover}>
@@ -57,7 +56,7 @@ const Wallet = () => {
           )}
           {map(card => (
             <IonSlide key={card.id}>
-              <Card {...card} isDefault={defaultCard === card.id} />
+              <Card isDefault={defaultCard === card.id} {...card} />
             </IonSlide>
           ))(cards)}
         </IonSlides>

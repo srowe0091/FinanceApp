@@ -33,6 +33,7 @@ const defaultTagStyling = {
 
 const useStyles = createUseStyles(theme => ({
   container: {
+    color: 'var(--white)',
     padding: theme.spacing(7, 2, 2, 2),
     width: '100%',
     height: '100%',
@@ -78,27 +79,27 @@ const useStyles = createUseStyles(theme => ({
   },
   VISA: {
     background: 'linear-gradient(135deg, #1a1e5d 0%, #4270e7 100%)',
-    boxShadow: '0px 10px 20px -5px #2d97bd',
+    // boxShadow: '0px 10px 20px -5px #2d97bd',
     '&::before': cardTitle(theme.spacing(2), 'VISA')
   },
   DISCOVER: {
     background: 'linear-gradient(135deg, #dd581c 0%, #fba321 100%)',
-    boxShadow: '0px 10px 20px -5px #dd581c',
+    // boxShadow: '0px 10px 20px -5px #dd581c',
     '&::before': cardTitle(theme.spacing(2), 'DISCOVER')
   },
   MASTERCARD: {
     background: 'linear-gradient(135deg, #e52e29 0%, #f89d2d 100%)',
-    boxShadow: '0px 10px 20px -5px #f5742d',
+    // boxShadow: '0px 10px 20px -5px #f5742d',
     '&::before': cardTitle(theme.spacing(2), 'MASTERCARD')
   },
   AMERICAN_EXPRESS: {
     background: 'linear-gradient(135deg, #01aae3 0%, #27256c 100%)',
-    boxShadow: '0px 10px 20px -5px #2e1c92',
+    // boxShadow: '0px 10px 20px -5px #2e1c92',
     '&::before': cardTitle(theme.spacing(2), 'AMEX')
   },
   OTHER: {
     background: 'linear-gradient(135deg, #0078ce 0%, #3e9439 100%)',
-    boxShadow: '0px 10px 20px -5px #2e963b',
+    // boxShadow: '0px 10px 20px -5px #2e963b',
     '&::before': cardTitle(theme.spacing(2), 'CC')
   },
   mini: {

@@ -65,7 +65,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
   )
 
   return (
-    <IonContent color="dark">
+    <IonContent>
       <div className={classes.container}>
         <IonText color="light">
           <h5 className={classes.header}>Edit Transaction</h5>

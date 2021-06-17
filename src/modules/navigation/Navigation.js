@@ -1,6 +1,6 @@
 import React from 'react'
 import { IonIcon, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton } from '@ionic/react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, useLocation } from 'react-router-dom'
 import { homeSharp, walletSharp, shieldHalfSharp, notificationsSharp, personSharp } from 'ionicons/icons'
 
 // User views
@@ -19,6 +19,7 @@ import routes from 'routes'
 import { useUser, useAuthentication } from 'modules/authentication'
 
 export const Navigation = () => {
+  const { pathname } = useLocation()
   const { isAdmin } = useUser()
   const { isAuthenticated } = useAuthentication()
 
@@ -52,7 +53,7 @@ export const Navigation = () => {
           <IonTabButton disabled />
 
           {isAdmin ? (
-            <IonTabButton tab={routes.admin.index} href={routes.admin.index}>
+            <IonTabButton tab={routes.admin.index} href={routes.admin.payTransaction}>
               <IonIcon icon={shieldHalfSharp} />
             </IonTabButton>
           ) : (
@@ -66,7 +67,7 @@ export const Navigation = () => {
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
-      <NavFab routerLink={routes.newTransaction} />
+      <NavFab {...(pathname !== routes.newTransaction && { routerLink: routes.newTransaction })} />
     </>
   )
 }

@@ -40,7 +40,7 @@ export const NewCardView = ({ dismissModal }) => {
   )
 
   return (
-    <IonContent color="dark">
+    <IonContent>
       <Formik onSubmit={onSubmit} initialValues={initialNewCard} validationSchema={NewCardSchema} validateOnMount>
         {({ values, handleBlur, handleChange, handleSubmit, isValid, isSubmitting }) => (
           <Form className={classes.container}>
