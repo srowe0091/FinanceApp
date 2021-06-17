@@ -7,6 +7,7 @@ const routes = {
   newTransaction: '/new-transaction',
   lab: '/lab',
   admin: {
+    index: '/admin',
     group: '/admin/group',
     payTransaction: '/admin/pay-transaction'
   }

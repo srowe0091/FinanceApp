@@ -52,7 +52,7 @@ const PayTransaction = () => {
   })
 
   return (
-    <ToolbarContent title="Pay Transactions" loading={loading}>
+    <ToolbarContent loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
       <div className={classes.transactions}>
         {isEmpty(transactions) ? (
