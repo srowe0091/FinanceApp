@@ -4,17 +4,13 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Ubuntu';
-}
-
-body {
-  background-color: var(--ion-color-dark);
+  font-family: 'Rubik';
 }
 
 /** Ionic CSS Variables **/
 :root {
   /** font **/
-  --ion-font-family: 'Ubuntu';
+  --ion-font-family: 'Rubik';
 
   /** colors **/
   --white: #ffffff;
@@ -22,7 +18,7 @@ body {
   --gray1: #f8f8f8;
   --gray2: #f0f0f0;
   --gray3: #ececec;
-  --gray4: #e8e8e8;
+  --gray4: #d0d0d0;
   --gray5: #bebebe;
   --gray6: #9c9c9c;
   --gray7: #6d6d6d;
@@ -30,11 +26,11 @@ body {
   --themeGray1: #2d2f38;
   --themeGray2: #202129;
   --alpha0: rgba(0, 0, 0, 0);
-  --alpha25: rgba(0, 0, 0, 0.25);
+  --alpha10: rgba(0, 0, 0, 0.1);
   --alpha5: rgba(0, 0, 0, 0.5);
 
   /** variables **/
-  --borderRadius: 6px;
+  --borderRadius: 14px;
   --inputSpacing: 32px;
   --boxShadow: 0px 2px 5px -1px var(--black);
 
@@ -42,24 +38,24 @@ body {
   /** tint === lighter **/
 
   /** primary **/
-  --ion-color-primary: #53aeca;
-  --ion-color-primary-rgb: 18, 162, 208;
+  --ion-color-primary: #01a9f2;
+  --ion-color-primary-rgb: 1, 169, 242;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #108fb7;
-  --ion-color-primary-tint: #2aabd5;
+  --ion-color-primary-shade: #005da6;
+  --ion-color-primary-tint: #4ef6ff;
 
   /** secondary **/
-  --ion-color-secondary: #34ea4f;
-  --ion-color-secondary-rgb: 73, 71, 214;
+  --ion-color-secondary: #172d9d;
+  --ion-color-secondary-rgb: 23, 45, 157;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #302ebd;
-  --ion-color-secondary-tint: #6361f0;
+  --ion-color-secondary-shade: #000051;
+  --ion-color-secondary-tint: #647aea;
 
   /** tertiary **/
-  --ion-color-tertiary: #614ee2;
-  --ion-color-tertiary-rgb: 39, 117, 80;
+  --ion-color-tertiary: #01f2c2;
+  --ion-color-tertiary-rgb: 23, 45, 157;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
   --ion-color-tertiary-shade: #0e5c37;
@@ -116,10 +112,13 @@ body {
 
 .md {
   --ion-toolbar-background: transparent;
-  --ion-toolbar-color: var(--white);
+  /* --ion-toolbar-color: var(--white); */
 }
 
-ion-popover:focus, ion-backdrop:focus, ion-modal:focus, ion-toast:focus {
+ion-popover:focus,
+ion-backdrop:focus,
+ion-modal:focus,
+ion-toast:focus {
   outline: none;
 }
 
@@ -133,27 +132,22 @@ ion-popover:focus, ion-backdrop:focus, ion-modal:focus, ion-toast:focus {
 
 p {
   font-size: 0.875rem;
-  line-height: 1.5;
 }
 
 *[variant='body2'] {
   font-size: 0.875rem;
-  line-height: 1.43;
 }
 
 *[variant='subtitle1'] {
   font-size: 1rem;
-  line-height: 1.75;
 }
 
 *[variant='subtitle2'] {
   font-size: 0.875rem;
-  line-height: 1.57;
 }
 
 *[variant='caption'] {
-  font-size: 0.7rem;
-  line-height: 1.66;
+  font-size: 0.75rem;
 }
 
 *[gutterbottom='1'] {
@@ -184,35 +178,29 @@ p[wrap='break'] {
 h1 {
   font-size: 3.5rem;
   font-weight: 300;
-  line-height: 1.167;
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   font-weight: 300;
-  line-height: 1.2;
 }
 
 h3 {
   font-size: 2rem;
   font-weight: 400;
-  line-height: 1.167;
 }
 
 h4 {
   font-size: 1.5625rem;
   font-weight: 400;
-  line-height: 1.235;
 }
 
 h5 {
   font-size: 1.25rem;
   font-weight: 400;
-  line-height: 1.334;
 }
 
 h6 {
   font-size: 1.125rem;
   font-weight: 500;
-  line-height: 1.6;
 }
