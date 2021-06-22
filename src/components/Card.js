@@ -68,12 +68,12 @@ const useStyles = createUseStyles(theme => ({
     zIndex: -1,
     '&::before': {
       ...defaultTagStyling,
-      left: '5px',
+      left: '6px',
       transform: 'translateY(0) translateX(-100%)'
     },
     '&::after': {
       ...defaultTagStyling,
-      right: '5px',
+      right: '6px',
       transform: 'translateY(0) translateX(100%) scaleX(-1)'
     }
   },
