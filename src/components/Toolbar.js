@@ -1,19 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
 import { IonHeader, IonMenuButton, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
 const useToolbarStyles = createUseStyles(theme => ({
   header: {
-    marginBottom: theme.spacing(2)
+    '&::after': {
+      display: 'none'
+    }
   },
   toolbar: {
-    backgroundColor: 'var(--alpha0)',
-    transition: 'background-color 250ms linear'
-  },
-  fadeIn: {
-    backgroundColor: 'var(--ion-color-dark)'
+    '--background': 'var(--alpha0)'
   },
   icon: {
     margin: theme.spacing(0, 1)

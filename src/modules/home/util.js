@@ -31,6 +31,9 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     filter: 'drop-shadow(0px 2px 6px var(--alpha5))'
   },
   transactions: {
+    flex: 1,
+    backgroundColor: '#F8F8FF',
+    padding: theme.spacing(0, 2, 1),
     '&:before': {
       content: '""',
       width: '100%',
@@ -40,9 +43,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
       transform: 'translateY(-100%)',
       backgroundColor: '#F8F8FF',
       borderRadius: '20px 20px 0 0 '
-    },
-    backgroundColor: '#F8F8FF',
-    padding: theme.spacing(0, 2, 1)
+    }
   },
   flex: {
     textAlign: 'right',

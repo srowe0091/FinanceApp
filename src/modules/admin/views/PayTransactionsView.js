@@ -14,7 +14,7 @@ import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
 import { StaggeredList } from 'animation'
-import { ToolbarContent } from 'template'
+import { PageContainer } from 'template'
 import { PullToRefresh } from 'components'
 import { currency } from 'utils'
 import Pubsub from 'modules/pubsub'
@@ -52,7 +52,7 @@ const PayTransaction = () => {
   })
 
   return (
-    <ToolbarContent loading={loading}>
+    <PageContainer loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
       <div className={classes.transactions}>
         {isEmpty(transactions) ? (
@@ -71,7 +71,12 @@ const PayTransaction = () => {
 
               {transactions[email]?.map((t, idx) => (
                 <StaggeredList key={t.id} index={idx}>
-                  <TransactionEntry disableEdit onCheckboxClick={checkboxClick} checked={includes(t.id)(transactionIds)} {...t} />
+                  <TransactionEntry
+                    disableEdit
+                    onCheckboxClick={checkboxClick}
+                    checked={includes(t.id)(transactionIds)}
+                    {...t}
+                  />
                 </StaggeredList>
               ))}
             </Fragment>
@@ -79,7 +84,7 @@ const PayTransaction = () => {
         )}
       </div>
       {!!transactionIds.length && <Fab disableAnimation text="PAY" onClick={payTransaction} loading={ptLoading} />}
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 

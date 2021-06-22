@@ -110,11 +110,6 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
-.md {
-  --ion-toolbar-background: transparent;
-  /* --ion-toolbar-color: var(--white); */
-}
-
 ion-popover:focus,
 ion-backdrop:focus,
 ion-modal:focus,

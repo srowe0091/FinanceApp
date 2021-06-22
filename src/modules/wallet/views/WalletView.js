@@ -8,7 +8,7 @@ import { NewCardView } from './NewCardView'
 import { useWalletStyles } from '../util'
 import { useWallet } from '../hooks'
 import { Card, Modal, Popover } from 'components'
-import { ToolbarContent } from 'template'
+import { PageContainer } from 'template'
 import { hash } from 'utils'
 import { useUpdateUser } from 'modules/user'
 
@@ -38,7 +38,7 @@ const Wallet = () => {
   }, [ref, cards, updateUser])
 
   return (
-    <ToolbarContent
+    <PageContainer
       toolbarChildren={
         <IonButtons slot="end">
           <IonButton onClick={openPopover}>
@@ -72,7 +72,7 @@ const Wallet = () => {
           Set Default Card
         </IonItem>
       </Popover>
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 

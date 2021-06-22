@@ -7,7 +7,7 @@ import AnimateHeight from 'react-animate-height'
 import { chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
-import { ToolbarContent } from 'template'
+import { PageContainer } from 'template'
 import { PullToRefresh, Card, ProgressBar } from 'components'
 import { formatDate } from 'utils'
 import { StaggeredList } from 'animation'
@@ -28,7 +28,7 @@ const Home = () => {
   const handleClose = useCallback(() => expand && updateExpansion(false), [expand])
 
   return (
-    <ToolbarContent loading={loading}>
+    <PageContainer loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
 
       <div className={clsx(classes.header, expand && classes.expandedHeader)}>
@@ -80,7 +80,7 @@ const Home = () => {
           </StaggeredList>
         ))}
       </div>
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 

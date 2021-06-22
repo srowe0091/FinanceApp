@@ -13,7 +13,7 @@ import NewBillView from './NewBillsView'
 import CalendarView from './CalendarView'
 import { currency } from 'utils'
 import { Modal, Popover } from 'components'
-import { ToolbarContent } from 'template'
+import { PageContainer } from 'template'
 
 const Bills = () => {
   const classes = useBillsStyles()
@@ -33,8 +33,7 @@ const Bills = () => {
   if (loading) return null
 
   return (
-    <ToolbarContent
-      title="Bills"
+    <PageContainer
       toolbarChildren={
         <IonButtons slot="end">
           <IonButton onClick={toggleCalendarModal}>
@@ -92,7 +91,7 @@ const Bills = () => {
       <Modal isOpen={calendarModal} onClose={toggleCalendarModal}>
         <CalendarView />
       </Modal>
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 

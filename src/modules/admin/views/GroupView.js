@@ -10,7 +10,7 @@ import compose from 'lodash/fp/compose'
 
 import { useGroupStyles } from '../util'
 import { UsersInGroup } from '../admin.gql'
-import { ToolbarContent } from 'template'
+import { PageContainer } from 'template'
 import { currency, calculateDays } from 'utils'
 
 const GroupUsers = () => {
@@ -22,7 +22,7 @@ const GroupUsers = () => {
   )
 
   return (
-    <ToolbarContent loading={loading}>
+    <PageContainer loading={loading}>
       <div className={classes.container}>
         {map(d => (
           <IonCard key={d.id} className={classes.card}>
@@ -71,7 +71,7 @@ const GroupUsers = () => {
           </IonCard>
         ))(parsedUsers)}
       </div>
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 
