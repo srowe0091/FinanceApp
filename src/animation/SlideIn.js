@@ -7,7 +7,7 @@ const useSlideInStyles = createUseStyles({
   '@keyframes slideIn': {
     from: {
       opacity: 0,
-      transform: `translateX(20%)`
+      transform: `translateX(10%)`
     },
     to: {
       opacity: 1,
@@ -18,6 +18,7 @@ const useSlideInStyles = createUseStyles({
     animationName: '$slideIn',
     animationDelay: get('delay'),
     animationDuration: get('duration'),
+    animationFillMode: 'backwards',
     animationTimingFunction: 'ease-in-out'
   }
 })

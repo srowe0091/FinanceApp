@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss'
 export const usePayTransactionStyles = createUseStyles(theme => ({
   transactions: {
     flex: 1,
-    padding: theme.spacing(2, 2, 8)
+    padding: theme.spacing(2)
   },
   headers: {
     color: 'var(--white)',

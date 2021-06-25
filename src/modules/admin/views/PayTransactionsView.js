@@ -13,7 +13,7 @@ import mapValues from 'lodash/fp/mapValues'
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { Fab } from 'elements'
-import { StaggeredList } from 'animation'
+import { StaggeredList, Fade } from 'animation'
 import { PageContainer } from 'template'
 import { PullToRefresh } from 'components'
 import { currency } from 'utils'
@@ -64,11 +64,12 @@ const PayTransaction = () => {
         ) : (
           Object.keys(transactions).map(email => (
             <Fragment key={email}>
-              <IonText>
-                <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;-&nbsp;&nbsp;
-                {currency(totalSpent[email])}
-              </IonText>
-
+              <Fade delay={300} duration={500}>
+                <IonText>
+                  <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;&nbsp;
+                  {currency(totalSpent[email])}
+                </IonText>
+              </Fade>
               {transactions[email]?.map((t, idx) => (
                 <StaggeredList key={t.id} index={idx}>
                   <TransactionEntry

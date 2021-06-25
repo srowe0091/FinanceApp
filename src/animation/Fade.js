@@ -6,8 +6,7 @@ import { Base } from './Base'
 const useFadeStyles = createUseStyles({
   '@keyframes fade': {
     from: {
-      opacity: 0,
-      transform: `translateY(-8px)`
+      opacity: 0
     },
     to: {
       opacity: 1,

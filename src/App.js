@@ -16,8 +16,8 @@ const App = () => (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
         <AuthProvider>
+          <ToastNotification />
           <IonReactRouter>
-            <ToastNotification />
             <Navigation />
           </IonReactRouter>
         </AuthProvider>

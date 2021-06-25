@@ -1,4 +1,3 @@
-export * from './AuthorizedRoute'
 export * from './Card'
 export * from './FullPageLoader'
 export * from './Logo'

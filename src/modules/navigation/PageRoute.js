@@ -6,7 +6,7 @@ import { Route, Redirect } from 'react-router-dom'
 import routes from 'routes'
 import { useUser } from 'modules/authentication'
 
-export const AuthorizedRoute = ({ path, admin, component }) => {
+export const PageRoute = ({ path, admin, component }) => {
   const { isAdmin } = useUser()
 
   if (admin && !isAdmin) {
@@ -16,7 +16,7 @@ export const AuthorizedRoute = ({ path, admin, component }) => {
   return <Route path={path}>{props => <IonPage>{createElement(component, props)}</IonPage>}</Route>
 }
 
-AuthorizedRoute.propTypes = {
+PageRoute.propTypes = {
   path: PropTypes.string,
   admin: PropTypes.bool,
   component: PropTypes.elementType
