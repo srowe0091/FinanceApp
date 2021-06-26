@@ -1,15 +1,16 @@
 import React, { useCallback, useState } from 'react'
 import clsx from 'clsx'
-import map from 'lodash/fp/map'
 import { IonText, IonIcon } from '@ionic/react'
 import AnimateHeight from 'react-animate-height'
+import map from 'lodash/fp/map'
 
-import { chevronDown } from 'ionicons/icons'
+import { add, chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { PageContainer } from 'template'
-import { PullToRefresh, Card, ProgressBar } from 'components'
+import { Fab, PullToRefresh, Card, ProgressBar } from 'components'
 import { formatDate } from 'utils'
+import routes from 'routes'
 import { StaggeredList } from 'animation'
 import { TransactionEntry } from 'modules/transaction'
 
@@ -80,6 +81,8 @@ const Home = () => {
           </StaggeredList>
         ))}
       </div>
+
+      <Fab icon={add} routerLink={routes.newTransaction} />
     </PageContainer>
   )
 }
