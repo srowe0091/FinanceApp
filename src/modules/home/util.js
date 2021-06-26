@@ -33,7 +33,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   transactions: {
     flex: 1,
     backgroundColor: '#F8F8FF',
-    padding: theme.spacing(0, 2, 1),
+    padding: theme.spacing(0, 2, 8),
     '&:before': {
       content: '""',
       width: '100%',
