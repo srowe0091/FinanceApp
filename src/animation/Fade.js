@@ -9,8 +9,7 @@ const useFadeStyles = createUseStyles({
       opacity: 0
     },
     to: {
-      opacity: 1,
-      transform: 'none'
+      opacity: 1
     }
   },
   animate: {
