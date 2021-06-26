@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/react'
 import { Redirect } from 'react-router-dom'
 
@@ -8,14 +9,16 @@ import routes from 'routes'
 import PayTransactionView from './PayTransactionsView'
 import GroupView from './GroupView'
 
-const Admin = () => {
+const Admin = ({ location }) => {
+  if (location.pathname === routes.admin.index) {
+    return <Redirect to={routes.admin.payTransaction} />
+  }
+
   return (
     <IonTabs>
       <IonRouterOutlet>
         <PageRoute path={routes.admin.payTransaction} component={PayTransactionView} />
         <PageRoute path={routes.admin.group} component={GroupView} />
-
-        <Redirect exact from={routes.admin.index} to={routes.admin.payTransaction} />
       </IonRouterOutlet>
 
       <IonTabBar slot="top">
@@ -29,6 +32,10 @@ const Admin = () => {
       </IonTabBar>
     </IonTabs>
   )
+}
+
+Admin.propTypes = {
+  location: PropTypes.object
 }
 
 export default Admin
