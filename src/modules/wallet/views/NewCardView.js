@@ -6,8 +6,7 @@ import { useMutation } from '@apollo/client'
 
 import { SaveNewCard } from '../wallet.gql'
 import { NewCardSchema, initialNewCard, useNewCardViewStyles } from '../util'
-import { Input, Select, Fab } from 'elements'
-import { Card } from 'components'
+import { Card, Fab, Input, Select } from 'components'
 import { daysInMonth } from 'utils'
 
 const selectOptions = [

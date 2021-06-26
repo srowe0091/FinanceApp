@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client'
 
 import { useNewBillsStyles, initialNewBill, NewBillSchema } from '../util'
 import { SaveNewBill } from '../bills.gql'
-import { MaskedInput, Input, Select, Fab } from 'elements'
+import { MaskedInput, Input, Select, Fab } from 'components'
 import { daysInMonth, currenyFormat, toNumber } from 'utils'
 
 const selectOptions = [

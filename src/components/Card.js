@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { IonText } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
-import { AspectRatio } from 'elements'
+import { AspectRatio } from 'components'
 import { formatDate } from 'utils'
 
 const cardTitle = (spacing, content) => ({

@@ -12,10 +12,9 @@ import mapValues from 'lodash/fp/mapValues'
 
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
-import { Fab } from 'elements'
 import { StaggeredList, Fade } from 'animation'
 import { PageContainer } from 'template'
-import { PullToRefresh } from 'components'
+import { Fab, PullToRefresh } from 'components'
 import { currency } from 'utils'
 import Pubsub from 'modules/pubsub'
 import { TransactionEntry } from 'modules/transaction'
@@ -84,7 +83,7 @@ const PayTransaction = () => {
           ))
         )}
       </div>
-      {!!transactionIds.length && <Fab disableAnimation text="PAY" onClick={payTransaction} loading={ptLoading} />}
+      <Fab text="PAY" onClick={payTransaction} disabled={!transactionIds.length} loading={ptLoading} />
     </PageContainer>
   )
 }
