@@ -21,12 +21,12 @@ const Home = () => {
   const { amountLeft, percentage, groupSpent, daysLeft, transactions, loading, onRefresh } = useHomeHooks()
   const classes = useHomeViewStyles({ cardsPresent: daysLeft.length })
 
-  const handleOpen = useCallback(
+  const handleOpenSummary = useCallback(
     () => !expand && daysLeft.length > 1 && updateExpansion(true),
     [daysLeft.length, expand]
   )
 
-  const handleClose = useCallback(() => expand && updateExpansion(false), [expand])
+  const handleCloseSumary = useCallback(() => expand && updateExpansion(false), [expand])
 
   return (
     <PageContainer loading={loading}>
@@ -42,7 +42,7 @@ const Home = () => {
         <p>{todayDate}</p>
       </div>
 
-      <div className={clsx(classes.summary, expand && classes.expandedSummary)} onClick={handleOpen}>
+      <div className={clsx(classes.summary, expand && classes.expandedSummary)} onClick={handleOpenSummary}>
         <AnimateHeight height={expand ? 'auto' : 68} duration={550} delay={100}>
           <div className={classes.cardList}>
             {map(c => (
@@ -68,7 +68,7 @@ const Home = () => {
 
         {daysLeft.length > 1 && (
           <IonIcon
-            onClick={handleClose}
+            onClick={handleCloseSumary}
             icon={chevronDown}
             className={clsx(classes.expandIcon, expand && classes.rotateIcon)}
           />

@@ -1,36 +1,29 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
-import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/react'
-import { Redirect } from 'react-router-dom'
+import { IonToolbar, IonSegment, IonSegmentButton } from '@ionic/react'
 
-import { PageRoute } from 'modules/navigation'
-import routes from 'routes'
+import { PageContainer } from 'template'
 
 import PayTransactionView from './PayTransactionsView'
 import GroupView from './GroupView'
 
-const Admin = ({ location }) => {
-  if (location.pathname === routes.admin.index) {
-    return <Redirect to={routes.admin.payTransaction} />
-  }
+const Admin = () => {
+  const [state, updateState] = useState('pay')
+
+  const handleChange = useCallback(e => updateState(e.detail.value), [])
 
   return (
-    <IonTabs>
-      <IonRouterOutlet>
-        <PageRoute path={routes.admin.payTransaction} component={PayTransactionView} />
-        <PageRoute path={routes.admin.group} component={GroupView} />
-      </IonRouterOutlet>
+    <PageContainer>
+      <IonToolbar>
+        <IonSegment value={state} onIonChange={handleChange}>
+          <IonSegmentButton value="pay">Pay</IonSegmentButton>
+          <IonSegmentButton value="group">Group</IonSegmentButton>
+        </IonSegment>
+      </IonToolbar>
 
-      <IonTabBar slot="top">
-        <IonTabButton tab={routes.admin.payTransaction} href={routes.admin.payTransaction}>
-          <IonLabel>PAY TRANSACTIONS</IonLabel>
-        </IonTabButton>
-
-        <IonTabButton tab={routes.admin.group} href={routes.admin.group}>
-          <IonLabel>GROUP</IonLabel>
-        </IonTabButton>
-      </IonTabBar>
-    </IonTabs>
+      {state === 'pay' && <PayTransactionView />}
+      {state === 'group' && <GroupView />}
+    </PageContainer>
   )
 }
 

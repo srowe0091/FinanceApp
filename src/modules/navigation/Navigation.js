@@ -32,6 +32,17 @@ export const Navigation = () => {
 
   return (
     <IonTabs>
+      <IonRouterOutlet>
+        <PageRoute path={routes.home} component={HomeView} />
+        <PageRoute path={routes.wallet} component={WalletView} />
+        <PageRoute path={routes.bills} component={BillsView} />
+        <PageRoute exact path={routes.newTransaction} component={NewTransactionView} />
+        {/* admin view */}
+        <PageRoute path={routes.admin.index} component={AdminView} admin />
+        {/* default view */}
+        <Redirect to={routes.home} />
+      </IonRouterOutlet>
+
       <IonTabBar slot="bottom">
         <IonTabButton tab={routes.home} href={routes.home}>
           <IonIcon icon={homeSharp} />
@@ -55,16 +66,6 @@ export const Navigation = () => {
           <IonIcon icon={notificationsSharp} />
         </IonTabButton>
       </IonTabBar>
-      <IonRouterOutlet>
-        <PageRoute path={routes.home} component={HomeView} />
-        <PageRoute path={routes.wallet} component={WalletView} />
-        <PageRoute path={routes.bills} component={BillsView} />
-        <PageRoute path={routes.newTransaction} component={NewTransactionView} />
-        {/* admin view */}
-        <PageRoute path={routes.admin.index} component={AdminView} admin />
-        {/* default view */}
-        <Redirect to={routes.home} />
-      </IonRouterOutlet>
     </IonTabs>
   )
 }
