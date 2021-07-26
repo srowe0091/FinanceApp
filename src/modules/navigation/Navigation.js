@@ -1,6 +1,6 @@
 import React from 'react'
 import { IonIcon, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton } from '@ionic/react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { homeSharp, walletSharp, notificationsSharp, personSharp, settingsSharp } from 'ionicons/icons'
 
 // User views
@@ -22,25 +22,19 @@ export const Navigation = () => {
   const { isAuthenticated } = useAuthentication()
 
   if (!isAuthenticated) {
-    return (
-      <>
-        <Route path={routes.login} component={LoginView} />
-        <Redirect exact from="/" to={routes.login} />
-      </>
-    )
+    return <Route component={LoginView} />
   }
 
   return (
     <IonTabs>
       <IonRouterOutlet>
+        {/* main view */}
         <PageRoute path={routes.home} component={HomeView} />
         <PageRoute path={routes.wallet} component={WalletView} />
         <PageRoute path={routes.bills} component={BillsView} />
         <PageRoute exact path={routes.newTransaction} component={NewTransactionView} />
         {/* admin view */}
-        <PageRoute path={routes.admin.index} component={AdminView} admin />
-        {/* default view */}
-        <Redirect to={routes.home} />
+        <PageRoute admin path={routes.admin.index} component={AdminView} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
