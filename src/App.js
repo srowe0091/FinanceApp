@@ -15,12 +15,12 @@ const App = () => (
   <IonApp>
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
-        <AuthProvider>
-          <ToastNotification />
-          <IonReactRouter>
+        <IonReactRouter>
+          <AuthProvider>
+            <ToastNotification />
             <Navigation />
-          </IonReactRouter>
-        </AuthProvider>
+          </AuthProvider>
+        </IonReactRouter>
       </ApolloProvider>
     </ThemeProvider>
   </IonApp>

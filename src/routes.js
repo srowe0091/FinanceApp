@@ -1,6 +1,5 @@
 const routes = {
   login: '/login',
-  resetPassword: '/reset-password',
   home: '/home',
   wallet: '/wallet',
   bills: '/bills',
