@@ -16,8 +16,8 @@ export const toNumber = str => parseInt(replace(/\D/g)('')(str), '10')
 const customConstant = text => count => ({ text, count })
 
 const _determineDays = cond([
-  [or(isEqual(15), isEqual(0)), customConstant('Submit Payment Today')],
-  [isEqual(1), customConstant('Payment Due Tomorrow')],
+  [or(isEqual(15), isEqual(0)), customConstant('Submit Today')],
+  [isEqual(1), customConstant('Due Tomorrow')],
   [stubTrue, v => customConstant(`${v} days left`)(v)]
 ])
 
@@ -30,11 +30,11 @@ export const calculateDays = dueDate => {
   return _determineDays(difference >= 15 ? difference - 15 : difference)
 }
 
-export const currency = number => `$${(number / 100).toFixed(2)}`
+export const currency = (number, force) => (number || force ? `$${(number / 100).toFixed(2)}` : null)
 
 export const currenyFormat = value => {
   const number = toNumber(value)
-  return [currency(number), number]
+  return [currency(number, true), number]
 }
 
 export const hash = s => {

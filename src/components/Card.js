@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { IonText } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
-import { AspectRatio } from 'elements'
+import { AspectRatio } from 'components'
 import { formatDate } from 'utils'
 
 const cardTitle = (spacing, content) => ({
@@ -33,6 +33,7 @@ const defaultTagStyling = {
 
 const useStyles = createUseStyles(theme => ({
   container: {
+    color: 'var(--white)',
     padding: theme.spacing(7, 2, 2, 2),
     width: '100%',
     height: '100%',
@@ -67,37 +68,45 @@ const useStyles = createUseStyles(theme => ({
     zIndex: -1,
     '&::before': {
       ...defaultTagStyling,
-      left: '5px',
+      left: '6px',
       transform: 'translateY(0) translateX(-100%)'
     },
     '&::after': {
       ...defaultTagStyling,
-      right: '5px',
+      right: '6px',
       transform: 'translateY(0) translateX(100%) scaleX(-1)'
     }
   },
   VISA: {
-    background: 'linear-gradient(135deg, #6d87e7 0%, #6bcbe1 100%)',
-    boxShadow: '0px 10px 20px -5px #2d97bd',
+    background: 'linear-gradient(135deg, #1a1e5d 0%, #4270e7 100%)',
+    // boxShadow: '0px 10px 20px -5px #2d97bd',
     '&::before': cardTitle(theme.spacing(2), 'VISA')
   },
   DISCOVER: {
     background: 'linear-gradient(135deg, #dd581c 0%, #fba321 100%)',
-    boxShadow: '0px 10px 20px -5px #dd581c',
+    // boxShadow: '0px 10px 20px -5px #dd581c',
     '&::before': cardTitle(theme.spacing(2), 'DISCOVER')
   },
   MASTERCARD: {
     background: 'linear-gradient(135deg, #e52e29 0%, #f89d2d 100%)',
-    boxShadow: '0px 10px 20px -5px #f5742d',
+    // boxShadow: '0px 10px 20px -5px #f5742d',
     '&::before': cardTitle(theme.spacing(2), 'MASTERCARD')
   },
   AMERICAN_EXPRESS: {
     background: 'linear-gradient(135deg, #01aae3 0%, #27256c 100%)',
-    boxShadow: '0px 10px 20px -5px #2e1c92',
+    // boxShadow: '0px 10px 20px -5px #2e1c92',
     '&::before': cardTitle(theme.spacing(2), 'AMEX')
   },
+  OTHER: {
+    background: 'linear-gradient(135deg, #0078ce 0%, #3e9439 100%)',
+    // boxShadow: '0px 10px 20px -5px #2e963b',
+    '&::before': cardTitle(theme.spacing(2), 'CC')
+  },
   mini: {
-    padding: '4px 10px',
+    textAlign: 'center',
+    color: 'var(--white)',
+    width: '65px',
+    padding: theme.spacing(1, 0),
     boxShadow: 'none',
     borderRadius: '6px',
     '&::before': {
@@ -107,10 +116,11 @@ const useStyles = createUseStyles(theme => ({
 }))
 
 const cardMap = {
-  VISA: 'Visa',
-  DISCOVER: 'Discover',
+  VISA: 'VISA',
+  DISCOVER: 'DISC',
   MASTERCARD: 'MC',
-  AMERICAN_EXPRESS: 'Amex'
+  AMERICAN_EXPRESS: 'AMEX',
+  OTHER: 'CC'
 }
 
 export const Card = ({ className, type, createdAt, isDefault, small, dueDate = 'XX', name = 'Name of Card' }) => {
@@ -120,7 +130,9 @@ export const Card = ({ className, type, createdAt, isDefault, small, dueDate = '
   if (small) {
     return (
       <div className={clsx(classes.mini, classes[type], className)}>
-        <p>{cardMap[type]}</p>
+        <p>
+          <strong>{cardMap[type]}</strong>
+        </p>
       </div>
     )
   }

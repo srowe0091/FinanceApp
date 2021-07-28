@@ -8,6 +8,8 @@
   "rules": {
     "semi": "off",
     "no-duplicate-imports": "error",
-    "react/no-unescaped-entities": "off"
+    "no-unused-vars": "warn",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "warn"
   }
 }

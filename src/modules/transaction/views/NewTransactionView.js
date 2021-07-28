@@ -6,8 +6,8 @@ import map from 'lodash/fp/map'
 
 import { TransactionSchema, useNewTransactionViewStyles } from '../util'
 import { NewTransaction } from '../transaction.gql'
-import { ToolbarContent } from 'template'
-import { Input, MaskedInput, Checkbox, Select, Fab } from 'elements'
+import { PageContainer } from 'template'
+import { Fab, Input, MaskedInput, Checkbox, Select } from 'components'
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -41,7 +41,7 @@ const NewTransactionPage = ({ history }) => {
   const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
 
   return (
-    <ToolbarContent back title="New Transaction">
+    <PageContainer>
       <Formik
         validateOnMount
         enableReinitialize
@@ -80,7 +80,7 @@ const NewTransactionPage = ({ history }) => {
           </Form>
         )}
       </Formik>
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 

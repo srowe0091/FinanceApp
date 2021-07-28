@@ -9,7 +9,7 @@ import map from 'lodash/fp/map'
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
-import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select } from 'elements'
+import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select } from 'components'
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -65,7 +65,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
   )
 
   return (
-    <IonContent color="dark">
+    <IonContent>
       <div className={classes.container}>
         <IonText color="light">
           <h5 className={classes.header}>Edit Transaction</h5>

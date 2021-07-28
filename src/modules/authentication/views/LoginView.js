@@ -1,14 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { IonPage, IonContent, IonText } from '@ionic/react'
 import { Formik, Form } from 'formik'
-import { Redirect } from 'react-router-dom'
-import useToggle from 'react-use/lib/useToggle'
+import { useToggle } from 'react-use'
 
 import { useLoginViewStyle, LoginSchema } from '../util'
 import { FinishUserModal } from './FinishUser'
-import { Logo } from 'components'
-import { Input, Button } from 'elements'
-import routes from 'routes'
+import { Input, Button, Logo } from 'components'
 import { textMappings } from 'utils'
 import { useAuthentication } from 'modules/authentication'
 
@@ -21,7 +18,7 @@ const LoginView = () => {
   const classes = useLoginViewStyle()
   const [status, setStatus] = useState(null)
   const [showModal, toggleModal] = useToggle(false)
-  const { handleLogin, isAuthenticated, requireProfileUpdate } = useAuthentication()
+  const { handleLogin, requireProfileUpdate } = useAuthentication()
 
   const submitHandler = useCallback(
     ({ email, password }) => {
@@ -37,21 +34,12 @@ const LoginView = () => {
     }
   }, [requireProfileUpdate, toggleModal])
 
-  if (isAuthenticated) {
-    return <Redirect to={routes.home} />
-  }
-
   return (
     <IonPage>
       <IonContent fullscreen className={classes.container}>
         <div className={classes.form}>
           <Logo className={classes.logo} />
-          <Formik
-            validateOnMount
-            onSubmit={submitHandler}
-            validationSchema={LoginSchema}
-            initialValues={initialValues}
-          >
+          <Formik validateOnMount onSubmit={submitHandler} validationSchema={LoginSchema} initialValues={initialValues}>
             {({ handleChange, handleBlur, errors, isSubmitting, isValid }) => (
               <Form>
                 <Input

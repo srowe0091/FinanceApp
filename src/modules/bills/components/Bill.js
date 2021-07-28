@@ -4,15 +4,9 @@ import dayjs from 'dayjs'
 import { createUseStyles } from 'react-jss'
 import { IonItem, IonIcon } from '@ionic/react'
 
-import {
-  receipt,
-  home,
-  carSport,
-  build,
-  card,
-  cash,
-  shieldCheckmark
-} from 'ionicons/icons'
+import { receipt, home, carSport, build, card, cash, shieldCheckmark } from 'ionicons/icons'
+
+import { currency } from 'utils'
 
 const iconMap = {
   MORTGAGE_RENT: home,
@@ -58,7 +52,7 @@ export const BillEntry = ({ name, dueDate, amount, type, notes, disabled }) => {
               Due: {_dueDate}
             </p>
           </span>
-          <p>${(amount / 100).toFixed(2)}</p>
+          <p>{currency(amount)}</p>
         </span>
       </IonItem>
     </div>

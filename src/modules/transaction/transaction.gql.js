@@ -25,6 +25,15 @@ export const UserTransactions = gql`
   ${TransactionFragment}
 `
 
+export const GetCardsTransactions = gql`
+  query GetCardsTransactions($cardId: ID) {
+    transactionsByCard(cardId: $cardId) {
+      ...TransactionFragment
+    }
+  }
+  ${TransactionFragment}
+`
+
 export const NewTransaction = gql`
   mutation NewTransaction($input: TransactionInput!) {
     newTransaction(input: $input) {

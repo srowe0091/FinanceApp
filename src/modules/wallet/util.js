@@ -15,6 +15,7 @@ export const initialNewCard = {
 
 export const useWalletStyles = createUseStyles(theme => ({
   container: {
+    marginTop: theme.spacing(2.5),
     '& .swiper-container': {
       overflow: 'visible'
     }

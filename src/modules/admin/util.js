@@ -3,11 +3,25 @@ import { createUseStyles } from 'react-jss'
 export const usePayTransactionStyles = createUseStyles(theme => ({
   transactions: {
     flex: 1,
-    overflow: 'auto',
-    paddingBottom: theme.spacing(8)
+    padding: theme.spacing(2, 2, 8)
   },
   headers: {
-    marginBottom: theme.spacing(1)
+    color: 'var(--white)',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '50%',
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    textTransform: 'uppercase',
+    backgroundColor: 'var(--ion-color-primary)',
+    textShadow: '0 0 3px var(--alpha5), 0 0 3px var(--alpha5)',
+    '&::before': {
+      content: '""',
+      float: 'left',
+      paddingBottom: '100%'
+    }
   },
   emptyView: {
     marginTop: theme.spacing(8)
@@ -15,6 +29,9 @@ export const usePayTransactionStyles = createUseStyles(theme => ({
 }))
 
 export const useGroupStyles = createUseStyles(theme => ({
+  container: {
+    padding: theme.spacing(2)
+  },
   card: {
     marginBottom: theme.spacing(2),
     borderRadius: 'var(--borderRadius)'

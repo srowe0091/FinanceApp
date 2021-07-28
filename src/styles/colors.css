@@ -1,8 +1,8 @@
 :root {
   /** background **/
-  --ion-color-background: linear-gradient(135deg, #555c7a 0%, #20202c 100%);
-  --ion-color-background-rgb: 85, 92, 122;
-  --ion-color-background-contrast: #ffffff;
+  --ion-color-background: #FFFFFF;
+  --ion-color-background-rgb: 255, 255, 255;
+  --ion-color-background-contrast: #000000;
   --ion-color-background-contrast-rgb: 255, 255, 255;
   --ion-color-background-shade: #3e4054;
   --ion-color-background-tint: #595b70;
@@ -18,8 +18,8 @@
   /** transparent **/
   --ion-color-transparent: transparent;
   --ion-color-transparent-rgb: 85, 92, 122;
-  --ion-color-transparent-contrast: #ffffff;
-  --ion-color-transparent-contrast-rgb: 255, 255, 255;
+  --ion-color-transparent-contrast: #000000;
+  --ion-color-transparent-contrast-rgb: 0, 0, 0;
   --ion-color-transparent-shade: transparent;
   --ion-color-transparent-tint: transparent;
 }

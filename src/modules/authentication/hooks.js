@@ -1,10 +1,12 @@
 import { useCallback, useContext, useEffect } from 'react'
 import { useApolloClient, useQuery } from '@apollo/client'
+import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
 import { StorageContainer } from 'lib/Capacitor'
 import { GetUser } from 'modules/user'
+import routes from 'routes'
 
 const checkErrors = response => {
   if (!response.ok) {
@@ -18,6 +20,7 @@ const AppId = process.env.REACT_APP_ID
 export const useInitializeAuth = () => {
   const [state, dispatch] = useAuthReducer()
   const client = useApolloClient()
+  const history = useHistory()
 
   const handleGetUser = useCallback(async () => {
     try {
@@ -27,11 +30,12 @@ export const useInitializeAuth = () => {
         dispatch({ type: 'COMPLETE_PROFILE', payload: user })
         return
       }
-      dispatch({ type: 'LOGIN', payload: user })
+      dispatch({ type: 'SUCCESSFUL_LOGIN', payload: user })
+      history.replace(routes.home)
     } catch (err) {
       console.log(err)
     }
-  }, [client, dispatch])
+  }, [client, history, dispatch])
 
   const getCurrentSession = useCallback(async () => {
     const _sessionId = await StorageContainer.get('session')
@@ -44,8 +48,9 @@ export const useInitializeAuth = () => {
         .catch(() => dispatch({ type: 'STOP_LOADING' }))
     } else {
       dispatch({ type: 'STOP_LOADING' })
+      history.replace(routes.login)
     }
-  }, [dispatch, handleGetUser])
+  }, [dispatch, handleGetUser, history])
 
   useEffect(() => {
     getCurrentSession()

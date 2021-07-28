@@ -24,6 +24,11 @@ export const UsersInGroup = gql`
         id
         email
         allowance
+        cards {
+          id
+          name
+          dueDate
+        }
       }
     }
   }

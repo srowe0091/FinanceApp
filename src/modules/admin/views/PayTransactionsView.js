@@ -1,19 +1,21 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import { IonText, useIonViewWillEnter } from '@ionic/react'
 import { useQuery, useMutation } from '@apollo/client'
-import useMountedState from 'react-use/lib/useMountedState'
-import map from 'lodash/fp/map'
+import { useMountedState } from 'react-use'
+import sumBy from 'lodash/fp/sumBy'
 import concat from 'lodash/fp/concat'
 import reject from 'lodash/fp/reject'
 import isEmpty from 'lodash/fp/isEmpty'
 import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
+import mapValues from 'lodash/fp/mapValues'
 
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
-import { Fab } from 'elements'
-import { ToolbarContent } from 'template'
-import { PullToRefresh } from 'components'
+import { StaggeredList, Fade } from 'animation'
+import { PageContainer } from 'template'
+import { Fab, PullToRefresh } from 'components'
+import { currency } from 'utils'
 import Pubsub from 'modules/pubsub'
 import { TransactionEntry } from 'modules/transaction'
 
@@ -36,7 +38,11 @@ const PayTransaction = () => {
     []
   )
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
-  const transactions = useMemo(() => groupBy('owner.email')(data?.admin?.groupTransactions), [data])
+  const { transactions, totalSpent } = useMemo(() => {
+    const groupedTransactions = groupBy('owner.email')(data?.admin?.groupTransactions)
+    const totalSpent = mapValues(sumBy('amount'))(groupedTransactions)
+    return { transactions: groupedTransactions, totalSpent }
+  }, [data])
 
   useIonViewWillEnter(() => {
     if (isMounted()) {
@@ -45,7 +51,7 @@ const PayTransaction = () => {
   })
 
   return (
-    <ToolbarContent title="Pay Transactions" loading={loading}>
+    <PageContainer loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
       <div className={classes.transactions}>
         {isEmpty(transactions) ? (
@@ -57,21 +63,28 @@ const PayTransaction = () => {
         ) : (
           Object.keys(transactions).map(email => (
             <Fragment key={email}>
-              <h5 className={classes.headers}>{email}</h5>
-              {map(t => (
-                <TransactionEntry
-                  key={t.id}
-                  onCheckboxClick={checkboxClick}
-                  checked={includes(t.id)(transactionIds)}
-                  {...t}
-                />
-              ))(transactions[email])}
+              <Fade delay={300} duration={500}>
+                <IonText>
+                  <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;&nbsp;
+                  {currency(totalSpent[email])}
+                </IonText>
+              </Fade>
+              {transactions[email]?.map((t, idx) => (
+                <StaggeredList key={t.id} index={idx}>
+                  <TransactionEntry
+                    disableEdit
+                    onCheckboxClick={checkboxClick}
+                    checked={includes(t.id)(transactionIds)}
+                    {...t}
+                  />
+                </StaggeredList>
+              ))}
             </Fragment>
           ))
         )}
       </div>
-      {!!transactionIds.length && <Fab text="PAY" onClick={payTransaction} loading={ptLoading} />}
-    </ToolbarContent>
+      <Fab text="PAY" onClick={payTransaction} disabled={!transactionIds.length} loading={ptLoading} />
+    </PageContainer>
   )
 }
 

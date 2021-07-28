@@ -6,15 +6,15 @@ import { useMutation } from '@apollo/client'
 
 import { SaveNewCard } from '../wallet.gql'
 import { NewCardSchema, initialNewCard, useNewCardViewStyles } from '../util'
-import { Input, Select, Fab } from 'elements'
-import { Card } from 'components'
+import { Card, Fab, Input, Select } from 'components'
 import { daysInMonth } from 'utils'
 
 const selectOptions = [
   { value: 'VISA', label: 'Visa' },
   { value: 'MASTERCARD', label: 'MasterCard' },
   { value: 'DISCOVER', label: 'Discover' },
-  { value: 'AMERICAN_EXPRESS', label: 'American Express' }
+  { value: 'AMERICAN_EXPRESS', label: 'American Express' },
+  { value: 'OTHER', label: 'Other' }
 ]
 
 export const NewCardView = ({ dismissModal }) => {
@@ -39,7 +39,7 @@ export const NewCardView = ({ dismissModal }) => {
   )
 
   return (
-    <IonContent color="dark">
+    <IonContent>
       <Formik onSubmit={onSubmit} initialValues={initialNewCard} validationSchema={NewCardSchema} validateOnMount>
         {({ values, handleBlur, handleChange, handleSubmit, isValid, isSubmitting }) => (
           <Form className={classes.container}>

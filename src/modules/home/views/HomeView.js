@@ -1,68 +1,89 @@
-import React from 'react'
-import { IonText, IonSlides, IonSlide } from '@ionic/react'
+import React, { useCallback, useState } from 'react'
+import clsx from 'clsx'
+import { IonText, IonIcon } from '@ionic/react'
+import AnimateHeight from 'react-animate-height'
 import map from 'lodash/fp/map'
 
+import { add, chevronDown } from 'ionicons/icons'
+
 import { useHomeViewStyles, useHomeHooks } from '../util'
-import { Fab } from 'elements'
-import { ToolbarContent } from 'template'
-import { PullToRefresh, Card } from 'components'
+import { PageContainer } from 'template'
+import { Fab, PullToRefresh, Card, ProgressBar } from 'components'
 import { formatDate } from 'utils'
 import routes from 'routes'
+import { StaggeredList } from 'animation'
 import { TransactionEntry } from 'modules/transaction'
 
 const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
 
-const slideOpts = {
-  slidesPerView: 1,
-  initialSlide: 0,
-  centeredSlides: true,
-  pager: true
-}
-
 const Home = () => {
-  const classes = useHomeViewStyles()
-  const { amountLeft, groupSpent, daysLeft, transactions, loading, onRefresh } = useHomeHooks()
+  const [expand, updateExpansion] = useState(false)
+  const { amountLeft, percentage, groupSpent, daysLeft, transactions, loading, onRefresh } = useHomeHooks()
+  const classes = useHomeViewStyles({ cardsPresent: daysLeft.length })
+
+  const handleOpenSummary = useCallback(
+    () => !expand && daysLeft.length > 1 && updateExpansion(true),
+    [daysLeft.length, expand]
+  )
+
+  const handleCloseSumary = useCallback(() => expand && updateExpansion(false), [expand])
 
   return (
-    <ToolbarContent loading={loading}>
+    <PageContainer loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
 
-      <div className={classes.card}>
-        <span>
-          <IonText>
-            <h2>
-              <strong>${amountLeft}</strong>
-            </h2>
-          </IonText>
-          {groupSpent > 0 && (
-            <IonText>
-              <p>Group Spent: ${groupSpent}</p>
-            </IonText>
-          )}
-        </span>
+      <div className={clsx(classes.header, expand && classes.expandedHeader)}>
+        <h2>
+          <strong>{amountLeft}</strong>
+        </h2>
 
-        <IonText>
-          <p>{todayDate}</p>
-        </IonText>
+        <ProgressBar className={classes.progressBar} percent={percentage} />
+
+        <p>{todayDate}</p>
       </div>
 
-      <IonSlides key={daysLeft.length} pager options={slideOpts} className={classes.dueDateContainer}>
-        {map(c => (
-          <IonSlide key={c.id} className={classes.slide}>
-            <Card small type={c.type} className={classes.miniCard} />
-            <IonText align="left">
-              <p variant="subtitle1">{c.name}</p>
-              <p variant="caption" color="textSecondary">
-                {c.text}
-              </p>
-            </IonText>
-          </IonSlide>
-        ))(daysLeft)}
-      </IonSlides>
+      <div className={clsx(classes.summary, expand && classes.expandedSummary)} onClick={handleOpenSummary}>
+        <AnimateHeight height={expand ? 'auto' : 68} duration={550} delay={100}>
+          <div className={classes.cardList}>
+            {map(c => (
+              <div key={c.id} className={classes.card}>
+                <Card small type={c.type} className={classes.cardSpace} />
+                <IonText align="left">
+                  <h6>{c.name}</h6>
+                  <p variant="caption" color="textSecondary">
+                    {c.text}
+                  </p>
+                </IonText>
+              </div>
+            ))(daysLeft)}
+          </div>
+        </AnimateHeight>
 
-      <div className={classes.transactions}>{map(t => <TransactionEntry key={t.id} {...t} />)(transactions)}</div>
-      <Fab routerLink={routes.newTransaction} />
-    </ToolbarContent>
+        <div className={classes.flex}>
+          <h6>{groupSpent}</h6>
+          <p variant="caption" color="textSecondary">
+            Group Spent
+          </p>
+        </div>
+
+        {daysLeft.length > 1 && (
+          <IonIcon
+            onClick={handleCloseSumary}
+            icon={chevronDown}
+            className={clsx(classes.expandIcon, expand && classes.rotateIcon)}
+          />
+        )}
+      </div>
+      <div className={classes.transactions}>
+        {transactions.map((t, idx) => (
+          <StaggeredList key={t.id} index={idx} delay={10}>
+            <TransactionEntry {...t} />
+          </StaggeredList>
+        ))}
+      </div>
+
+      <Fab icon={add} routerLink={routes.newTransaction} />
+    </PageContainer>
   )
 }
 

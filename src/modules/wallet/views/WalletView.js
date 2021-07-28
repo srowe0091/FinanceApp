@@ -1,16 +1,16 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react'
 import { IonSlides, IonSlide, IonButtons, IonIcon, IonItem, IonButton } from '@ionic/react'
 import { ellipsisVertical } from 'ionicons/icons'
-import useToggle from 'react-use/lib/useToggle'
+import { useToggle } from 'react-use'
 import map from 'lodash/fp/map'
 
 import { NewCardView } from './NewCardView'
 import { useWalletStyles } from '../util'
 import { useWallet } from '../hooks'
-import { useUpdateUser } from 'modules/user'
 import { Card, Modal, Popover } from 'components'
-import { ToolbarContent } from 'template'
+import { PageContainer } from 'template'
 import { hash } from 'utils'
+import { useUpdateUser } from 'modules/user'
 
 const slideOpts = {
   slidesPerView: 1.1,
@@ -38,8 +38,7 @@ const Wallet = () => {
   }, [ref, cards, updateUser])
 
   return (
-    <ToolbarContent
-      title="Wallet"
+    <PageContainer
       toolbarChildren={
         <IonButtons slot="end">
           <IonButton onClick={openPopover}>
@@ -57,7 +56,7 @@ const Wallet = () => {
           )}
           {map(card => (
             <IonSlide key={card.id}>
-              <Card {...card} isDefault={defaultCard === card.id} />
+              <Card isDefault={defaultCard === card.id} {...card} />
             </IonSlide>
           ))(cards)}
         </IonSlides>
@@ -73,7 +72,7 @@ const Wallet = () => {
           Set Default Card
         </IonItem>
       </Popover>
-    </ToolbarContent>
+    </PageContainer>
   )
 }
 

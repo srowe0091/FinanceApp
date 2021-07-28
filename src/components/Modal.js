@@ -24,7 +24,7 @@ export const Modal = ({ isOpen, onClose, children }) => {
 
   return (
     <IonModal isOpen={isOpen} onWillDismiss={onClose} className={classes.container}>
-      <IonIcon color="light" size="large" icon={close} className={classes.close} onClick={modalController.dismiss} />
+      <IonIcon size="large" icon={close} className={classes.close} onClick={modalController.dismiss} />
       {React.cloneElement(children, { dismissModal: modalController.dismiss })}
     </IonModal>
   )

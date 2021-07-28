@@ -9,7 +9,7 @@
     "pretty": "prettier --write \"src/**/*.js\"",
     "android:start": "npx cap open android",
     "android:copy": "ionic capacitor copy android",
-    "android:initial": "ionic capacitor add android"
+    "android:initial": "npx cap add android"
   },
   "hooks": {
     "pre-commit": "pretty-quick --staged"
@@ -25,34 +25,43 @@
   },
   "homepage": ".",
   "dependencies": {
-    "@apollo/client": "^3.3.18",
-    "@capacitor/android": "^2.4.7",
-    "@capacitor/core": "^2.4.7",
-    "@ionic/react": "5.6.7",
-    "@ionic/react-router": "5.6.7",
+    "@apollo/client": "^3.3.21",
+    "@capacitor/android": "^3.1.2",
+    "@capacitor/app": "^1.0.2",
+    "@capacitor/core": "^3.1.2",
+    "@capacitor/haptics": "^1.0.2",
+    "@capacitor/keyboard": "^1.0.2",
+    "@capacitor/local-notifications": "^1.0.3",
+    "@capacitor/status-bar": "^1.0.2",
+    "@capacitor/storage": "^1.0.3",
+    "@hookform/resolvers": "^2.6.1",
+    "@ionic/react": "5.6.12",
+    "@ionic/react-router": "5.6.12",
     "clsx": "^1.1.1",
-    "dayjs": "^1.10.4",
-    "formik": "^2.2.6",
-    "graphql": "^15.5.0",
-    "graphql-tag": "^2.12.4",
+    "dayjs": "^1.10.6",
+    "formik": "^2.2.9",
+    "graphql": "^15.5.1",
+    "graphql-tag": "^2.12.5",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-animate-height": "^2.0.23",
     "react-dom": "^17.0.2",
-    "react-jss": "^10.6.0",
+    "react-hook-form": "^7.12.0",
+    "react-jss": "^10.7.1",
     "react-minimal-pie-chart": "^8.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-use": "^17.2.4",
-    "rxjs": "^7.0.1",
+    "rxjs": "^7.2.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.7",
-    "husky": "^6.0.0",
-    "prettier": "^2.3.0",
-    "pretty-quick": "^3.1.0"
+    "@capacitor/cli": "^3.1.2",
+    "husky": "^7.0.1",
+    "prettier": "^2.3.2",
+    "pretty-quick": "^3.1.1"
   },
   "browserslist": {
     "production": [

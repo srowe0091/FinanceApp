@@ -12,7 +12,7 @@ const sessionProps = pick(['email', 'isAdmin', 'inGroup', 'allowance', 'income',
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case 'SUCCESSFUL_LOGIN':
       return Object.assign({}, state, {
         isLoading: false,
         isAuthenticated: true,
