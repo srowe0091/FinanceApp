@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useRef, useMemo } from 'react'
-import { IonSlides, IonSlide, IonButtons, IonIcon, IonItem, IonButton } from '@ionic/react'
-import { ellipsisVertical } from 'ionicons/icons'
-import { useToggle } from 'react-use'
+import React, { useCallback, useRef, useMemo } from 'react'
+import { IonAlert, IonSlides, IonSlide } from '@ionic/react'
+import { useToggle, useLongPress } from 'react-use'
 import map from 'lodash/fp/map'
 
 import { NewCardView } from './NewCardView'
 import { useWalletStyles } from '../util'
 import { useWallet } from '../hooks'
-import { Card, Modal, Popover } from 'components'
+import { Fab, Card, Modal } from 'components'
 import { PageContainer } from 'template'
 import { hash } from 'utils'
 import { useUpdateUser } from 'modules/user'
@@ -24,11 +23,11 @@ const Wallet = () => {
   const ref = useRef()
   const { cards, defaultCard, loading } = useWallet()
   const [addCardModal, toggleAddCard] = useToggle(false)
-  const [popoverEvent, setShowPopover] = useState(null)
+  const [setDefaultAlert, toggleDefaultAlert] = useToggle(false)
   const key = useMemo(() => hash(JSON.stringify(cards)), [cards])
 
-  const openPopover = useCallback(e => setShowPopover(e.nativeEvent), [])
-  const closePopover = useCallback(() => setShowPopover(null), [])
+  const openPopover = useCallback(() => toggleDefaultAlert(true), [toggleDefaultAlert])
+  const closePopover = useCallback(() => toggleDefaultAlert(false), [toggleDefaultAlert])
 
   const [updateUser] = useUpdateUser()
 
@@ -37,18 +36,20 @@ const Wallet = () => {
     updateUser({ defaultCard: cards[index].id })
   }, [ref, cards, updateUser])
 
+  const longPressEvent = useLongPress(openPopover, { delay: 500 })
+
+  const alertButtons = useMemo(
+    () => [
+      { text: 'No', role: 'cancel' },
+      { text: 'Yes', handler: setCardAsDefault }
+    ],
+    [setCardAsDefault]
+  )
+
   return (
-    <PageContainer
-      toolbarChildren={
-        <IonButtons slot="end">
-          <IonButton onClick={openPopover}>
-            <IonIcon className={classes.icons} icon={ellipsisVertical} />
-          </IonButton>
-        </IonButtons>
-      }
-    >
+    <PageContainer>
       <div className={classes.container}>
-        <IonSlides key={key} ref={ref} options={slideOpts}>
+        <IonSlides key={key} ref={ref} options={slideOpts} onIonSlideDrag={longPressEvent.onTouchEnd}>
           {!loading && cards.length === 0 && (
             <div className={classes.emptyWallet}>
               <h6 align="center">No Cards added</h6>
@@ -56,7 +57,9 @@ const Wallet = () => {
           )}
           {map(card => (
             <IonSlide key={card.id}>
-              <Card isDefault={defaultCard === card.id} {...card} />
+              <div {...(defaultCard !== card.id && longPressEvent)}>
+                <Card isDefault={defaultCard === card.id} {...card} />
+              </div>
             </IonSlide>
           ))(cards)}
         </IonSlides>
@@ -66,12 +69,14 @@ const Wallet = () => {
         <NewCardView />
       </Modal>
 
-      <Popover event={popoverEvent} onClose={closePopover}>
-        <IonItem onClick={toggleAddCard}>Add New Card</IonItem>
-        <IonItem onClick={setCardAsDefault} disabled={!cards.length}>
-          Set Default Card
-        </IonItem>
-      </Popover>
+      <Fab onClick={toggleAddCard} />
+
+      <IonAlert
+        isOpen={setDefaultAlert}
+        onDidDismiss={closePopover}
+        message="Set Card as Default?"
+        buttons={alertButtons}
+      />
     </PageContainer>
   )
 }

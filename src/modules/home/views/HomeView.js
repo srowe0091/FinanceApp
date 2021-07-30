@@ -4,7 +4,7 @@ import { IonText, IonIcon } from '@ionic/react'
 import AnimateHeight from 'react-animate-height'
 import map from 'lodash/fp/map'
 
-import { add, chevronDown } from 'ionicons/icons'
+import { chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { PageContainer } from 'template'
@@ -82,7 +82,7 @@ const Home = () => {
         ))}
       </div>
 
-      <Fab icon={add} routerLink={routes.newTransaction} />
+      <Fab routerLink={routes.newTransaction} />
     </PageContainer>
   )
 }

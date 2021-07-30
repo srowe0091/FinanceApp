@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
 import { IonText, useIonViewWillEnter } from '@ionic/react'
+import { checkmark } from 'ionicons/icons'
 import { useQuery, useMutation } from '@apollo/client'
 import { useMountedState } from 'react-use'
 import sumBy from 'lodash/fp/sumBy'
@@ -83,7 +84,7 @@ const PayTransaction = () => {
           ))
         )}
       </div>
-      <Fab text="PAY" onClick={payTransaction} disabled={!transactionIds.length} loading={ptLoading} />
+      <Fab icon={checkmark} onClick={payTransaction} disabled={!transactionIds.length} loading={ptLoading} />
     </PageContainer>
   )
 }
