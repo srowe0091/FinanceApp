@@ -3,13 +3,17 @@ import cond from 'lodash/fp/cond'
 import some from 'lodash/fp/some'
 import isEqual from 'lodash/fp/isEqual'
 import replace from 'lodash/fp/replace'
+import isNumber from 'lodash/fp/isNumber'
 import stubTrue from 'lodash/fp/stubTrue'
 
 export const formatDate = (date, format = 'M/D/YYYY') => dayjs(date).format(format)
 
 export const pluralize = (count, string) => (1 === count ? string : `${string}s`)
 
-export const or = (...func) => val => some(f => f(val))(func)
+export const or =
+  (...func) =>
+  val =>
+    some(f => f(val))(func)
 
 export const toNumber = str => parseInt(replace(/\D/g)('')(str), '10')
 
@@ -30,7 +34,7 @@ export const calculateDays = dueDate => {
   return _determineDays(difference >= 15 ? difference - 15 : difference)
 }
 
-export const currency = (number, force) => (number || force ? `$${(number / 100).toFixed(2)}` : null)
+export const currency = number => (isNumber(number) ? `$${(number / 100).toFixed(2)}` : null)
 
 export const currenyFormat = value => {
   const number = toNumber(value)

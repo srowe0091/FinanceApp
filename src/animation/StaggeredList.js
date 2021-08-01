@@ -6,7 +6,7 @@ const useStaggeredListStyles = createUseStyles({
   '@keyframes staggeredList': {
     from: {
       opacity: 0,
-      transform: `scale(.8) translateY(150%)`
+      transform: `scale(.7)`
     },
     to: {
       opacity: 1,

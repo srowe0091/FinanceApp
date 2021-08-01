@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import clsx from 'clsx'
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles(theme => ({
   container: {
     height: 5,
     width: '100%',
@@ -17,12 +17,13 @@ const useStyles = createUseStyles({
     background:
       'linear-gradient(90deg, var(--ion-color-primary) 0%, var(--ion-color-primary-tint) 70%, var(--ion-color-primary) 100%);',
     borderRadius: 'inherit',
-    transition: 'width 1500ms ease-out'
+    transition: ({ duration = 1000 }) =>
+      theme.transition({ property: 'width', duration, timing: 'cubic-bezier(.3,.9,.6,1)' })
   }
-})
+}))
 
-export const ProgressBar = ({ className, percent }) => {
-  const classes = useStyles({ percent })
+export const ProgressBar = ({ className, percent, duration }) => {
+  const classes = useStyles({ percent, duration })
   return (
     <div className={clsx(classes.container, className)}>
       <div className={classes.progress} />
@@ -31,6 +32,7 @@ export const ProgressBar = ({ className, percent }) => {
 }
 
 ProgressBar.propTypes = {
+  className: PropTypes.string,
   percent: PropTypes.number,
-  className: PropTypes.string
+  duration: PropTypes.number
 }

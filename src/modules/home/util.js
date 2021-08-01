@@ -32,7 +32,10 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   },
   transactions: {
     flex: 1,
+    minHeight: '100px',
     backgroundColor: '#F8F8FF',
+    transform: 'translateY(-68px)',
+    transition: theme.transition({ duration: 750, timing: 'ease-out' }),
     padding: theme.spacing(0, 2, 8),
     '&:before': {
       content: '""',
@@ -43,6 +46,11 @@ export const useHomeViewStyles = createUseStyles(theme => ({
       transform: 'translateY(-100%)',
       backgroundColor: '#F8F8FF',
       borderRadius: '20px 20px 0 0 '
+    }
+  },
+  transactionSpacing: {
+    '& > p': {
+      paddingTop: theme.spacing(2)
     }
   },
   flex: {
@@ -69,7 +77,9 @@ export const useHomeViewStyles = createUseStyles(theme => ({
       borderRadius: '20px 20px 0 0 '
     }
   },
-
+  reset: {
+    transform: 'translateY(0)'
+  },
   card: {
     display: 'flex',
     alignItems: 'center',
@@ -118,7 +128,7 @@ export const useHomeHooks = () => {
 
     return {
       groupSpent: currency(data.groupSpent),
-      amountLeft: currency(diff, true),
+      amountLeft: diff,
       percentage: diff / allowance,
       transactions: orderBy(['date'])(['desc'])(data.transactions)
     }
@@ -133,14 +143,16 @@ export const useHomeHooks = () => {
     [cards]
   )
 
+  const _loading = loading || walletLoading
+
   return {
     onRefresh,
     inGroup,
     creditCards,
-    percentage,
-    amountLeft,
-    groupSpent,
+    percentage: _loading ? 0 : percentage,
+    amountLeft: _loading ? 0 : amountLeft,
+    groupSpent: _loading ? 0 : groupSpent,
     transactions,
-    loading: loading || walletLoading
+    loading: _loading
   }
 }
