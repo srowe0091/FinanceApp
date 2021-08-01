@@ -14,7 +14,7 @@ import mapValues from 'lodash/fp/mapValues'
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
 import { StaggeredList, Fade } from 'animation'
-import { PageContainer } from 'template'
+import { PageContainer, Loading } from 'template'
 import { Fab, PullToRefresh } from 'components'
 import { currency } from 'utils'
 import Pubsub from 'modules/pubsub'
@@ -55,34 +55,36 @@ const PayTransaction = () => {
     <PageContainer loading={loading}>
       <PullToRefresh onRefresh={onRefresh} />
       <div className={classes.transactions}>
-        {isEmpty(transactions) ? (
-          <IonText>
-            <h5 align="center" className={classes.emptyView}>
-              No transactions
-            </h5>
-          </IonText>
-        ) : (
-          Object.keys(transactions).map(email => (
-            <Fragment key={email}>
-              <Fade delay={300} duration={500}>
-                <IonText>
-                  <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;&nbsp;
-                  {currency(totalSpent[email])}
-                </IonText>
-              </Fade>
-              {transactions[email]?.map((t, idx) => (
-                <StaggeredList key={t.id} index={idx}>
-                  <TransactionEntry
-                    disableEdit
-                    onCheckboxClick={checkboxClick}
-                    checked={includes(t.id)(transactionIds)}
-                    {...t}
-                  />
-                </StaggeredList>
-              ))}
-            </Fragment>
-          ))
-        )}
+        <Loading spinner>
+          {isEmpty(transactions) ? (
+            <IonText>
+              <h5 align="center" className={classes.emptyView}>
+                No transactions
+              </h5>
+            </IonText>
+          ) : (
+            Object.keys(transactions).map(email => (
+              <Fragment key={email}>
+                <Fade delay={300} duration={500}>
+                  <IonText>
+                    <span className={classes.headers}>{email?.substring(0, 2)}</span>&nbsp;&nbsp;&nbsp;
+                    {currency(totalSpent[email])}
+                  </IonText>
+                </Fade>
+                {transactions[email]?.map((t, idx) => (
+                  <StaggeredList key={t.id} index={idx}>
+                    <TransactionEntry
+                      disableEdit
+                      onCheckboxClick={checkboxClick}
+                      checked={includes(t.id)(transactionIds)}
+                      {...t}
+                    />
+                  </StaggeredList>
+                ))}
+              </Fragment>
+            ))
+          )}
+        </Loading>
       </div>
       <Fab icon={checkmark} onClick={payTransaction} disabled={!transactionIds.length} loading={ptLoading} />
     </PageContainer>

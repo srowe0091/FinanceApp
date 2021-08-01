@@ -16,7 +16,8 @@ const useStyles = createUseStyles({
     transform: 'translateY(-20%)',
     background:
       'linear-gradient(90deg, var(--ion-color-primary) 0%, var(--ion-color-primary-tint) 70%, var(--ion-color-primary) 100%);',
-    borderRadius: 'inherit'
+    borderRadius: 'inherit',
+    transition: 'width 1500ms ease-out'
   }
 })
 

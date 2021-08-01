@@ -1,33 +1,29 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import PropTypes from 'prop-types'
 import { IonContent } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
-import { Toolbar, RelativeLoader } from 'components'
+import { Toolbar } from 'components'
 
 export const usePageContainerStyles = createUseStyles({
-  container: {
-    display: 'flex',
-    minHeight: '100%',
-    flexDirection: 'column'
+  content: {
+    '--background': '#F8F8FF'
   }
 })
 
-export const PageContainer = ({ children, loading, toolbarChildren }) => {
-  const classes = usePageContainerStyles()
+export const PageContext = createContext()
 
-  if (loading) {
-    return <RelativeLoader />
-  }
+export const PageContainer = ({ children, loading, toolbarChildren }) => {
+  const classes = usePageContainerStyles({ loading })
 
   return (
-    <>
+    <PageContext.Provider value={loading}>
       {toolbarChildren && <Toolbar>{toolbarChildren}</Toolbar>}
 
-      <IonContent fullscreen>
-        <div className={classes.container}>{children}</div>
+      <IonContent scrollY={!loading} className={classes.content}>
+        {children}
       </IonContent>
-    </>
+    </PageContext.Provider>
   )
 }
 

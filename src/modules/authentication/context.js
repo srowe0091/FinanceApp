@@ -2,15 +2,14 @@ import React, { createContext } from 'react'
 import PropTypes from 'prop-types'
 
 import { useInitializeAuth } from './hooks'
-import { FullPageLoader } from 'components'
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const { isLoading, ...state } = useInitializeAuth()
-  if (isLoading) {
-    return <FullPageLoader />
-  }
+
+  if (isLoading) return null
+
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
 }
 

@@ -124,7 +124,7 @@ export const useHomeHooks = () => {
     }
   }, [data, allowance])
 
-  const daysLeft = useMemo(
+  const creditCards = useMemo(
     () =>
       compose(
         sortBy('count'),
@@ -135,7 +135,8 @@ export const useHomeHooks = () => {
 
   return {
     onRefresh,
-    daysLeft,
+    inGroup,
+    creditCards,
     percentage,
     amountLeft,
     groupSpent,
