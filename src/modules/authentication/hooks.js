@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react'
 import { useApolloClient, useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
+import { SplashScreen } from '@capacitor/splash-screen'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
@@ -31,6 +32,7 @@ export const useInitializeAuth = () => {
         return
       }
       dispatch({ type: 'SUCCESSFUL_LOGIN', payload: user })
+      SplashScreen.hide()
       history.replace(routes.home)
     } catch (err) {
       console.log(err)
