@@ -31,7 +31,7 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
 
   return (
     <IonModal isOpen={isOpen} backdropDismiss={false}>
-      <IonContent color="dark">
+      <IonContent>
         <div className={classes.container}>
           <IonText className={classes.header}>
             <h4>Finish Profile</h4>

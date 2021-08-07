@@ -23,7 +23,7 @@ export const useBillsStyles = createUseStyles(theme => ({
     marginBottom: theme.spacing(5),
     display: 'flex',
     justifyContent: 'space-evenly',
-    backgroundColor: 'var(--ion-color-medium)',
+    backgroundColor: 'var(--ion-color-light)',
     borderRadius: 'var(--borderRadius)'
   },
   monthlyInfo: {

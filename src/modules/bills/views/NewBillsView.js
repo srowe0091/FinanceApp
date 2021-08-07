@@ -39,7 +39,7 @@ const NewBillView = ({ dismissModal }) => {
   )
 
   return (
-    <IonContent color="dark">
+    <IonContent>
       <Formik onSubmit={onSubmit} validationSchema={NewBillSchema} initialValues={initialNewBill} validateOnMount>
         {({ values, handleBlur, handleChange, handleSubmit, isValid, isSubmitting }) => (
           <Form className={classes.container}>

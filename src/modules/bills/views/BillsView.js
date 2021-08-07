@@ -45,7 +45,7 @@ const Bills = () => {
         </IonButtons>
       }
     >
-      <div color="medium" className={classes.panel}>
+      <div className={classes.panel}>
         <IonItem color="transparent" lines="none">
           <IonIcon icon={caretUp} color="danger" />
           <span className={classes.monthlyInfo}>

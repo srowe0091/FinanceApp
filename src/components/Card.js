@@ -162,12 +162,6 @@ export const Card = ({ className, type, createdAt, isDefault, small, dueDate = '
           &nbsp;
           <p display="inline">{_createdDate}</p>
         </IonText>
-
-        {/* {createdAt && (
-          <Button color="medium" size="small" className={classes.details}>
-            Details
-          </Button>
-        )} */}
       </div>
     </AspectRatio>
   )

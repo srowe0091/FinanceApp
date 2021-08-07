@@ -10,13 +10,19 @@ export const TransactionSchema = yup.object({
 
 export const useNewTransactionViewStyles = createUseStyles(theme => ({
   container: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column'
+    height: '100%',
+    padding: theme.spacing(3)
   },
   moneyInput: {
     textAlign: 'center',
     fontSize: '70px'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  header: {
+    marginBottom: theme.spacing(2)
   }
 }))

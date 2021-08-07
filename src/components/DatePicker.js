@@ -18,7 +18,7 @@ const useDatePickerStyles = createUseStyles({
 export const DatePicker = ({ onChange, ...props }) => {
   const classes = useDatePickerStyles()
   return (
-    <IonItem color="medium" className={classes.datePicker}>
+    <IonItem color="light" className={classes.datePicker}>
       <IonDatetime displayFormat="M/D/YYYY" onIonChange={onChange} {...props} />
       <IonIcon icon={calendar} slot="end" />
     </IonItem>

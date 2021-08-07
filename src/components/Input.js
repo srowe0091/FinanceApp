@@ -8,7 +8,7 @@ const useInputStyles = createUseStyles(theme => ({
     position: 'relative',
     width: '100%',
     '& input': {
-      color: 'var(--white)',
+      color: 'var(--gray8)',
       width: '100%',
       padding: theme.spacing(2, 2.5),
       marginBottom: 'var(--inputSpacing)',
@@ -17,11 +17,8 @@ const useInputStyles = createUseStyles(theme => ({
       outline: 'none',
       boxShadow: 'var(--boxShadow)',
       borderRadius: 'var(--borderRadius)',
-      background: 'var(--ion-color-medium)',
-      '&::placeholder': {
-        color: 'var(--gray7)',
-        opacity: 0.5
-      },
+      background: 'var(--ion-color-light)',
+
       '&[disabled]': {
         opacity: 0.5
       }

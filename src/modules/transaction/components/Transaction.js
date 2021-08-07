@@ -91,7 +91,9 @@ export const TransactionEntry = ({
 
         {!disableEdit && (
           <IonItemOptions side="end" onIonSwipe={openEdit}>
-            <IonItemOption expandable>Edit</IonItemOption>
+            <IonItemOption expandable onClick={openEdit}>
+              Edit
+            </IonItemOption>
           </IonItemOptions>
         )}
       </IonItemSliding>

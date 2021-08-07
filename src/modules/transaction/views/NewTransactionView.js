@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
+import { IonText } from '@ionic/react'
 import { Formik, Form } from 'formik'
 import map from 'lodash/fp/map'
 
@@ -42,44 +43,51 @@ const NewTransactionPage = ({ history }) => {
 
   return (
     <PageContainer>
-      <Formik
-        validateOnMount
-        enableReinitialize
-        onSubmit={onSubmit}
-        initialValues={initialValues}
-        validationSchema={TransactionSchema}
-      >
-        {({ values, handleChange, handleBlur, handleSubmit, isValid, isSubmitting }) => (
-          <Form className={classes.container} autoComplete="off">
-            <MaskedInput
-              autoFocus
-              type="tel"
-              name="amount"
-              className={classes.moneyInput}
-              format={currenyFormat}
-              value={values.amount}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
+      <div className={classes.container}>
+        <IonText display="block">
+          <h5 className={classes.header}>New Transaction</h5>
+        </IonText>
+        <Formik
+          validateOnMount
+          enableReinitialize
+          onSubmit={onSubmit}
+          initialValues={initialValues}
+          validationSchema={TransactionSchema}
+        >
+          {({ values, handleChange, handleBlur, handleSubmit, isValid, isSubmitting }) => (
+            <Form className={classes.form} autoComplete="off">
+              <MaskedInput
+                autoFocus
+                type="tel"
+                name="amount"
+                className={classes.moneyInput}
+                format={currenyFormat}
+                value={values.amount}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
 
-            <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
+              <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
 
-            <Select
-              type="popover"
-              name="card"
-              label={walletLoading ? 'Loading...' : 'Put on Card'}
-              value={walletLoading ? '' : values.card}
-              options={cardOptions}
-              onChange={handleChange}
-              disabled={walletLoading}
-            />
+              <Select
+                type="popover"
+                name="card"
+                label={walletLoading ? 'Loading...' : 'Put on Card'}
+                value={walletLoading ? '' : values.card}
+                options={cardOptions}
+                onChange={handleChange}
+                disabled={walletLoading}
+              />
 
-            {inGroup && <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />}
+              {inGroup && (
+                <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
+              )}
 
-            <Fab icon={dollarSign} onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
-          </Form>
-        )}
-      </Formik>
+              <Fab icon={dollarSign} onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
+            </Form>
+          )}
+        </Formik>
+      </div>
     </PageContainer>
   )
 }

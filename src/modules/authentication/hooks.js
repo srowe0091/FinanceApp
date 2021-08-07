@@ -28,12 +28,13 @@ export const useInitializeAuth = () => {
       const response = await client.query({ query: GetUser })
       const user = response?.data?.me || {}
       if ((!user.allowance || !user.income) && user.isAdmin) {
-        dispatch({ type: 'COMPLETE_PROFILE', payload: user })
-        return
+        return dispatch({ type: 'COMPLETE_PROFILE', payload: user })
       }
       dispatch({ type: 'SUCCESSFUL_LOGIN', payload: user })
+      if (process.env.NODE_ENV !== 'development') {
+        history.replace(routes.home)
+      }
       SplashScreen.hide()
-      history.replace(routes.home)
     } catch (err) {
       console.log(err)
     }
@@ -73,7 +74,7 @@ export const useInitializeAuth = () => {
           const { session } = JSON.parse(res)
           return StorageContainer.set('session', session)
         })
-        .then(() => handleGetUser()),
+        .then(handleGetUser),
     [handleGetUser]
   )
 

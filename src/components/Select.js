@@ -21,7 +21,7 @@ const useSelectStyles = createUseStyles({
 export const Select = ({ className, label, name, onChange, value, options, type = 'action-sheet', ...rest }) => {
   const classes = useSelectStyles()
   return (
-    <IonItem color="medium" className={clsx(classes.select, className)}>
+    <IonItem color="light" className={clsx(classes.select, className)}>
       <IonLabel>{label}</IonLabel>
       <IonSelect
         name={name}

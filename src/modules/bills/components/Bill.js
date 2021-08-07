@@ -43,7 +43,7 @@ export const BillEntry = ({ name, dueDate, amount, type, notes, disabled }) => {
 
   return (
     <div className={classes.bill}>
-      <IonItem color="medium" lines="none" disabled={disabled}>
+      <IonItem lines="none" disabled={disabled}>
         <IonIcon icon={iconMap[type] || receipt} size="large" />
         <span className={classes.label}>
           <span className={classes.textSpacing}>

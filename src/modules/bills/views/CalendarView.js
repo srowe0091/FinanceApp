@@ -8,7 +8,7 @@ const NewBillView = ({ dismissModal }) => {
   const classes = useCalendarStyles()
 
   return (
-    <IonContent color="dark">
+    <IonContent>
       <div className={classes.container}>
         <div></div>
       </div>

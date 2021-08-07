@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
 import { createUseStyles } from 'react-jss'
-import { IonText, IonContent } from '@ionic/react'
+import { IonText } from '@ionic/react'
 import { Formik, Form } from 'formik'
 import map from 'lodash/fp/map'
 
@@ -14,14 +14,12 @@ import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
 import Pubsub from 'modules/pubsub'
+import { PageContainer } from 'template'
 
 const useEditTransactionStyles = createUseStyles(theme => ({
   container: {
     height: '100%',
-    padding: theme.spacing(3),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
+    padding: theme.spacing(3)
   },
   header: {
     marginBottom: theme.spacing(2)
@@ -65,9 +63,9 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
   )
 
   return (
-    <IonContent>
+    <PageContainer>
       <div className={classes.container}>
-        <IonText color="light">
+        <IonText>
           <h5 className={classes.header}>Edit Transaction</h5>
         </IonText>
         <Formik enableReinitialize initialValues={cardValues} onSubmit={onSubmit}>
@@ -105,13 +103,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
               <DatePicker name="date" value={values.date} onChange={handleChange} />
 
               {inGroup && (
-                <Checkbox
-                  color="medium"
-                  label="Group Purchase"
-                  name="group"
-                  checked={values.group}
-                  onChange={handleChange}
-                />
+                <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
               )}
 
               <Fab onClick={handleSubmit} icon={checkmark} disabled={!isValid} loading={isSubmitting} />
@@ -119,7 +111,7 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
           )}
         </Formik>
       </div>
-    </IonContent>
+    </PageContainer>
   )
 }
 
