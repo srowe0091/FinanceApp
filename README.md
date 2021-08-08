@@ -8,8 +8,8 @@
 #### Enhancement
 
 - [x] Update Input fields colors
-- [ ] Update summary section to show how much transaction are on per card
-- [ ] Replace todays date with group spent
+- [x] Update summary section to show how much transaction are on per card
+- [x] Replace todays date with group spent
 - [ ] Replace react-animated-numbers with CSS (https://css-tricks.com/animating-number-counters/)
 
 #### Refactor

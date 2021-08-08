@@ -17,7 +17,7 @@ export const or =
 
 export const toNumber = str => parseInt(replace(/\D/g)('')(str), '10')
 
-const customConstant = text => count => ({ text, count })
+const customConstant = text => daysLeft => ({ text, daysLeft })
 
 const _determineDays = cond([
   [or(isEqual(15), isEqual(0)), customConstant('Submit Today')],

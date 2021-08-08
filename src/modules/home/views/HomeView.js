@@ -10,12 +10,11 @@ import { chevronDown } from 'ionicons/icons'
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { PageContainer, Loading } from 'template'
 import { Fab, PullToRefresh, Card, ProgressBar } from 'components'
-import { formatDate, currency } from 'utils'
+import { currency } from 'utils'
 import routes from 'routes'
 import { StaggeredList } from 'animation'
 import { TransactionEntry } from 'modules/transaction'
 
-const todayDate = formatDate(new Date(), 'dddd, MMM D, YYYY')
 const DURATION = 1500
 
 const Home = () => {
@@ -45,7 +44,11 @@ const Home = () => {
 
         <ProgressBar className={classes.progressBar} duration={DURATION} percent={percentage} />
 
-        <p>{todayDate}</p>
+        {inGroup && (
+          <p>
+            Group Spent: <strong>{groupSpent}</strong>
+          </p>
+        )}
       </div>
 
       {(inGroup || creditCards.length > 0) && (
@@ -53,27 +56,22 @@ const Home = () => {
           <AnimateHeight height={expand ? 'auto' : 68} duration={550} delay={100}>
             <div className={classes.cardList}>
               {map(c => (
-                <div key={c.id} className={classes.card}>
-                  <Card small type={c.type} className={classes.cardSpace} />
-                  <IonText align="left">
+                <div key={c.id} className={classes.cardWrapper}>
+                  <Card small type={c.type} />
+
+                  <IonText className={classes.stretch} align="left">
                     <h6>{c.name}</h6>
                     <p variant="caption" color="textSecondary">
                       {c.text}
                     </p>
                   </IonText>
+                  <p>
+                    <strong>{currency(c.transactionSum)}</strong>
+                  </p>
                 </div>
               ))(creditCards)}
             </div>
           </AnimateHeight>
-
-          {inGroup && (
-            <div className={classes.flex}>
-              <h6>{groupSpent}</h6>
-              <p variant="caption" color="textSecondary">
-                Group Spent
-              </p>
-            </div>
-          )}
 
           {creditCards.length > 1 && (
             <IonIcon
@@ -85,16 +83,10 @@ const Home = () => {
         </div>
       )}
 
-      <div
-        className={clsx(
-          classes.transactions,
-          !loading && classes.reset,
-          transactions.length === 0 && classes.transactionSpacing
-        )}
-      >
+      <div className={clsx(classes.transactions, !loading && classes.reset)}>
         <Loading spinner>
           {transactions.length === 0 && (
-            <p align="center" color="textSecondary">
+            <p align="center" color="textSecondary" className={classes.transactionSpacing}>
               No transactions
             </p>
           )}

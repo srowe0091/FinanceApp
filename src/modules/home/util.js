@@ -2,10 +2,12 @@ import { useCallback, useMemo } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useQuery } from '@apollo/client'
 import map from 'lodash/fp/map'
+import sumBy from 'lodash/fp/sumBy'
 import sortBy from 'lodash/fp/sortBy'
+import reduce from 'lodash/fp/reduce'
+import groupBy from 'lodash/fp/groupBy'
 import orderBy from 'lodash/fp/orderBy'
 import compose from 'lodash/fp/compose'
-import reduce from 'lodash/fp/reduce'
 
 import { calculateDays, currency } from 'utils'
 import { UserTransactions } from 'modules/transaction'
@@ -49,20 +51,10 @@ export const useHomeViewStyles = createUseStyles(theme => ({
     }
   },
   transactionSpacing: {
-    '& > p': {
-      paddingTop: theme.spacing(2)
-    }
-  },
-  flex: {
-    textAlign: 'right',
-    display: 'flex',
-    flexDirection: 'column'
+    paddingTop: theme.spacing(2)
   },
   summary: {
     position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     padding: theme.spacing(0, 2, 0),
     backgroundColor: '#e0e9ff',
     transition: theme.transition({}),
@@ -80,13 +72,14 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   reset: {
     transform: 'translateY(0)'
   },
-  card: {
+  stretch: {
+    flex: 1,
+    marginLeft: theme.spacing(1)
+  },
+  cardWrapper: {
     display: 'flex',
     alignItems: 'center',
     marginBottom: theme.spacing(2)
-  },
-  cardSpace: {
-    marginRight: theme.spacing(1)
   },
   cardList: {
     paddingBottom: theme.spacing(4)
@@ -116,6 +109,7 @@ export const useHomeHooks = () => {
   const { cards, loading: walletLoading } = useWallet()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
+
   const { amountLeft, groupSpent, percentage, transactions } = useMemo(() => {
     const _amountLeft = reduce((acc, curr) => {
       if (!curr.group) {
@@ -134,14 +128,15 @@ export const useHomeHooks = () => {
     }
   }, [data, allowance])
 
-  const creditCards = useMemo(
-    () =>
-      compose(
-        sortBy('count'),
-        map(d => Object.assign({}, d, calculateDays(d.dueDate, true)))
-      )(cards),
-    [cards]
-  )
+  const creditCards = useMemo(() => {
+    const creditCards = compose(
+      sortBy('daysLeft'),
+      map(d => Object.assign({}, d, calculateDays(d.dueDate)))
+    )(cards)
+
+    const cardKeys = groupBy('card.id')(transactions)
+    return map(card => ({ ...card, transactionSum: sumBy('amount')(cardKeys[card.id]) }))(creditCards)
+  }, [transactions, cards])
 
   const _loading = loading || walletLoading
 
