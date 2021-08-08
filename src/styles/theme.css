@@ -157,10 +157,6 @@ p {
   font-size: 0.75rem;
 }
 
-*[gutterbottom='1'] {
-  margin-bottom: 8px;
-}
-
 p[display='inline'] {
   display: inline-block;
 }

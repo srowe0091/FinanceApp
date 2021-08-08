@@ -65,7 +65,7 @@ export const TransactionEntry = ({
         <IonItem lines="none">
           <span className={classes.label}>
             <span className={classes.textSpacing}>
-              <h6 variant="subtitle1" wrap="break" gutterbottom="1">
+              <h6 variant="subtitle1" wrap="break">
                 {description || <span color="textSecondary">(blank)</span>}
               </h6>
               <div>
