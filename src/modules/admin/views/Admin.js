@@ -1,11 +1,18 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
-import { IonToolbar, IonSegment, IonSegmentButton } from '@ionic/react'
+import { IonToolbar, IonHeader, IonSegment, IonSegmentButton } from '@ionic/react'
 
 import { PageContainer } from 'template'
 
 import PayTransactionView from './PayTransactionsView'
 import GroupView from './GroupView'
+
+const View = ({ show, component }) => React.cloneElement(component, { style: { display: show ? null : 'none' } })
+
+View.propTypes = {
+  show: PropTypes.bool,
+  component: PropTypes.node
+}
 
 const Admin = () => {
   const [state, updateState] = useState('pay')
@@ -13,17 +20,21 @@ const Admin = () => {
   const handleChange = useCallback(e => updateState(e.detail.value), [])
 
   return (
-    <PageContainer>
-      <IonToolbar>
-        <IonSegment value={state} onIonChange={handleChange}>
-          <IonSegmentButton value="pay">Pay</IonSegmentButton>
-          <IonSegmentButton value="group">Group</IonSegmentButton>
-        </IonSegment>
-      </IonToolbar>
+    <>
+      <IonHeader>
+        <IonToolbar>
+          <IonSegment value={state} onIonChange={handleChange}>
+            <IonSegmentButton value="pay">Pay</IonSegmentButton>
+            <IonSegmentButton value="group">Group</IonSegmentButton>
+          </IonSegment>
+        </IonToolbar>
+      </IonHeader>
 
-      {state === 'pay' && <PayTransactionView />}
-      {state === 'group' && <GroupView />}
-    </PageContainer>
+      <PageContainer>
+        <View show={state === 'pay'} component={<PayTransactionView />} />
+        <View show={state === 'group'} component={<GroupView />} />
+      </PageContainer>
+    </>
   )
 }
 

@@ -1,13 +1,14 @@
 import { useCallback, useContext, useEffect } from 'react'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { SplashScreen } from '@capacitor/splash-screen'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
 import { StorageContainer } from 'lib/Capacitor'
-import { GetUser } from 'modules/user'
+import { useQuery } from 'hooks'
 import routes from 'routes'
+import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
   if (!response.ok) {
@@ -116,6 +117,6 @@ export const useAuthentication = () => {
 }
 
 export const useUser = () => {
-  const { data } = useQuery(GetUser, { fetchPolicy: 'cache-only' })
-  return data?.me ?? {}
+  const { data = {} } = useQuery(GetUser, { path: 'me', fetchPolicy: 'cache-only' })
+  return data
 }

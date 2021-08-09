@@ -1,12 +1,10 @@
 import React, { useCallback, useState, useMemo, Fragment } from 'react'
-import { IonText, useIonViewWillEnter } from '@ionic/react'
+import { IonText, useIonViewDidLeave } from '@ionic/react'
 import { checkmark } from 'ionicons/icons'
-import { useQuery, useMutation } from '@apollo/client'
-import { useMountedState } from 'react-use'
+import { useMutation } from '@apollo/client'
 import sumBy from 'lodash/fp/sumBy'
 import concat from 'lodash/fp/concat'
 import reject from 'lodash/fp/reject'
-import isEmpty from 'lodash/fp/isEmpty'
 import groupBy from 'lodash/fp/groupBy'
 import includes from 'lodash/fp/includes'
 import mapValues from 'lodash/fp/mapValues'
@@ -17,46 +15,47 @@ import { StaggeredList, Fade } from 'animation'
 import { PageContainer, Loading } from 'template'
 import { Fab, PullToRefresh } from 'components'
 import { currency } from 'utils'
+import { useQuery } from 'hooks'
 import Pubsub from 'modules/pubsub'
 import { TransactionEntry } from 'modules/transaction'
 
-const PayTransaction = () => {
-  const isMounted = useMountedState()
+const PayTransaction = props => {
   const classes = usePayTransactionStyles()
-  const [transactionIds, handleIds] = useState([])
-  const { data, loading, refetch } = useQuery(GroupTransactions)
+  const [transactionIds, updateSelectedIds] = useState([])
+  const { data = [], loading, refetch } = useQuery(GroupTransactions, { path: 'admin.groupTransactions' })
   const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
     variables: { transactionIds },
     awaitRefetchQueries: true,
     refetchQueries: ['UserTransactions', 'GroupTransactions'],
     onCompleted: () => {
-      handleIds([])
+      updateSelectedIds([])
       Pubsub.emit('TOAST_NOTIFICATION', 'Transactions Paid')
     }
   })
   const checkboxClick = useCallback(
-    id => e => handleIds(_ids => (e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids))),
+    id => e => updateSelectedIds(_ids => (e.target.checked ? concat(_ids)(id) : reject(_id => _id === id)(_ids))),
     []
   )
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
+
   const { transactions, totalSpent } = useMemo(() => {
-    const groupedTransactions = groupBy('owner.email')(data?.admin?.groupTransactions)
+    const groupedTransactions = groupBy('owner.email')(data)
     const totalSpent = mapValues(sumBy('amount'))(groupedTransactions)
-    return { transactions: groupedTransactions, totalSpent }
+    return { totalSpent, transactions: groupedTransactions }
   }, [data])
 
-  useIonViewWillEnter(() => {
-    if (isMounted()) {
-      handleIds([])
-    }
+  // This only works because tabs are present and views do not get removed from DOM
+  useIonViewDidLeave(() => {
+    updateSelectedIds([])
   })
 
   return (
-    <PageContainer loading={loading}>
+    <PageContainer loading={loading} {...props}>
       <PullToRefresh onRefresh={onRefresh} />
+
       <div className={classes.transactions}>
         <Loading spinner>
-          {isEmpty(transactions) ? (
+          {!data.length ? (
             <IonText>
               <h5 align="center" className={classes.emptyView}>
                 No transactions
@@ -86,6 +85,7 @@ const PayTransaction = () => {
           )}
         </Loading>
       </div>
+
       <Fab icon={checkmark} onClick={payTransaction} disabled={!transactionIds.length} loading={ptLoading} />
     </PageContainer>
   )

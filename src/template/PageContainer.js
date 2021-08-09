@@ -13,14 +13,14 @@ export const usePageContainerStyles = createUseStyles({
 
 export const PageContext = createContext()
 
-export const PageContainer = ({ children, loading, toolbarChildren }) => {
+export const PageContainer = ({ children, loading, toolbarChildren, ...rest }) => {
   const classes = usePageContainerStyles({ loading })
 
   return (
     <PageContext.Provider value={loading}>
       {toolbarChildren && <Toolbar>{toolbarChildren}</Toolbar>}
 
-      <IonContent scrollY={!loading} className={classes.content}>
+      <IonContent scrollY={!loading} className={classes.content} {...rest}>
         {children}
       </IonContent>
     </PageContext.Provider>
