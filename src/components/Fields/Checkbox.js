@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { forwardRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { IonCheckbox, IonItem, IonLabel } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
@@ -13,7 +13,7 @@ const useCheckboxStyle = createUseStyles(theme => ({
   }
 }))
 
-export const Checkbox = ({ label, onChange, color, ...rest }) => {
+export const Checkbox = forwardRef(({ label, onChange, color, ...rest }, ref) => {
   const classes = useCheckboxStyle()
   const handleChange = useCallback(
     e => {
@@ -27,12 +27,14 @@ export const Checkbox = ({ label, onChange, color, ...rest }) => {
     [onChange]
   )
   return (
-    <IonItem lines="none" className={classes.item} color="transparent">
+    <IonItem ref={ref} lines="none" className={classes.item} color="transparent">
       <IonLabel>{label}</IonLabel>
       <IonCheckbox type="checkbox" slot="start" className={classes.checkbox} onIonChange={handleChange} {...rest} />
     </IonItem>
   )
-}
+})
+
+Checkbox.displayName = 'Checkbox'
 
 Checkbox.propTypes = {
   label: PropTypes.string,

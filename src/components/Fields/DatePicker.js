@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import { IonDatetime, IonItem, IonIcon } from '@ionic/react'
@@ -15,15 +15,17 @@ const useDatePickerStyles = createUseStyles({
   }
 })
 
-export const DatePicker = ({ onChange, ...props }) => {
+export const DatePicker = forwardRef(({ onChange, ...props }, ref) => {
   const classes = useDatePickerStyles()
   return (
     <IonItem color="light" className={classes.datePicker}>
-      <IonDatetime displayFormat="M/D/YYYY" onIonChange={onChange} {...props} />
+      <IonDatetime ref={ref} displayFormat="M/D/YYYY" onIonChange={onChange} {...props} />
       <IonIcon icon={calendar} slot="end" />
     </IonItem>
   )
-}
+})
+
+DatePicker.displayName = 'DatePicker'
 
 DatePicker.propTypes = {
   onChange: PropTypes.func
