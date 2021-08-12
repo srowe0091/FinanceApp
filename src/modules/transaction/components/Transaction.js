@@ -10,15 +10,15 @@ import { formatDate, currency } from 'utils'
 import { Modal, Tag } from 'components'
 
 const useTransactionStyles = createUseStyles(theme => ({
-  transaction: {
+  wrapper: {
     marginBottom: theme.spacing(2),
     overflow: 'auto',
     borderRadius: 'var(--borderRadius)',
     boxShadow: '0px 3px 4px 0px var(--alpha10)'
   },
-  label: {
+  transaction: {
     width: '100%',
-    padding: theme.spacing(1, 0),
+    padding: theme.spacing(0.7, 0),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -26,8 +26,8 @@ const useTransactionStyles = createUseStyles(theme => ({
   checkbox: {
     marginRight: theme.spacing(2)
   },
-  textSpacing: {
-    marginRight: theme.spacing(1)
+  headerSpacing: {
+    marginBottom: theme.spacing(0.5)
   }
 }))
 
@@ -60,12 +60,12 @@ export const TransactionEntry = ({
   })
 
   return (
-    <div className={classes.transaction}>
+    <div className={classes.wrapper}>
       <IonItemSliding ref={ref}>
         <IonItem lines="none">
-          <span className={classes.label}>
-            <span className={classes.textSpacing}>
-              <h6 variant="subtitle1" wrap="break">
+          <span className={classes.transaction}>
+            <span>
+              <h6 className={classes.headerSpacing} variant="subtitle1" wrap="break">
                 {description || <span color="textSecondary">(blank)</span>}
               </h6>
               <div>

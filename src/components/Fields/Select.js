@@ -20,7 +20,7 @@ const useSelectStyles = createUseStyles(theme => ({
 }))
 
 export const Select = forwardRef(
-  ({ className, label, name, onChange, value, options, type = 'action-sheet', error, ...rest }, ref) => {
+  ({ className, label, name, onChange, value, options, error, type = 'action-sheet', ...rest }, ref) => {
     const classes = useSelectStyles(error)
     return (
       <IonItem color="light" className={clsx(classes.select, className)}>
@@ -52,8 +52,9 @@ Select.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
   type: PropTypes.string,
+  error: PropTypes.object,
+  onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
