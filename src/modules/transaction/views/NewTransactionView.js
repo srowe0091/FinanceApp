@@ -1,14 +1,15 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
-import { IonText } from '@ionic/react'
-import { Formik, Form } from 'formik'
+import { IonText, useIonViewWillLeave } from '@ionic/react'
+import { useForm, FormProvider } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import map from 'lodash/fp/map'
 
 import { TransactionSchema, useNewTransactionViewStyles } from '../util'
 import { NewTransaction } from '../transaction.gql'
 import { PageContainer } from 'template'
-import { Fab, Input, MaskedInput, Checkbox, Select } from 'components'
+import { Fab, Input, MaskedInput, Checkbox, Select, FieldController } from 'components'
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -17,29 +18,36 @@ import dollarSign from 'styles/icons/dollarSign.svg'
 
 const NewTransactionPage = ({ history }) => {
   const classes = useNewTransactionViewStyles()
+  const { cards, defaultCard } = useWallet()
   const { isAdmin, inGroup } = useUser()
-  const { cards, defaultCard, loading: walletLoading } = useWallet()
+
+  const form = useForm({
+    resolver: yupResolver(TransactionSchema),
+    defaultValues: { amount: 0, description: '', group: false, card: defaultCard }
+  })
+
+  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
+
   const [saveTransaction] = useMutation(NewTransaction, {
     awaitRefetchQueries: true,
     refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['GroupTransactions'] : [])
   })
+
   const onSubmit = useCallback(
-    values => {
+    values =>
       saveTransaction({
         variables: {
-          input: {
-            ...values,
-            amount: toNumber(values.amount)
-          }
+          input: Object.assign(values, { amount: toNumber(values.amount) })
         }
-      }).then(() => history.goBack())
-    },
+      }).then(history.goBack),
     [saveTransaction, history]
   )
 
-  const initialValues = useMemo(() => ({ amount: 0, description: '', group: false, card: defaultCard }), [defaultCard])
+  useIonViewWillLeave(form.reset)
 
-  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
+  const {
+    formState: { isSubmitting }
+  } = form
 
   return (
     <PageContainer>
@@ -47,46 +55,26 @@ const NewTransactionPage = ({ history }) => {
         <IonText display="block">
           <h5 className={classes.header}>New Transaction</h5>
         </IonText>
-        <Formik
-          validateOnMount
-          enableReinitialize
-          onSubmit={onSubmit}
-          initialValues={initialValues}
-          validationSchema={TransactionSchema}
-        >
-          {({ values, handleChange, handleBlur, handleSubmit, isValid, isSubmitting }) => (
-            <Form className={classes.form} autoComplete="off">
-              <MaskedInput
-                autoFocus
-                type="tel"
-                name="amount"
-                className={classes.moneyInput}
-                format={currenyFormat}
-                value={values.amount}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
+        <FormProvider {...form}>
+          <form className={classes.form} autoComplete="off">
+            <FieldController
+              autoFocus
+              type="tel"
+              name="amount"
+              className={classes.moneyInput}
+              format={currenyFormat}
+              component={MaskedInput}
+            />
 
-              <Input name="description" placeholder="memo" onBlur={handleBlur} onChange={handleChange} />
+            <FieldController name="description" placeholder="memo" component={Input} />
 
-              <Select
-                type="popover"
-                name="card"
-                label={walletLoading ? 'Loading...' : 'Put on Card'}
-                value={walletLoading ? '' : values.card}
-                options={cardOptions}
-                onChange={handleChange}
-                disabled={walletLoading}
-              />
+            <FieldController type="popover" name="card" label="Put on Card" options={cardOptions} component={Select} />
 
-              {inGroup && (
-                <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
-              )}
+            {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
 
-              <Fab icon={dollarSign} onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
-            </Form>
-          )}
-        </Formik>
+            <Fab icon={dollarSign} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+          </form>
+        </FormProvider>
       </div>
     </PageContainer>
   )
