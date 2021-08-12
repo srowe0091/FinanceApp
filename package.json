@@ -25,7 +25,7 @@
   },
   "homepage": ".",
   "dependencies": {
-    "@apollo/client": "^3.4.5",
+    "@apollo/client": "^3.4.7",
     "@capacitor/android": "^3.1.2",
     "@capacitor/app": "^1.0.2",
     "@capacitor/core": "^3.1.2",
