@@ -40,10 +40,16 @@ const shadows = [
 
 const linearGradient = (color1, color2, degree = 315) => `linear-gradient(${degree}deg, ${color1} 0%, ${color2} 100%)`
 
+const fieldError = {
+  border: error => `1px solid var(${error ? '--ion-color-danger' : '--alpha0'})`,
+  boxShadow: error => `0px 2px 5px -1px var(${error ? '--ion-color-danger' : '--black'})`
+}
+
 const theme = {
   spacing: (...size) => size.map(s => (s === 'auto' ? 'auto' : s * 8 + 'px')).join(' '),
   linearGradient,
   shadows,
+  fieldError,
   transition: ({ property = 'all', duration = 500, timing = 'ease-in-out' }) => `${property} ${duration}ms ${timing}`
 }
 

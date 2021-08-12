@@ -40,7 +40,6 @@
     "@ionic/react-router": "5.6.13",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.6",
-    "formik": "^2.2.9",
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.5",
     "lodash": "^4.17.21",

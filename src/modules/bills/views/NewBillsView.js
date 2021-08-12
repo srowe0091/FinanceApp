@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Formik, Form } from 'formik'
 import { IonContent } from '@ionic/react'
 import { useMutation } from '@apollo/client'
+import { useForm, FormProvider } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useNewBillsStyles, initialNewBill, NewBillSchema } from '../util'
 import { SaveNewBill } from '../bills.gql'
-import { MaskedInput, Input, Select, Fab } from 'components'
+import { MaskedInput, Input, Select, Fab, FieldController } from 'components'
 import { daysInMonth, currenyFormat, toNumber } from 'utils'
 
 const selectOptions = [
@@ -24,60 +25,43 @@ const NewBillView = ({ dismissModal }) => {
     refetchQueries: ['GetBills']
   })
 
+  const form = useForm({
+    resolver: yupResolver(NewBillSchema),
+    defaultValues: initialNewBill
+  })
+
   const onSubmit = useCallback(
     values => {
-      const variables = {
-        input: {
-          ...values,
-          amount: toNumber(values.amount),
-          dueDate: parseInt(values.dueDate)
+      saveNewBill({
+        variables: {
+          input: Object.assign(values, { amount: toNumber(values.amount), dueDate: parseInt(values.dueDate) })
         }
-      }
-      saveNewBill({ variables }).then(() => dismissModal())
+      }).then(() => dismissModal())
     },
     [saveNewBill, dismissModal]
   )
 
+  const {
+    formState: { isSubmitting }
+  } = form
+
   return (
     <IonContent>
-      <Formik onSubmit={onSubmit} validationSchema={NewBillSchema} initialValues={initialNewBill} validateOnMount>
-        {({ values, handleBlur, handleChange, handleSubmit, isValid, isSubmitting }) => (
-          <Form className={classes.container}>
-            <Input name="name" placeholder="Bill" value={values.name} onBlur={handleBlur} onChange={handleChange} />
+      <FormProvider {...form}>
+        <form className={classes.container}>
+          <FieldController name="name" placeholder="Bill" component={Input} />
 
-            <MaskedInput
-              autoFocus
-              type="tel"
-              name="amount"
-              format={currenyFormat}
-              value={values.amount}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
+          <FieldController autoFocus type="tel" name="amount" format={currenyFormat} component={MaskedInput} />
 
-            <Select
-              name="dueDate"
-              label="Due Date"
-              value={values.dueDate}
-              options={daysInMonth}
-              onChange={handleChange}
-            />
+          <FieldController name="dueDate" label="Due Date" options={daysInMonth} component={Select} />
 
-            <Select
-              name="type"
-              label="Bill Type"
-              className={classes.select}
-              value={values.type}
-              options={selectOptions}
-              onChange={handleChange}
-            />
+          <FieldController name="type" label="Bill Type" options={selectOptions} component={Select} />
 
-            <Input name="notes" placeholder="Notes" value={values.notes} onBlur={handleBlur} onChange={handleChange} />
+          <FieldController name="notes" placeholder="Notes" component={Input} />
 
-            <Fab onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
-          </Form>
-        )}
-      </Formik>
+          <Fab onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+        </form>
+      </FormProvider>
     </IonContent>
   )
 }

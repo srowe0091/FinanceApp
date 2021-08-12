@@ -1,6 +1,14 @@
 import * as yup from 'yup'
 import { createUseStyles } from 'react-jss'
 
+export const cards = [
+  { value: 'VISA', label: 'Visa' },
+  { value: 'MASTERCARD', label: 'MasterCard' },
+  { value: 'DISCOVER', label: 'Discover' },
+  { value: 'AMERICAN_EXPRESS', label: 'American Express' },
+  { value: 'OTHER', label: 'Other' }
+]
+
 export const NewCardSchema = yup.object().shape({
   cardName: yup.string().required(),
   cardDueDate: yup.string().required(),
@@ -39,13 +47,5 @@ export const useNewCardViewStyles = createUseStyles(theme => ({
     width: '300px',
     alignSelf: 'center',
     marginBottom: theme.spacing(8)
-  },
-  button: {
-    marginTop: 'auto'
-  },
-  close: {
-    top: theme.spacing(2),
-    right: theme.spacing(2),
-    position: 'absolute'
   }
 }))

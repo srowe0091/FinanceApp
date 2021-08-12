@@ -20,10 +20,16 @@ const useStyles = createUseStyles({
   }
 })
 
-export const Button = ({ children, className, loading, ...props }) => {
+export const Button = ({ children, className, loading, disabled, ...props }) => {
   const classes = useStyles()
   return (
-    <IonButton expand="full" shape="round" className={clsx(className, classes.button)} {...props}>
+    <IonButton
+      expand="full"
+      shape="round"
+      className={clsx(className, classes.button)}
+      disabled={disabled || loading}
+      {...props}
+    >
       {children}
       {loading && <IonSpinner className={classes.loading} />}
     </IonButton>
@@ -33,7 +39,8 @@ export const Button = ({ children, className, loading, ...props }) => {
 Button.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool
 }
 
 Button.defaultProps = {

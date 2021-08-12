@@ -1,7 +1,7 @@
 import React from 'react'
 import { IonIcon, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton } from '@ionic/react'
 import { Route } from 'react-router-dom'
-import { homeSharp, walletSharp, notificationsSharp, personSharp, settingsSharp } from 'ionicons/icons'
+import { homeSharp, walletSharp, personSharp, documentsSharp } from 'ionicons/icons'
 
 // User views
 import LoginView from 'modules/authentication/views/LoginView'
@@ -32,7 +32,7 @@ export const Navigation = () => {
         <PageRoute path={routes.home} component={HomeView} />
         <PageRoute path={routes.wallet} component={WalletView} />
         <PageRoute path={routes.bills} component={BillsView} />
-        <PageRoute exact path={routes.newTransaction} component={NewTransactionView} />
+        <PageRoute path={routes.newTransaction} component={NewTransactionView} />
         {/* admin view */}
         <PageRoute admin path={routes.admin.index} component={AdminView} />
       </IonRouterOutlet>
@@ -46,19 +46,19 @@ export const Navigation = () => {
           <IonIcon icon={walletSharp} />
         </IonTabButton>
 
+        <IonTabButton tab={routes.bills} href={routes.bills}>
+          <IonIcon icon={documentsSharp} />
+        </IonTabButton>
+
         {isAdmin ? (
           <IonTabButton tab={routes.admin.index} href={routes.admin.index}>
-            <IonIcon icon={settingsSharp} />
+            <IonIcon icon={personSharp} />
           </IonTabButton>
         ) : (
           <IonTabButton tab={routes.wallet} href={routes.wallet}>
             <IonIcon icon={personSharp} />
           </IonTabButton>
         )}
-
-        <IonTabButton disabled>
-          <IonIcon icon={notificationsSharp} />
-        </IonTabButton>
       </IonTabBar>
     </IonTabs>
   )

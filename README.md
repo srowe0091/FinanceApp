@@ -15,5 +15,5 @@
 
 #### Refactor
 
-- [ ] Remove Formik for react-hook-form
+- [x] Remove Formik for react-hook-form
 - [ ] Revist New/Edit transaction view, basically same look and style yet different everything

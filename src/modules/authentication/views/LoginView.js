@@ -1,24 +1,28 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { IonPage, IonContent, IonText } from '@ionic/react'
-import { Formik, Form } from 'formik'
+import { useForm, FormProvider } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useToggle } from 'react-use'
 
 import { useLoginViewStyle, LoginSchema } from '../util'
 import { FinishUserModal } from './FinishUser'
-import { Input, Button, Logo } from 'components'
+import { Input, Button, Logo, FieldController } from 'components'
 import { textMappings } from 'utils'
 import { useAuthentication } from 'modules/authentication'
-
-const initialValues = {
-  email: '',
-  password: ''
-}
 
 const LoginView = () => {
   const classes = useLoginViewStyle()
   const [status, setStatus] = useState(null)
   const [showModal, toggleModal] = useToggle(false)
   const { handleLogin, requireProfileUpdate } = useAuthentication()
+
+  const form = useForm({
+    resolver: yupResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  })
 
   const submitHandler = useCallback(
     ({ email, password }) => {
@@ -34,49 +38,32 @@ const LoginView = () => {
     }
   }, [requireProfileUpdate, toggleModal])
 
+  const {
+    formState: { isSubmitting }
+  } = form
+
   return (
     <IonPage>
       <IonContent fullscreen className={classes.container}>
         <div className={classes.form}>
           <Logo className={classes.logo} />
-          <Formik validateOnMount onSubmit={submitHandler} validationSchema={LoginSchema} initialValues={initialValues}>
-            {({ handleChange, handleBlur, errors, isSubmitting, isValid }) => (
-              <Form>
-                <Input
-                  autoFocus
-                  name="email"
-                  type="email"
-                  placeholder="Email Address"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+          <FormProvider {...form}>
+            <form onSubmit={form.handleSubmit(submitHandler)}>
+              <FieldController autoFocus name="email" type="email" placeholder="Email Address" component={Input} />
 
-                <Input
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  errors={errors.password}
-                />
+              <FieldController name="password" type="password" placeholder="Password" component={Input} />
 
-                <IonText color="danger">
-                  <p align="center" variant="subtitle2" className={classes.errorStatus}>
-                    {status}
-                  </p>
-                </IonText>
+              <IonText color="danger">
+                <p align="center" variant="subtitle2" className={classes.errorStatus}>
+                  {status}
+                </p>
+              </IonText>
 
-                <Button
-                  type="submit"
-                  loading={isSubmitting}
-                  disabled={isSubmitting || !isValid}
-                  className={classes.button}
-                >
-                  Login
-                </Button>
-              </Form>
-            )}
-          </Formik>
+              <Button type="submit" loading={isSubmitting} className={classes.button}>
+                Login
+              </Button>
+            </form>
+          </FormProvider>
         </div>
         <FinishUserModal isOpen={showModal} closeModal={toggleModal} />
       </IonContent>

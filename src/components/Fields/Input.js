@@ -16,11 +16,10 @@ const useInputStyles = createUseStyles(theme => ({
       outline: 'none',
       borderRadius: 'var(--borderRadius)',
       background: 'var(--ion-color-light)',
-      border: ({ error }) => `1px solid var(${error ? '--ion-color-danger' : '--alpha0'})`,
-      boxShadow: ({ error }) => `0px 2px 5px -1px var(${error ? '--ion-color-danger' : '--black'})`,
       '&[disabled]': {
         opacity: 0.5
-      }
+      },
+      ...theme.fieldError
     },
     '& p': {
       marginLeft: theme.spacing(2),
@@ -40,7 +39,7 @@ const useAutoFocus = ({ autoFocus, ref }) => {
 }
 
 export const Input = forwardRef(({ className, onChange, onBlur, autoFocus, label, error, ...rest }, ref) => {
-  const classes = useInputStyles({ error })
+  const classes = useInputStyles(error)
   const element = useAutoFocus({ autoFocus, ref })
   return (
     <div className={classes.container}>
@@ -63,7 +62,7 @@ Input.propTypes = {
 
 export const MaskedInput = forwardRef(
   ({ className, onChange, onBlur, format, value, label, autoFocus, error, ...rest }, ref) => {
-    const classes = useInputStyles({ error })
+    const classes = useInputStyles(error)
     const element = useAutoFocus({ autoFocus, ref })
 
     const _value = useMemo(() => format(value)[0], [format, value])

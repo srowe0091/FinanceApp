@@ -2,23 +2,28 @@ import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router'
 import { IonText, IonContent, IonModal } from '@ionic/react'
-import { Formik, Form } from 'formik'
+import { useForm, FormProvider } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useFinishUserProfileStyles } from '../util'
-import { Button, MaskedInput } from 'components'
+import { Button, MaskedInput, FieldController } from 'components'
 import { currenyFormat } from 'utils'
 import routes from 'routes'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
-
-const initialValues = {
-  income: 0,
-  allowance: 0
-}
 
 export const FinishUserModal = ({ isOpen, closeModal }) => {
   const classes = useFinishUserProfileStyles()
   const history = useHistory()
   const [updateUser, { loading: saving }] = useUpdateUser()
+
+  const form = useForm({
+    resolver: yupResolver(UserProfileSchema),
+    defaultValues: {
+      income: 0,
+      allowance: 0
+    }
+  })
+
   const onSubmit = useCallback(
     values => {
       updateUser(values).then(() => {
@@ -29,6 +34,10 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
     [closeModal, history, updateUser]
   )
 
+  const {
+    formState: { isSubmitting }
+  } = form
+
   return (
     <IonModal isOpen={isOpen} backdropDismiss={false}>
       <IonContent>
@@ -36,45 +45,29 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
           <IonText className={classes.header}>
             <h4>Finish Profile</h4>
           </IonText>
-          <Formik
-            validateOnMount
-            onSubmit={onSubmit}
-            initialValues={initialValues}
-            validationSchema={UserProfileSchema}
-          >
-            {({ values, isValid, isSubmitting, handleChange, handleBlur }) => (
-              <Form autoComplete="off">
-                <MaskedInput
-                  type="tel"
-                  name="income"
-                  label="Monthly Income"
-                  format={currenyFormat}
-                  value={values.income}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
+          <FormProvider {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
+              <FieldController
+                type="tel"
+                name="income"
+                label="Monthly Income"
+                format={currenyFormat}
+                component={MaskedInput}
+              />
 
-                <MaskedInput
-                  type="tel"
-                  name="allowance"
-                  label="Bi-Weekly Budget"
-                  format={currenyFormat}
-                  value={values.allowance}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
+              <FieldController
+                type="tel"
+                name="allowance"
+                label="Bi-Weekly Budget"
+                format={currenyFormat}
+                component={MaskedInput}
+              />
 
-                <Button
-                  type="submit"
-                  className={classes.button}
-                  loading={saving || isSubmitting}
-                  disabled={!isValid || saving || isSubmitting}
-                >
-                  Save
-                </Button>
-              </Form>
-            )}
-          </Formik>
+              <Button type="submit" className={classes.button} loading={saving || isSubmitting}>
+                Save
+              </Button>
+            </form>
+          </FormProvider>
         </div>
       </IonContent>
     </IonModal>

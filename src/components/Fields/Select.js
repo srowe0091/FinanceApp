@@ -5,22 +5,23 @@ import { IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import map from 'lodash/fp/map'
 
-const useSelectStyles = createUseStyles({
+const useSelectStyles = createUseStyles(theme => ({
   select: {
     '--border-width': 0,
     width: '100%',
     marginBottom: 'var(--inputSpacing)',
     borderRadius: 'var(--borderRadius)',
-    boxShadow: 'var(--boxShadow)'
+    boxShadow: 'var(--boxShadow)',
+    ...theme.fieldError
   },
   actionSheet: {
     '--max-height': '300px'
   }
-})
+}))
 
 export const Select = forwardRef(
-  ({ className, label, name, onChange, value, options, type = 'action-sheet', ...rest }, ref) => {
-    const classes = useSelectStyles()
+  ({ className, label, name, onChange, value, options, type = 'action-sheet', error, ...rest }, ref) => {
+    const classes = useSelectStyles(error)
     return (
       <IonItem color="light" className={clsx(classes.select, className)}>
         <IonLabel>{label}</IonLabel>

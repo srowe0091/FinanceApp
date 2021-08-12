@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
 import { createUseStyles } from 'react-jss'
 import { IonText } from '@ionic/react'
-import { Formik, Form } from 'formik'
+import { useForm, FormProvider } from 'react-hook-form'
 import map from 'lodash/fp/map'
 
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
-import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select } from 'components'
+import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select, FieldController } from 'components'
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -35,22 +35,21 @@ const useEditTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const EditTransaction = ({ dismissModal, ...cardValues }) => {
+export const EditTransaction = ({ dismissModal, ...defaultValues }) => {
   const classes = useEditTransactionStyles()
   const { inGroup } = useUser()
-  const { cards, loading: walletLoading } = useWallet()
+  const { cards } = useWallet()
   const [updateTransaction] = useMutation(UpdateTransaction)
 
   const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
+
+  const form = useForm({ defaultValues })
 
   const onSubmit = useCallback(
     (values, { setSubmitting }) => {
       updateTransaction({
         variables: {
-          input: {
-            ...values,
-            amount: toNumber(values.amount)
-          }
+          input: Object.assign(values, { amount: toNumber(values.amount) })
         }
       })
         .then(() => dismissModal())
@@ -62,54 +61,38 @@ export const EditTransaction = ({ dismissModal, ...cardValues }) => {
     [updateTransaction, dismissModal]
   )
 
+  const {
+    formState: { isSubmitting }
+  } = form
+
   return (
     <PageContainer>
       <div className={classes.container}>
         <IonText>
           <h5 className={classes.header}>Edit Transaction</h5>
         </IonText>
-        <Formik enableReinitialize initialValues={cardValues} onSubmit={onSubmit}>
-          {({ handleSubmit, handleBlur, handleChange, isValid, values, isSubmitting }) => (
-            <Form className={classes.form} autoComplete="off">
-              <MaskedInput
-                autoFocus
-                type="tel"
-                name="amount"
-                className={classes.moneyInput}
-                format={currenyFormat}
-                value={values.amount}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
+        <FormProvider {...form}>
+          <form className={classes.form} autoComplete="off">
+            <FieldController
+              autoFocus
+              type="tel"
+              name="amount"
+              className={classes.moneyInput}
+              format={currenyFormat}
+              component={MaskedInput}
+            />
 
-              <Input
-                name="description"
-                placeholder="memo"
-                value={values.description || ''}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
+            <FieldController name="description" placeholder="memo" component={Input} />
 
-              <Select
-                type="popover"
-                name="card"
-                label={walletLoading ? 'Loading...' : 'Put on Card'}
-                value={walletLoading ? '' : values.card}
-                options={cardOptions}
-                onChange={handleChange}
-                disabled={walletLoading}
-              />
+            <FieldController type="popover" name="card" label="Put on Card" options={cardOptions} component={Select} />
 
-              <DatePicker name="date" value={values.date} onChange={handleChange} />
+            <FieldController name="date" component={DatePicker} />
 
-              {inGroup && (
-                <Checkbox label="Group Purchase" name="group" checked={values.group} onChange={handleChange} />
-              )}
+            {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
 
-              <Fab onClick={handleSubmit} icon={checkmark} disabled={!isValid} loading={isSubmitting} />
-            </Form>
-          )}
-        </Formik>
+            <Fab onClick={form.handleSubmit(onSubmit)} icon={checkmark} loading={isSubmitting} />
+          </form>
+        </FormProvider>
       </div>
     </PageContainer>
   )

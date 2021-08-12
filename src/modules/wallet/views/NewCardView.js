@@ -1,27 +1,25 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Formik, Form } from 'formik'
+import { useForm, FormProvider } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { IonContent } from '@ionic/react'
 import { useMutation } from '@apollo/client'
 
 import { SaveNewCard } from '../wallet.gql'
-import { NewCardSchema, initialNewCard, useNewCardViewStyles } from '../util'
-import { Card, Fab, Input, Select } from 'components'
+import { NewCardSchema, initialNewCard, cards, useNewCardViewStyles } from '../util'
+import { Card, Fab, Input, Select, FieldController } from 'components'
 import { daysInMonth } from 'utils'
-
-const selectOptions = [
-  { value: 'VISA', label: 'Visa' },
-  { value: 'MASTERCARD', label: 'MasterCard' },
-  { value: 'DISCOVER', label: 'Discover' },
-  { value: 'AMERICAN_EXPRESS', label: 'American Express' },
-  { value: 'OTHER', label: 'Other' }
-]
 
 export const NewCardView = ({ dismissModal }) => {
   const classes = useNewCardViewStyles()
   const [saveNewCard] = useMutation(SaveNewCard, {
     awaitRefetchQueries: true,
     refetchQueries: ['GetWallet']
+  })
+
+  const form = useForm({
+    resolver: yupResolver(NewCardSchema),
+    defaultValues: initialNewCard
   })
 
   const onSubmit = useCallback(
@@ -38,41 +36,26 @@ export const NewCardView = ({ dismissModal }) => {
     [saveNewCard, dismissModal]
   )
 
+  const cardType = form.watch('cardType')
+
+  const {
+    formState: { isSubmitting }
+  } = form
+
   return (
     <IonContent>
-      <Formik onSubmit={onSubmit} initialValues={initialNewCard} validationSchema={NewCardSchema} validateOnMount>
-        {({ values, handleBlur, handleChange, handleSubmit, isValid, isSubmitting }) => (
-          <Form className={classes.container}>
-            <Card className={classes.card} type={values.cardType} />
-            <Input
-              name="cardName"
-              placeholder="Card Name"
-              value={values.cardName}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
+      <FormProvider {...form}>
+        <form className={classes.container}>
+          <Card className={classes.card} type={cardType} />
+          <FieldController name="cardName" placeholder="Card Name" component={Input} />
 
-            <Select
-              name="cardDueDate"
-              label="Due Date"
-              value={values.cardDueDate}
-              options={daysInMonth}
-              onChange={handleChange}
-            />
+          <FieldController name="cardDueDate" label="Due Date" options={daysInMonth} component={Select} />
 
-            <Select
-              name="cardType"
-              label="Card Type"
-              className={classes.select}
-              value={values.cardType}
-              options={selectOptions}
-              onChange={handleChange}
-            />
+          <FieldController name="cardType" label="Card Type" options={cards} component={Select} />
 
-            <Fab onClick={handleSubmit} loading={isSubmitting} disabled={!isValid} />
-          </Form>
-        )}
-      </Formik>
+          <Fab onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+        </form>
+      </FormProvider>
     </IonContent>
   )
 }
