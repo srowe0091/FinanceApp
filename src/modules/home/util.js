@@ -101,11 +101,17 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   rotateIcon: {
     transform: 'rotateZ(-180deg)',
     bottom: theme.spacing(3.5)
+  },
+  profileIcon: {
+    top: theme.spacing(2),
+    right: theme.spacing(2),
+    zIndex: 100,
+    position: 'absolute'
   }
 }))
 
 export const useHomeHooks = () => {
-  const { inGroup, allowance } = useUser()
+  const { inGroup, allowance, profileImage } = useUser()
   const { cards, loading: walletLoading } = useWallet()
   const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
@@ -148,6 +154,7 @@ export const useHomeHooks = () => {
     amountLeft: _loading ? 0 : amountLeft,
     groupSpent: _loading ? 0 : groupSpent,
     transactions,
+    profileImage,
     loading: _loading
   }
 }

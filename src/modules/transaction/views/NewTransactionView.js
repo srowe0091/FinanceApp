@@ -68,7 +68,7 @@ const NewTransactionPage = ({ history }) => {
 
             <FieldController name="description" placeholder="memo" component={Input} />
 
-            <FieldController type="popover" name="card" label="Put on Card" options={cardOptions} component={Select} />
+            <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
 
             {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
 

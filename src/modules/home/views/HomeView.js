@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import clsx from 'clsx'
+import { menuController } from '@ionic/core'
 import { IonText, IonIcon } from '@ionic/react'
 import AnimateHeight from 'react-animate-height'
 import AnimatedNumber from 'react-animated-number'
@@ -9,7 +10,7 @@ import { chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { PageContainer, Loading } from 'template'
-import { Fab, PullToRefresh, Card, ProgressBar } from 'components'
+import { Fab, PullToRefresh, Card, ProgressBar, ProfileIcon } from 'components'
 import { currency } from 'utils'
 import routes from 'routes'
 import { StaggeredList } from 'animation'
@@ -19,7 +20,8 @@ const DURATION = 1500
 
 const Home = () => {
   const [expand, updateExpansion] = useState(false)
-  const { inGroup, amountLeft, percentage, groupSpent, creditCards, transactions, loading, onRefresh } = useHomeHooks()
+  const { inGroup, amountLeft, percentage, groupSpent, creditCards, transactions, loading, onRefresh, profileImage } =
+    useHomeHooks()
   const classes = useHomeViewStyles({ cardsPresent: creditCards.length })
 
   const handleOpenSummary = useCallback(
@@ -28,10 +30,15 @@ const Home = () => {
   )
 
   const handleCloseSumary = useCallback(() => expand && updateExpansion(false), [expand])
+  const toggleMenu = useCallback(() => menuController.toggle(), [])
 
   return (
     <PageContainer loading={loading}>
       {!loading && <PullToRefresh onRefresh={onRefresh} />}
+
+      <div className={classes.profileIcon}>
+        <ProfileIcon icon={profileImage} onClick={toggleMenu} />
+      </div>
 
       <div className={clsx(classes.header, expand && classes.expandedHeader)}>
         <AnimatedNumber
@@ -51,7 +58,7 @@ const Home = () => {
         )}
       </div>
 
-      {(inGroup || creditCards.length > 0) && (
+      {creditCards.length > 0 && (
         <div className={clsx(classes.summary, expand && classes.expandedSummary)} onClick={handleOpenSummary}>
           <AnimateHeight height={expand ? 'auto' : 68} duration={550} delay={100}>
             <div className={classes.cardList}>

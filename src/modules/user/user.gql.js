@@ -8,6 +8,7 @@ export const UserFragment = gql`
     inGroup
     income
     allowance
+    profileImage
     defaultCard {
       id
     }
