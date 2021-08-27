@@ -7,6 +7,7 @@ import { homeSharp, walletSharp, personSharp, documentsSharp } from 'ionicons/ic
 import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
 import WalletView from 'modules/wallet/views/WalletView'
+import NewCardView from 'modules/wallet/views/NewCardView'
 import BillsView from 'modules/bills/views/BillsView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 // Admin views
@@ -32,6 +33,7 @@ export const Navigation = () => {
         <PageRoute path={routes.home} component={HomeView} />
         <PageRoute path={routes.wallet} component={WalletView} />
         <PageRoute path={routes.bills} component={BillsView} />
+        <PageRoute path={routes.newCard} component={NewCardView} />
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
         {/* admin view */}
         <PageRoute admin path={routes.admin.index} component={AdminView} />

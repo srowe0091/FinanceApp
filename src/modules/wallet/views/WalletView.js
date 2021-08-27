@@ -3,10 +3,10 @@ import { IonAlert, IonSlides, IonSlide } from '@ionic/react'
 import { useToggle, useLongPress } from 'react-use'
 import map from 'lodash/fp/map'
 
-import { NewCardView } from './NewCardView'
 import { useWalletStyles } from '../util'
 import { useWallet } from '../hooks'
-import { Fab, Card, Modal } from 'components'
+import routes from 'routes'
+import { Fab, Card } from 'components'
 import { PageContainer } from 'template'
 import { hash } from 'utils'
 import { useUpdateUser } from 'modules/user'
@@ -22,7 +22,6 @@ const Wallet = () => {
   const classes = useWalletStyles()
   const ref = useRef()
   const { cards, defaultCard, loading } = useWallet()
-  const [addCardModal, toggleAddCard] = useToggle(false)
   const [setDefaultAlert, toggleDefaultAlert] = useToggle(false)
   const key = useMemo(() => hash(JSON.stringify(cards)), [cards])
 
@@ -65,11 +64,7 @@ const Wallet = () => {
         </IonSlides>
       </div>
 
-      <Modal isOpen={addCardModal} onClose={toggleAddCard}>
-        <NewCardView />
-      </Modal>
-
-      <Fab onClick={toggleAddCard} />
+      <Fab routerLink={routes.newCard} />
 
       <IonAlert
         isOpen={setDefaultAlert}

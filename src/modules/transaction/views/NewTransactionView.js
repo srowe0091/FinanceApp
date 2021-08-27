@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
 import { IonText, useIonViewWillLeave } from '@ionic/react'
+import { checkmark } from 'ionicons/icons'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import map from 'lodash/fp/map'
@@ -13,8 +14,6 @@ import { Fab, Input, MaskedInput, Checkbox, Select, FieldController } from 'comp
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
-
-import dollarSign from 'styles/icons/dollarSign.svg'
 
 const NewTransactionPage = ({ history }) => {
   const classes = useNewTransactionViewStyles()
@@ -72,7 +71,7 @@ const NewTransactionPage = ({ history }) => {
 
             {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
 
-            <Fab icon={dollarSign} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+            <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
           </form>
         </FormProvider>
       </div>

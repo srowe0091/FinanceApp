@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { IonText, IonContent, IonModal } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'

@@ -4,6 +4,7 @@ const routes = {
   wallet: '/wallet',
   bills: '/bills',
   newTransaction: '/new-transaction',
+  newCard: '/new-card',
   lab: '/lab',
   admin: {
     index: '/admin',

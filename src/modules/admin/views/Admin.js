@@ -2,8 +2,6 @@ import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { IonToolbar, IonHeader, IonSegment, IonSegmentButton } from '@ionic/react'
 
-import { PageContainer } from 'template'
-
 import PayTransactionView from './PayTransactionsView'
 import GroupView from './GroupView'
 
@@ -30,10 +28,8 @@ const Admin = () => {
         </IonToolbar>
       </IonHeader>
 
-      <PageContainer>
-        <View show={state === 'pay'} component={<PayTransactionView />} />
-        <View show={state === 'group'} component={<GroupView />} />
-      </PageContainer>
+      <View show={state === 'pay'} component={<PayTransactionView />} />
+      <View show={state === 'group'} component={<GroupView />} />
     </>
   )
 }

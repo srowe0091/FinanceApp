@@ -5,6 +5,7 @@
 - [ ] Auto refresh user info when user added into a group
 - [ ] Add billing
 - [ ] Add User icon in home screen
+- [ ] Implement Notifications
 
 #### Enhancement
 

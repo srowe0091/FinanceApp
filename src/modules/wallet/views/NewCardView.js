@@ -1,16 +1,18 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useForm, FormProvider } from 'react-hook-form'
+import { useIonViewWillLeave } from '@ionic/react'
+import { checkmark } from 'ionicons/icons'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { IonContent } from '@ionic/react'
 import { useMutation } from '@apollo/client'
 
 import { SaveNewCard } from '../wallet.gql'
 import { NewCardSchema, initialNewCard, cards, useNewCardViewStyles } from '../util'
+import { PageContainer } from 'template'
 import { Card, Fab, Input, Select, FieldController } from 'components'
 import { daysInMonth } from 'utils'
 
-export const NewCardView = ({ dismissModal }) => {
+const NewCardView = ({ history }) => {
   const classes = useNewCardViewStyles()
   const [saveNewCard] = useMutation(SaveNewCard, {
     awaitRefetchQueries: true,
@@ -31,19 +33,21 @@ export const NewCardView = ({ dismissModal }) => {
           type: values.cardType
         }
       }
-      saveNewCard({ variables }).then(() => dismissModal())
+      saveNewCard({ variables }).then(history.goBack)
     },
-    [saveNewCard, dismissModal]
+    [saveNewCard, history]
   )
 
   const cardType = form.watch('cardType')
+
+  useIonViewWillLeave(form.reset)
 
   const {
     formState: { isSubmitting }
   } = form
 
   return (
-    <IonContent>
+    <PageContainer>
       <FormProvider {...form}>
         <form className={classes.container}>
           <Card className={classes.card} type={cardType} />
@@ -53,13 +57,15 @@ export const NewCardView = ({ dismissModal }) => {
 
           <FieldController name="cardType" label="Card Type" options={cards} component={Select} />
 
-          <Fab onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+          <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
         </form>
       </FormProvider>
-    </IonContent>
+    </PageContainer>
   )
 }
 
 NewCardView.propTypes = {
-  dismissModal: PropTypes.func
+  history: PropTypes.object
 }
+
+export default NewCardView

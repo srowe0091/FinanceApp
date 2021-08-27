@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import clsx from 'clsx'
-import { menuController } from '@ionic/core'
 import { IonText, IonIcon } from '@ionic/react'
 import AnimateHeight from 'react-animate-height'
 import AnimatedNumber from 'react-animated-number'
@@ -20,8 +19,7 @@ const DURATION = 1500
 
 const Home = () => {
   const [expand, updateExpansion] = useState(false)
-  const { inGroup, amountLeft, percentage, groupSpent, creditCards, transactions, loading, onRefresh, profileImage } =
-    useHomeHooks()
+  const { inGroup, amountLeft, percentage, groupSpent, creditCards, transactions, loading, onRefresh } = useHomeHooks()
   const classes = useHomeViewStyles({ cardsPresent: creditCards.length })
 
   const handleOpenSummary = useCallback(
@@ -30,14 +28,13 @@ const Home = () => {
   )
 
   const handleCloseSumary = useCallback(() => expand && updateExpansion(false), [expand])
-  const toggleMenu = useCallback(() => menuController.toggle(), [])
 
   return (
     <PageContainer loading={loading}>
       {!loading && <PullToRefresh onRefresh={onRefresh} />}
 
       <div className={classes.profileIcon}>
-        <ProfileIcon icon={profileImage} onClick={toggleMenu} />
+        <ProfileIcon />
       </div>
 
       <div className={clsx(classes.header, expand && classes.expandedHeader)}>

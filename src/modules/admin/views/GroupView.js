@@ -12,13 +12,13 @@ import { useQuery } from 'hooks'
 import { PageContainer } from 'template'
 import { currency, calculateDays } from 'utils'
 
-const GroupUsers = () => {
+const GroupUsers = props => {
   const classes = useGroupStyles()
   const { data = [], loading } = useQuery(UsersInGroup, { path: 'admin.usersInGroup' })
   const parsedUsers = useMemo(() => compose(map(update('cards')(sortBy('name'))))(data), [data])
 
   return (
-    <PageContainer loading={loading}>
+    <PageContainer loading={loading} {...props}>
       <div className={classes.container}>
         {map(d => (
           <IonCard key={d.id} className={classes.card}>
