@@ -1,9 +1,7 @@
-import React, { createContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { IonContent } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
-
-import { Toolbar } from 'components'
 
 export const usePageContainerStyles = createUseStyles({
   content: {
@@ -11,24 +9,18 @@ export const usePageContainerStyles = createUseStyles({
   }
 })
 
-export const PageContext = createContext()
-
-export const PageContainer = ({ children, loading, toolbarChildren, ...rest }) => {
-  const classes = usePageContainerStyles({ loading })
+export const PageContainer = ({ children, className, loading, ...rest }) => {
+  const classes = usePageContainerStyles()
 
   return (
-    <PageContext.Provider value={loading}>
-      {toolbarChildren && <Toolbar>{toolbarChildren}</Toolbar>}
-
-      <IonContent scrollY={!loading} className={classes.content} {...rest}>
-        {children}
-      </IonContent>
-    </PageContext.Provider>
+    <IonContent scrollY={!loading} className={classes.content} {...rest}>
+      <div className={className}>{children}</div>
+    </IonContent>
   )
 }
 
 PageContainer.propTypes = {
   children: PropTypes.node,
-  loading: PropTypes.bool,
-  toolbarChildren: PropTypes.node
+  className: PropTypes.string,
+  loading: PropTypes.bool
 }

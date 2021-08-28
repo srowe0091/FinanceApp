@@ -49,32 +49,30 @@ const NewTransactionPage = ({ history }) => {
   } = form
 
   return (
-    <PageContainer>
-      <div className={classes.container}>
-        <IonText display="block">
-          <h5 className={classes.header}>New Transaction</h5>
-        </IonText>
-        <FormProvider {...form}>
-          <form className={classes.form} autoComplete="off">
-            <FieldController
-              autoFocus
-              type="tel"
-              name="amount"
-              className={classes.moneyInput}
-              format={currenyFormat}
-              component={MaskedInput}
-            />
+    <PageContainer className={classes.container}>
+      <IonText display="block">
+        <h5 className={classes.header}>New Transaction</h5>
+      </IonText>
+      <FormProvider {...form}>
+        <form className={classes.form} autoComplete="off">
+          <FieldController
+            autoFocus
+            type="tel"
+            name="amount"
+            className={classes.moneyInput}
+            format={currenyFormat}
+            component={MaskedInput}
+          />
 
-            <FieldController name="description" placeholder="memo" component={Input} />
+          <FieldController name="description" placeholder="memo" component={Input} />
 
-            <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
+          <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
 
-            {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
+          {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
 
-            <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
-          </form>
-        </FormProvider>
-      </div>
+          <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+        </form>
+      </FormProvider>
     </PageContainer>
   )
 }

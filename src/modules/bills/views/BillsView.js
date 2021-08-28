@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import { IonButtons, IonIcon, IonItem, IonButton, IonText } from '@ionic/react'
-import { ellipsisVertical, caretUp, caretDown, calendar } from 'ionicons/icons'
+import React, { useMemo } from 'react'
+import { IonIcon, IonItem, IonText } from '@ionic/react'
+import { caretUp, caretDown } from 'ionicons/icons'
 import { useToggle } from 'react-use'
 import dayjs from 'dayjs'
 import map from 'lodash/fp/map'
@@ -11,8 +11,9 @@ import { useBillsStyles } from '../util'
 import { useBills } from '../hooks'
 import NewBillView from './NewBillsView'
 import CalendarView from './CalendarView'
+import routes from 'routes'
 import { currency } from 'utils'
-import { Modal, Popover } from 'components'
+import { Modal, Fab } from 'components'
 import { PageContainer } from 'template'
 
 const Bills = () => {
@@ -20,10 +21,6 @@ const Bills = () => {
   const { bills, loading, totalBills, income } = useBills()
   const [addBillModal, toggleAddBill] = useToggle(false)
   const [calendarModal, toggleCalendarModal] = useToggle(false)
-  const [popoverEvent, setShowPopover] = useState(null)
-
-  const openPopover = useCallback(e => setShowPopover(e.nativeEvent), [])
-  const closePopover = useCallback(() => setShowPopover(null), [])
 
   const sortedBills = useMemo(() => {
     const todaysDate = dayjs().date()
@@ -33,18 +30,7 @@ const Bills = () => {
   if (loading) return null
 
   return (
-    <PageContainer
-      toolbarChildren={
-        <IonButtons slot="end">
-          <IonButton onClick={toggleCalendarModal}>
-            <IonIcon icon={calendar} />
-          </IonButton>
-          <IonButton onClick={openPopover}>
-            <IonIcon className={classes.icons} icon={ellipsisVertical} />
-          </IonButton>
-        </IonButtons>
-      }
-    >
+    <PageContainer>
       <div className={classes.panel}>
         <IonItem color="transparent" lines="none">
           <IonIcon icon={caretUp} color="danger" />
@@ -72,10 +58,6 @@ const Bills = () => {
       {!!sortedBills.PASSED && <p variant="body2">Passed</p>}
       {map(b => <BillEntry key={b.id} {...b} disabled />)(sortedBills.PASSED)}
 
-      <Popover event={popoverEvent} onClose={closePopover}>
-        <IonItem onClick={toggleAddBill}>Add New Bill</IonItem>
-      </Popover>
-
       <Modal isOpen={addBillModal} onClose={toggleAddBill}>
         <NewBillView />
       </Modal>
@@ -83,6 +65,8 @@ const Bills = () => {
       <Modal isOpen={calendarModal} onClose={toggleCalendarModal}>
         <CalendarView />
       </Modal>
+
+      <Fab routerLink={routes.newTransaction} />
     </PageContainer>
   )
 }

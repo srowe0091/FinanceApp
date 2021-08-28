@@ -8,7 +8,7 @@ import map from 'lodash/fp/map'
 import { chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
-import { PageContainer, Loading } from 'template'
+import { PageContainer } from 'template'
 import { Fab, PullToRefresh, Card, ProgressBar, ProfileIcon } from 'components'
 import { currency } from 'utils'
 import routes from 'routes'
@@ -33,9 +33,7 @@ const Home = () => {
     <PageContainer loading={loading}>
       {!loading && <PullToRefresh onRefresh={onRefresh} />}
 
-      <div className={classes.profileIcon}>
-        <ProfileIcon />
-      </div>
+      <ProfileIcon className={classes.profileIcon} />
 
       <div className={clsx(classes.header, expand && classes.expandedHeader)}>
         <AnimatedNumber
@@ -88,18 +86,16 @@ const Home = () => {
       )}
 
       <div className={clsx(classes.transactions, !loading && classes.reset)}>
-        <Loading spinner>
-          {transactions.length === 0 && (
-            <p align="center" color="textSecondary" className={classes.transactionSpacing}>
-              No transactions
-            </p>
-          )}
-          {transactions.map((t, idx) => (
-            <StaggeredList key={t.id} index={idx} delay={10}>
-              <TransactionEntry {...t} />
-            </StaggeredList>
-          ))}
-        </Loading>
+        {transactions.length === 0 && !loading && (
+          <p align="center" color="textSecondary" className={classes.transactionSpacing}>
+            No transactions
+          </p>
+        )}
+        {transactions.map((t, idx) => (
+          <StaggeredList key={t.id} index={idx} delay={5}>
+            <TransactionEntry {...t} />
+          </StaggeredList>
+        ))}
       </div>
 
       <Fab routerLink={routes.newTransaction} />

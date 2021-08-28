@@ -25,16 +25,16 @@ const NewCardView = ({ history }) => {
   })
 
   const onSubmit = useCallback(
-    values => {
-      const variables = {
-        input: {
-          name: values.cardName,
-          dueDate: parseInt(values.cardDueDate),
-          type: values.cardType
+    values =>
+      saveNewCard({
+        variables: {
+          input: {
+            name: values.cardName,
+            dueDate: parseInt(values.cardDueDate),
+            type: values.cardType
+          }
         }
-      }
-      saveNewCard({ variables }).then(history.goBack)
-    },
+      }).then(history.goBack),
     [saveNewCard, history]
   )
 

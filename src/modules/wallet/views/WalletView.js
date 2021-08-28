@@ -46,23 +46,21 @@ const Wallet = () => {
   )
 
   return (
-    <PageContainer>
-      <div className={classes.container}>
-        <IonSlides key={key} ref={ref} options={slideOpts} onIonSlideDrag={longPressEvent.onTouchEnd}>
-          {!loading && cards.length === 0 && (
-            <div className={classes.emptyWallet}>
-              <h6 align="center">No Cards added</h6>
+    <PageContainer className={classes.container}>
+      <IonSlides key={key} ref={ref} options={slideOpts} onIonSlideDrag={longPressEvent.onTouchEnd}>
+        {!loading && cards.length === 0 && (
+          <div className={classes.emptyWallet}>
+            <h6 align="center">No Cards added</h6>
+          </div>
+        )}
+        {map(card => (
+          <IonSlide key={card.id}>
+            <div {...(defaultCard !== card.id && longPressEvent)}>
+              <Card isDefault={defaultCard === card.id} {...card} />
             </div>
-          )}
-          {map(card => (
-            <IonSlide key={card.id}>
-              <div {...(defaultCard !== card.id && longPressEvent)}>
-                <Card isDefault={defaultCard === card.id} {...card} />
-              </div>
-            </IonSlide>
-          ))(cards)}
-        </IonSlides>
-      </div>
+          </IonSlide>
+        ))(cards)}
+      </IonSlides>
 
       <Fab routerLink={routes.newCard} />
 

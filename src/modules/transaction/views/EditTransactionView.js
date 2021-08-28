@@ -66,34 +66,32 @@ export const EditTransaction = ({ dismissModal, ...defaultValues }) => {
   } = form
 
   return (
-    <PageContainer>
-      <div className={classes.container}>
-        <IonText>
-          <h5 className={classes.header}>Edit Transaction</h5>
-        </IonText>
-        <FormProvider {...form}>
-          <form className={classes.form} autoComplete="off">
-            <FieldController
-              autoFocus
-              type="tel"
-              name="amount"
-              className={classes.moneyInput}
-              format={currenyFormat}
-              component={MaskedInput}
-            />
+    <PageContainer className={classes.container}>
+      <IonText>
+        <h5 className={classes.header}>Edit Transaction</h5>
+      </IonText>
+      <FormProvider {...form}>
+        <form className={classes.form} autoComplete="off">
+          <FieldController
+            autoFocus
+            type="tel"
+            name="amount"
+            className={classes.moneyInput}
+            format={currenyFormat}
+            component={MaskedInput}
+          />
 
-            <FieldController name="description" placeholder="memo" component={Input} />
+          <FieldController name="description" placeholder="memo" component={Input} />
 
-            <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
+          <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
 
-            <FieldController name="date" component={DatePicker} />
+          <FieldController name="date" component={DatePicker} />
 
-            {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
+          {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
 
-            <Fab onClick={form.handleSubmit(onSubmit)} icon={checkmark} loading={isSubmitting} />
-          </form>
-        </FormProvider>
-      </div>
+          <Fab onClick={form.handleSubmit(onSubmit)} icon={checkmark} loading={isSubmitting} />
+        </form>
+      </FormProvider>
     </PageContainer>
   )
 }

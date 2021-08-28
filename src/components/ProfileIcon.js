@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
+import clsx from 'clsx'
 
 import { useUser } from 'modules/authentication'
 
@@ -22,14 +23,17 @@ export const useProfileIconStyles = createUseStyles({
   }
 })
 
-export const ProfileIcon = ({ size = 'small', ...rest }) => {
+export const ProfileIcon = ({ className, size = 'small', ...rest }) => {
   const { profileImage } = useUser()
   const classes = useProfileIconStyles({ size, icon: profileImage })
 
-  return <div className={classes.container} {...rest} />
+  if (!profileImage) return null
+
+  return <div className={clsx(className, classes.container)} {...rest} />
 }
 
 ProfileIcon.propTypes = {
+  className: PropTypes.string,
   icon: PropTypes.string,
   size: PropTypes.string
 }
