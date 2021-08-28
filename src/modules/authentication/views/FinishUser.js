@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
-import { IonText, IonContent, IonModal } from '@ionic/react'
+import { IonContent, IonModal } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useFinishUserProfileStyles } from '../util'
-import { Button, MaskedInput, FieldController } from 'components'
+import { Header, Button, MaskedInput, FieldController } from 'components'
 import { currenyFormat } from 'utils'
 import routes from 'routes'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
@@ -42,9 +42,7 @@ export const FinishUserModal = ({ isOpen, closeModal }) => {
     <IonModal isOpen={isOpen} backdropDismiss={false}>
       <IonContent>
         <div className={classes.container}>
-          <IonText className={classes.header}>
-            <h4>Finish Profile</h4>
-          </IonText>
+          <Header label="Finish Profile" />
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
               <FieldController

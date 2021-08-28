@@ -24,7 +24,7 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     width: '85px',
     alignSelf: 'center',
     marginBottom: theme.spacing(6),
-    borderRadius: 'var(--borderRadius)',
+    borderRadius: 'var(--borderRadius)'
   },
   errorStatus: {
     textTransform: 'uppercase'
@@ -42,9 +42,6 @@ export const useFinishUserProfileStyles = createUseStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column'
-  },
-  header: {
-    marginBottom: theme.spacing(4)
   },
   button: {
     marginTop: theme.spacing(2)

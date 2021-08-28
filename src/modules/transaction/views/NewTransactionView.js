@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
-import { IonText, useIonViewWillLeave } from '@ionic/react'
+import { useIonViewWillLeave } from '@ionic/react'
 import { checkmark } from 'ionicons/icons'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -10,7 +10,7 @@ import map from 'lodash/fp/map'
 import { TransactionSchema, useNewTransactionViewStyles } from '../util'
 import { NewTransaction } from '../transaction.gql'
 import { PageContainer } from 'template'
-import { Fab, Input, MaskedInput, Checkbox, Select, FieldController } from 'components'
+import { Fab, Input, Header, MaskedInput, Checkbox, Select, FieldController } from 'components'
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -50,9 +50,8 @@ const NewTransactionPage = ({ history }) => {
 
   return (
     <PageContainer className={classes.container}>
-      <IonText display="block">
-        <h5 className={classes.header}>New Transaction</h5>
-      </IonText>
+      <Header label="New Transaction" />
+
       <FormProvider {...form}>
         <form className={classes.form} autoComplete="off">
           <FieldController

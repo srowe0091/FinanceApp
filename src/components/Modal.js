@@ -5,6 +5,8 @@ import { IonModal, IonIcon } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 import { close } from 'ionicons/icons'
 
+import { Button } from 'components'
+
 export const useModalStyles = createUseStyles(theme => ({
   container: {
     '& > .modal-wrapper': {
@@ -12,7 +14,7 @@ export const useModalStyles = createUseStyles(theme => ({
     }
   },
   close: {
-    top: theme.spacing(1.5),
+    top: theme.spacing(1),
     right: theme.spacing(1.5),
     zIndex: 10,
     position: 'absolute'
@@ -24,7 +26,9 @@ export const Modal = ({ isOpen, onClose, children }) => {
 
   return (
     <IonModal isOpen={isOpen} onWillDismiss={onClose} className={classes.container}>
-      <IonIcon size="large" icon={close} className={classes.close} onClick={modalController.dismiss} />
+      <Button shape="" color="dark" expand="block" className={classes.close} onClick={modalController.dismiss}>
+        <IonIcon slot="icon-only" icon={close} />
+      </Button>
       {React.cloneElement(children, { dismissModal: modalController.dismiss })}
     </IonModal>
   )

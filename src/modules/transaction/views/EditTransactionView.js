@@ -2,14 +2,13 @@ import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
 import { createUseStyles } from 'react-jss'
-import { IonText } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import map from 'lodash/fp/map'
 
 import { checkmark } from 'ionicons/icons'
 
 import { UpdateTransaction } from '../transaction.gql'
-import { Input, Checkbox, Fab, DatePicker, MaskedInput, Select, FieldController } from 'components'
+import { Header, Input, Checkbox, Fab, DatePicker, MaskedInput, Select, FieldController } from 'components'
 import { currenyFormat, toNumber } from 'utils'
 import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
@@ -19,10 +18,7 @@ import { PageContainer } from 'template'
 const useEditTransactionStyles = createUseStyles(theme => ({
   container: {
     height: '100%',
-    padding: theme.spacing(3)
-  },
-  header: {
-    marginBottom: theme.spacing(2)
+    padding: theme.spacing(2)
   },
   form: {
     display: 'flex',
@@ -67,9 +63,8 @@ export const EditTransaction = ({ dismissModal, ...defaultValues }) => {
 
   return (
     <PageContainer className={classes.container}>
-      <IonText>
-        <h5 className={classes.header}>Edit Transaction</h5>
-      </IonText>
+      <Header label="Edit Transaction" />
+
       <FormProvider {...form}>
         <form className={classes.form} autoComplete="off">
           <FieldController
