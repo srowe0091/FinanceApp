@@ -1,7 +1,8 @@
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useContext } from 'react'
 import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { SplashScreen } from '@capacitor/splash-screen'
+import { useEffectOnce } from 'react-use'
 
 import { AuthContext } from './context'
 import { useAuthReducer } from './reducer'
@@ -11,6 +12,7 @@ import routes from 'routes'
 import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
+  console.log('check errors')
   if (!response.ok) {
     throw response
   }
@@ -35,7 +37,6 @@ export const useInitializeAuth = () => {
       if (process.env.NODE_ENV !== 'development') {
         history.replace(routes.home)
       }
-      SplashScreen.hide()
     } catch (err) {
       console.log(err)
     }
@@ -44,7 +45,7 @@ export const useInitializeAuth = () => {
   const getCurrentSession = useCallback(async () => {
     const _sessionId = await StorageContainer.get('session')
     if (_sessionId.value) {
-      fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
+      await fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate/session`, {
         headers: { AppId, Authorization: _sessionId.value }
       })
         .then(checkErrors)
@@ -54,11 +55,12 @@ export const useInitializeAuth = () => {
       dispatch({ type: 'STOP_LOADING' })
       history.replace(routes.login)
     }
+    SplashScreen.hide()
   }, [dispatch, handleGetUser, history])
 
-  useEffect(() => {
+  useEffectOnce(() => {
     getCurrentSession()
-  }, [getCurrentSession])
+  }, [])
 
   const handleLogin = useCallback(
     (email, password) =>
