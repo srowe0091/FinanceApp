@@ -26,7 +26,7 @@ export const Button = ({ children, className, loading, disabled, ...props }) => 
     <IonButton
       expand="full"
       shape="round"
-      className={clsx(className, classes.button)}
+      className={clsx(classes.button, className)}
       disabled={disabled || loading}
       {...props}
     >
