@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss'
 import * as yup from 'yup'
 
-import bgd from 'media/logo_background.png'
+import bgd from 'media/background.jpg'
 
 export const LoginSchema = yup.object().shape({
   email: yup.string().email('Invalid Email Address').required(),
@@ -10,7 +10,7 @@ export const LoginSchema = yup.object().shape({
 
 export const useLoginViewStyle = createUseStyles(theme => ({
   container: {
-    '--background': `url(${bgd}) top / 170% 160% no-repeat`
+    '--background': `url(${bgd}) top / 170% 130% no-repeat`
   },
   form: {
     padding: theme.spacing(2.5),
@@ -18,7 +18,7 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     borderRadius: 'var(--borderRadius)',
-    backgroundColor: 'var(--alpha5)'
+    backgroundColor: 'var(--alpha50)'
   },
   logo: {
     width: '85px',
@@ -36,14 +36,10 @@ export const useLoginViewStyle = createUseStyles(theme => ({
 
 export const useFinishUserProfileStyles = createUseStyles(theme => ({
   container: {
-    textAlign: 'center',
-    height: '100%',
-    padding: theme.spacing(0, 4),
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(0, 4)
   },
-  button: {
-    marginTop: theme.spacing(2)
+  divider: {
+    marginBottom: theme.spacing(3)
   }
 }))

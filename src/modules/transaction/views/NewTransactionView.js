@@ -63,7 +63,7 @@ const NewTransactionPage = ({ history }) => {
             component={MaskedInput}
           />
 
-          <FieldController name="description" placeholder="memo" component={Input} />
+          <FieldController name="description" placeholder="Memo" component={Input} />
 
           <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
 

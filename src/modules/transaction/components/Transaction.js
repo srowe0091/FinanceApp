@@ -14,7 +14,7 @@ const useTransactionStyles = createUseStyles(theme => ({
     marginBottom: theme.spacing(2),
     overflow: 'auto',
     borderRadius: 'var(--borderRadius)',
-    boxShadow: '0px 3px 4px 0px var(--alpha10)'
+    boxShadow: theme.boxShadow('--alpha10')
   },
   transaction: {
     width: '100%',

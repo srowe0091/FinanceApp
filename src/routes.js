@@ -3,6 +3,7 @@ const routes = {
   home: '/home',
   wallet: '/wallet',
   bills: '/bills',
+  profile: '/profile',
   newTransaction: '/new-transaction',
   newCard: '/new-card',
   lab: '/lab',

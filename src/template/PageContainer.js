@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss'
 
 export const usePageContainerStyles = createUseStyles({
   content: {
-    '--background': '#F8F8FF'
+    '--background': 'var(--pageBackground)'
   }
 })
 

@@ -16,7 +16,7 @@ export const usePayTransactionStyles = createUseStyles(theme => ({
     verticalAlign: 'middle',
     textTransform: 'uppercase',
     backgroundColor: 'var(--ion-color-primary)',
-    textShadow: '0 0 3px var(--alpha5), 0 0 3px var(--alpha5)',
+    textShadow: '0 0 3px var(--alpha50), 0 0 3px var(--alpha50)',
     '&::before': {
       content: '""',
       float: 'left',

@@ -9,7 +9,7 @@ import { chevronDown } from 'ionicons/icons'
 
 import { useHomeViewStyles, useHomeHooks } from '../util'
 import { PageContainer } from 'template'
-import { Fab, PullToRefresh, Card, ProgressBar, ProfileIcon } from 'components'
+import { Fab, PullToRefresh, Card, ProgressBar } from 'components'
 import { currency } from 'utils'
 import routes from 'routes'
 import { StaggeredList } from 'animation'
@@ -30,10 +30,8 @@ const Home = () => {
   const handleCloseSumary = useCallback(() => expand && updateExpansion(false), [expand])
 
   return (
-    <PageContainer loading={loading}>
+    <PageContainer loading={loading} className={classes.container}>
       {!loading && <PullToRefresh onRefresh={onRefresh} />}
-
-      <ProfileIcon className={classes.profileIcon} />
 
       <div className={clsx(classes.header, expand && classes.expandedHeader)}>
         <AnimatedNumber

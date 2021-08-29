@@ -22,7 +22,7 @@ const useTransactionStyles = createUseStyles(theme => ({
     marginBottom: theme.spacing(2),
     overflow: 'auto',
     borderRadius: 'var(--borderRadius)',
-    boxShadow: '0px 2px 5px -2px var(--black)'
+    boxShadow: theme.boxShadow()
   },
   label: {
     width: '100%',

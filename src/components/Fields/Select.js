@@ -11,8 +11,8 @@ const useSelectStyles = createUseStyles(theme => ({
     width: '100%',
     marginBottom: 'var(--inputSpacing)',
     borderRadius: 'var(--borderRadius)',
-    boxShadow: 'var(--boxShadow)',
-    ...theme.fieldError
+    boxShadow: theme.boxShadow(),
+    ...theme.field
   },
   actionSheet: {
     '--max-height': '300px'
@@ -21,7 +21,7 @@ const useSelectStyles = createUseStyles(theme => ({
 
 export const Select = forwardRef(
   ({ className, label, name, onChange, value, options, error, type = 'action-sheet', ...rest }, ref) => {
-    const classes = useSelectStyles(error)
+    const classes = useSelectStyles({ error })
     return (
       <IonItem color="light" className={clsx(classes.select, className)}>
         <IonLabel>{label}</IonLabel>

@@ -1,25 +1,23 @@
 import React from 'react'
 import { IonIcon, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton } from '@ionic/react'
 import { Route } from 'react-router-dom'
-import { homeSharp, walletSharp, personSharp, documentsSharp } from 'ionicons/icons'
+import { homeSharp, walletSharp, personSharp /*, documentsSharp */ } from 'ionicons/icons'
 
 // User views
 import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
 import WalletView from 'modules/wallet/views/WalletView'
 import NewCardView from 'modules/wallet/views/NewCardView'
-import BillsView from 'modules/bills/views/BillsView'
+// import BillsView from 'modules/bills/views/BillsView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
-// Admin views
-import AdminView from 'modules/admin/views/Admin'
+import ProfileView from 'modules/user/views/ProfileView'
 
 import { PageRoute } from './PageRoute'
 
 import routes from 'routes'
-import { useUser, useAuthentication } from 'modules/authentication'
+import { useAuthentication } from 'modules/authentication'
 
 export const Navigation = () => {
-  const { isAdmin } = useUser()
   const { isAuthenticated } = useAuthentication()
 
   if (!isAuthenticated) {
@@ -32,11 +30,10 @@ export const Navigation = () => {
         {/* main view */}
         <PageRoute path={routes.home} component={HomeView} />
         <PageRoute path={routes.wallet} component={WalletView} />
-        <PageRoute path={routes.bills} component={BillsView} />
+        {/* <PageRoute path={routes.bills} component={BillsView} /> */}
+        <PageRoute path={routes.profile} component={ProfileView} />
         <PageRoute path={routes.newCard} component={NewCardView} />
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
-        {/* admin view */}
-        <PageRoute admin path={routes.admin.index} component={AdminView} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
@@ -48,19 +45,13 @@ export const Navigation = () => {
           <IonIcon icon={walletSharp} />
         </IonTabButton>
 
-        <IonTabButton tab={routes.bills} href={routes.bills}>
+        {/* <IonTabButton tab={routes.bills} href={routes.bills}>
           <IonIcon icon={documentsSharp} />
-        </IonTabButton>
+        </IonTabButton> */}
 
-        {isAdmin ? (
-          <IonTabButton tab={routes.admin.index} href={routes.admin.index}>
-            <IonIcon icon={personSharp} />
-          </IonTabButton>
-        ) : (
-          <IonTabButton tab={routes.wallet} href={routes.wallet}>
-            <IonIcon icon={personSharp} />
-          </IonTabButton>
-        )}
+        <IonTabButton tab={routes.profile} href={routes.profile}>
+          <IonIcon icon={personSharp} />
+        </IonTabButton>
       </IonTabBar>
     </IonTabs>
   )

@@ -2,10 +2,9 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { IonPage, IonContent, IonText } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useToggle } from 'react-use'
 
 import { useLoginViewStyle, LoginSchema } from '../util'
-import { FinishUserModal } from './FinishUser'
+import { CompleteProfileModal } from './CompleteProfile'
 import { Input, Button, Logo, FieldController } from 'components'
 import { textMappings } from 'utils'
 import { useAuthentication } from 'modules/authentication'
@@ -13,7 +12,7 @@ import { useAuthentication } from 'modules/authentication'
 const LoginView = () => {
   const classes = useLoginViewStyle()
   const [status, setStatus] = useState(null)
-  const [showModal, toggleModal] = useToggle(false)
+  const [showModal, updateModalState] = useState(false)
   const { handleLogin, requireProfileUpdate } = useAuthentication()
 
   const form = useForm({
@@ -34,9 +33,9 @@ const LoginView = () => {
 
   useEffect(() => {
     if (requireProfileUpdate) {
-      toggleModal(true)
+      updateModalState(true)
     }
-  }, [requireProfileUpdate, toggleModal])
+  }, [requireProfileUpdate])
 
   const {
     formState: { isSubmitting }
@@ -65,7 +64,7 @@ const LoginView = () => {
             </form>
           </FormProvider>
         </div>
-        <FinishUserModal isOpen={showModal} closeModal={toggleModal} />
+        <CompleteProfileModal isOpen={showModal} closeModal={updateModalState} />
       </IonContent>
     </IonPage>
   )

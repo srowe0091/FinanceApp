@@ -7,8 +7,10 @@ import { SaveUser } from 'modules/user'
 import { useAuthentication } from 'modules/authentication'
 
 export const UserProfileSchema = yup.object().shape({
-  income: yup.number().moreThan(0).required(),
-  allowance: yup.number().moreThan(0).required()
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  income: yup.number().moreThan(0),
+  allowance: yup.number().moreThan(0)
 })
 
 export const useUpdateUser = () => {
@@ -22,13 +24,15 @@ export const useUpdateUser = () => {
   })
 
   const handleUpdate = useCallback(
-    ({ allowance, income, defaultCard }) =>
+    ({ allowance, income, defaultCard, firstName, lastName }) =>
       _updatePreferences({
         variables: {
           input: {
             ...(income && { income: toNumber(income) }),
             ...(allowance && { allowance: toNumber(allowance) }),
-            ...(defaultCard && { defaultCard })
+            ...(defaultCard && { defaultCard }),
+            ...(firstName && { firstName }),
+            ...(lastName && { lastName })
           }
         }
       }),

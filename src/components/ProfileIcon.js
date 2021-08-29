@@ -2,26 +2,36 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 import clsx from 'clsx'
+import cond from 'lodash/fp/cond'
+import matches from 'lodash/fp/matches'
+import constant from 'lodash/fp/constant'
 
 import { useUser } from 'modules/authentication'
 
-export const useProfileIconStyles = createUseStyles({
+const determineIconSize = ({ size }) =>
+  cond([
+    [matches('small'), constant(42)],
+    [matches('medium'), constant(60)],
+    [matches('large'), constant(72 + 'px')]
+  ])(size)
+
+const useProfileIconStyles = createUseStyles(theme => ({
   container: {
-    width: ({ size }) => (size === 'small' ? 42 : 60),
-    height: ({ size }) => (size === 'small' ? 42 : 60),
-    lineHeight: ({ size }) => `${size === 'small' ? 42 : 80}px`,
+    width: determineIconSize,
+    height: determineIconSize,
+    lineHeight: determineIconSize,
     textAlign: 'center',
     overflow: 'hidden',
     position: 'relative',
     borderRadius: '50%',
     backgroundColor: 'white',
-    boxShadow: 'var(--boxShadow)',
+    boxShadow: theme.boxShadow(),
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundImage: ({ icon }) => `url(${icon})`
   }
-})
+}))
 
 export const ProfileIcon = ({ className, size = 'small', ...rest }) => {
   const { profileImage } = useUser()

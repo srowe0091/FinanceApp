@@ -12,7 +12,6 @@ import routes from 'routes'
 import { GetUser } from 'modules/user'
 
 const checkErrors = response => {
-  console.log('check errors')
   if (!response.ok) {
     throw response
   }
@@ -30,7 +29,7 @@ export const useInitializeAuth = () => {
     try {
       const response = await client.query({ query: GetUser })
       const user = response?.data?.me || {}
-      if ((!user.allowance || !user.income) && user.isAdmin) {
+      if ((!user.allowance || !user.income || !user.firstName || !user.lastName) && user.isAdmin) {
         return dispatch({ type: 'COMPLETE_PROFILE', payload: user })
       }
       dispatch({ type: 'SUCCESSFUL_LOGIN', payload: user })

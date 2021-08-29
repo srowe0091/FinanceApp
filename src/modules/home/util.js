@@ -15,9 +15,14 @@ import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
 
 export const useHomeViewStyles = createUseStyles(theme => ({
+  container: {
+    minHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   header: {
     color: 'var(--white)',
-    textShadow: '0px 4px 4px var(--alpha5)',
+    textShadow: '0px 4px 4px var(--alpha50)',
     textAlign: 'center',
     padding: theme.spacing(6, 4, 8),
     display: 'flex',
@@ -30,12 +35,12 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   progressBar: {
     maxWidth: 300,
     margin: theme.spacing(3, 'auto'),
-    filter: 'drop-shadow(0px 2px 6px var(--alpha5))'
+    filter: 'drop-shadow(0px 2px 6px var(--alpha50))'
   },
   transactions: {
     flex: 1,
     minHeight: '100px',
-    backgroundColor: '#F8F8FF',
+    backgroundColor: 'var(--pageBackground)',
     transform: 'translateY(-68px)',
     transition: theme.transition({ duration: 750, timing: 'ease-out' }),
     padding: theme.spacing(0, 2, 8),
@@ -46,7 +51,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
       left: 0,
       position: 'absolute',
       transform: 'translateY(-100%)',
-      backgroundColor: '#F8F8FF',
+      backgroundColor: 'var(--pageBackground)',
       borderRadius: '20px 20px 0 0 '
     }
   },
