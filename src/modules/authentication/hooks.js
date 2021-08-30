@@ -80,21 +80,20 @@ export const useInitializeAuth = () => {
     [handleGetUser]
   )
 
-  const handleLogout = useCallback(
-    async () =>
-      StorageContainer.get('session')
-        .then(_sessionId =>
-          fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
-            method: 'DELETE',
-            headers: { AppId, Authorization: _sessionId.value }
-          })
-        )
-        .then(checkErrors)
-        .then(() => client.clearStore())
-        .then(() => StorageContainer.remove('session'))
-        .then(() => dispatch({ type: 'LOGOUT' })),
-    [client, dispatch]
-  )
+  const handleLogout = useCallback(() => {
+    dispatch({ type: 'LOGGING_OUT' })
+    StorageContainer.get('session')
+      .then(_sessionId =>
+        fetch(`${process.env.REACT_APP_SERVER_URL}/authenticate`, {
+          method: 'DELETE',
+          headers: { AppId, Authorization: _sessionId.value }
+        })
+      )
+      .then(checkErrors)
+      .finally(() => StorageContainer.remove('session'))
+      .finally(() => dispatch({ type: 'LOGOUT' }))
+      .finally(() => client.clearStore())
+  }, [client, dispatch])
 
   const finishProfile = useCallback(data => dispatch({ type: 'FINISHED_PROFILE' }), [dispatch])
 

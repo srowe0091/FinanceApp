@@ -11,7 +11,7 @@ import { currenyFormat } from 'utils'
 import routes from 'routes'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 
-export const CompleteProfileModal = ({ isOpen, closeModal }) => {
+export const CompleteAccountModal = ({ isOpen, closeModal }) => {
   const classes = useFinishUserProfileStyles()
   const history = useHistory()
   const [updateUser, { loading: saving }] = useUpdateUser()
@@ -38,7 +38,7 @@ export const CompleteProfileModal = ({ isOpen, closeModal }) => {
     <IonModal isOpen={isOpen} backdropDismiss={false}>
       <IonContent>
         <div className={classes.container}>
-          <Header label="Complete Your Profile" />
+          <Header label="Complete Your Account" />
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
               <IonItemDivider className={classes.divider}>
@@ -82,7 +82,7 @@ export const CompleteProfileModal = ({ isOpen, closeModal }) => {
   )
 }
 
-CompleteProfileModal.propTypes = {
+CompleteAccountModal.propTypes = {
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func
 }

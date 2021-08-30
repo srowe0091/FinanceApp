@@ -33,13 +33,3 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     marginTop: theme.spacing(3)
   }
 }))
-
-export const useFinishUserProfileStyles = createUseStyles(theme => ({
-  container: {
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(0, 4)
-  },
-  divider: {
-    marginBottom: theme.spacing(3)
-  }
-}))

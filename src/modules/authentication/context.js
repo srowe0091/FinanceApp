@@ -1,16 +1,22 @@
 import React, { createContext } from 'react'
 import PropTypes from 'prop-types'
+import { IonLoading } from '@ionic/react'
 
 import { useInitializeAuth } from './hooks'
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const { isLoading, ...state } = useInitializeAuth()
+  const { isLoading, isLoggingOut, ...state } = useInitializeAuth()
 
   if (isLoading) return null
 
-  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={state}>
+      <IonLoading isOpen={isLoggingOut} message="Logging Out" />
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 AuthProvider.propTypes = {

@@ -4,7 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useLoginViewStyle, LoginSchema } from '../util'
-import { CompleteProfileModal } from './CompleteProfile'
+import { CompleteAccountModal } from 'modules/user/views/CompleteAccount'
 import { Input, Button, Logo, FieldController } from 'components'
 import { textMappings } from 'utils'
 import { useAuthentication } from 'modules/authentication'
@@ -64,7 +64,7 @@ const LoginView = () => {
             </form>
           </FormProvider>
         </div>
-        <CompleteProfileModal isOpen={showModal} closeModal={updateModalState} />
+        <CompleteAccountModal isOpen={showModal} closeModal={updateModalState} />
       </IonContent>
     </IonPage>
   )

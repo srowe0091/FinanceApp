@@ -19,7 +19,9 @@ const reducer = (state, action) => {
         user: sessionProps(action.payload)
       })
     case 'LOGOUT':
-      return Object.assign({}, state, { isAuthenticated: false, user: {} })
+      return Object.assign({}, state, { isAuthenticated: false, isLoggingOut: false, user: {} })
+    case 'LOGGING_OUT':
+      return Object.assign({}, state, { isLoggingOut: true })
     case 'STOP_LOADING':
       return Object.assign({}, state, { isLoading: false })
     case 'COMPLETE_PROFILE':
