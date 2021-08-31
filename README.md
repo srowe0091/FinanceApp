@@ -4,8 +4,8 @@
 
 - [ ] Auto refresh user info when user added into a group
 - [ ] Add billing
-- [ ] Add User icon in home screen
 - [ ] Implement Notifications
+- [ ] Add Routing Transitions
 
 #### Enhancement
 
@@ -17,4 +17,4 @@
 #### Refactor
 
 - [x] Remove Formik for react-hook-form
-- [ ] Revist New/Edit transaction view, basically same look and style yet different everything
+- [x] Revist New/Edit transaction view, basically same look and style yet different everything

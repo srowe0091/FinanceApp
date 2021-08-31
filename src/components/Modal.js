@@ -15,7 +15,7 @@ export const useModalStyles = createUseStyles(theme => ({
   },
   close: {
     top: theme.spacing(1),
-    right: theme.spacing(1.5),
+    right: theme.spacing(1.75),
     zIndex: 10,
     position: 'absolute'
   }

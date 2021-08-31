@@ -1,35 +1,20 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
-import { useIonViewWillLeave } from '@ionic/react'
-import { checkmark } from 'ionicons/icons'
-import { useForm, FormProvider } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import map from 'lodash/fp/map'
 
-import { TransactionSchema, useNewTransactionViewStyles } from '../util'
+import { TransactionView } from './TransactionView'
 import { NewTransaction } from '../transaction.gql'
-import { PageContainer } from 'template'
-import { Fab, Input, Header, MaskedInput, Checkbox, Select, FieldController } from 'components'
-import { currenyFormat, toNumber } from 'utils'
-import { useUser } from 'modules/authentication'
+import { toNumber } from 'utils'
 import { useWallet } from 'modules/wallet'
 
-const NewTransactionPage = ({ history }) => {
-  const classes = useNewTransactionViewStyles()
-  const { cards, defaultCard } = useWallet()
-  const { isAdmin, inGroup } = useUser()
+const NewTransactionView = ({ history }) => {
+  const { defaultCard } = useWallet()
 
-  const form = useForm({
-    resolver: yupResolver(TransactionSchema),
-    defaultValues: { amount: 0, description: '', group: false, card: defaultCard }
-  })
-
-  const cardOptions = useMemo(() => map(card => ({ label: card.name, value: card.id }))(cards), [cards])
+  const defaultValues = useMemo(() => ({ amount: 0, description: '', group: false, card: defaultCard }), [defaultCard])
 
   const [saveTransaction] = useMutation(NewTransaction, {
     awaitRefetchQueries: true,
-    refetchQueries: () => ['UserTransactions'].concat(isAdmin ? ['GroupTransactions'] : [])
+    refetchQueries: ['UserTransactions']
   })
 
   const onSubmit = useCallback(
@@ -42,42 +27,11 @@ const NewTransactionPage = ({ history }) => {
     [saveTransaction, history]
   )
 
-  useIonViewWillLeave(form.reset)
-
-  const {
-    formState: { isSubmitting }
-  } = form
-
-  return (
-    <PageContainer className={classes.container}>
-      <Header label="New Transaction" />
-
-      <FormProvider {...form}>
-        <form className={classes.form} autoComplete="off">
-          <FieldController
-            autoFocus
-            type="tel"
-            name="amount"
-            className={classes.moneyInput}
-            format={currenyFormat}
-            component={MaskedInput}
-          />
-
-          <FieldController name="description" placeholder="Memo" component={Input} />
-
-          <FieldController name="card" label="Put on Card" options={cardOptions} component={Select} />
-
-          {inGroup && <FieldController label="Group Purchase" name="group" component={Checkbox} />}
-
-          <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
-        </form>
-      </FormProvider>
-    </PageContainer>
-  )
+  return <TransactionView header="New Transaction" onSubmit={onSubmit} defaultValues={defaultValues} />
 }
 
-NewTransactionPage.propTypes = {
+NewTransactionView.propTypes = {
   history: PropTypes.object
 }
 
-export default NewTransactionPage
+export default NewTransactionView

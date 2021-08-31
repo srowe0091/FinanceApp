@@ -4,9 +4,9 @@ import { GetWallet } from './wallet.gql'
 import { useQuery } from 'hooks'
 import { useUser } from 'modules/authentication'
 
-export const useWallet = () => {
+export const useWallet = props => {
   const { defaultCard } = useUser()
-  const { data = [], loading: walletLoading } = useQuery(GetWallet, { path: 'cards' })
+  const { data = [], loading: walletLoading } = useQuery(GetWallet, { path: 'cards', ...props })
 
   const sortedCards = sortBy([item => (item.id === defaultCard?.id ? 0 : 1)])(data)
 

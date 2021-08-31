@@ -1,7 +1,7 @@
 import React from 'react'
 import { IonIcon, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton } from '@ionic/react'
 import { Route } from 'react-router-dom'
-import { homeSharp, walletSharp, personSharp /*, documentsSharp */ } from 'ionicons/icons'
+import { homeSharp, walletSharp, personSharp /*, peopleSharp, documentsSharp */ } from 'ionicons/icons'
 
 // User views
 import LoginView from 'modules/authentication/views/LoginView'
@@ -11,6 +11,8 @@ import NewCardView from 'modules/wallet/views/NewCardView'
 // import BillsView from 'modules/bills/views/BillsView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 import ProfileView from 'modules/user/views/ProfileView'
+
+// import AdminView from 'modules/admin/views/Admin'
 
 import { PageRoute } from './PageRoute'
 
@@ -34,6 +36,7 @@ export const Navigation = () => {
         <PageRoute path={routes.profile} component={ProfileView} />
         <PageRoute path={routes.newCard} component={NewCardView} />
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
+        {/* <PageRoute admin path={routes.admin.index} component={AdminView} /> */}
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
@@ -52,6 +55,10 @@ export const Navigation = () => {
         <IonTabButton tab={routes.profile} href={routes.profile}>
           <IonIcon icon={personSharp} />
         </IonTabButton>
+
+        {/* <IonTabButton tab={routes.admin.index} href={routes.admin.index}>
+          <IonIcon icon={peopleSharp} />
+        </IonTabButton> */}
       </IonTabBar>
     </IonTabs>
   )
