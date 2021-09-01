@@ -59,7 +59,7 @@ const LoginView = () => {
               </IonText>
 
               <Button type="submit" loading={isSubmitting} className={classes.button}>
-                Login
+                Sign In
               </Button>
             </form>
           </FormProvider>

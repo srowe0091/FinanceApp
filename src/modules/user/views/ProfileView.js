@@ -80,13 +80,13 @@ const Profile = () => {
       </IonItem>
 
       <Button fill="clear" className={classes.logout} onClick={openLogoutConfirmation}>
-        Logout
+        Sign out
       </Button>
 
       <IonAlert
         isOpen={setDefaultAlert}
         onDidDismiss={closeLogoutConfirmation}
-        message="Are you sure you want log out?"
+        message="Are you sure you want sign out?"
         buttons={alertButtons}
       />
     </PageContainer>
