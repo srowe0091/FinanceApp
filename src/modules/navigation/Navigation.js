@@ -10,6 +10,7 @@ import WalletView from 'modules/wallet/views/WalletView'
 import NewCardView from 'modules/wallet/views/NewCardView'
 // import BillsView from 'modules/bills/views/BillsView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
+import EditTransactionView from 'modules/transaction/views/EditTransactionView'
 import ProfileView from 'modules/user/views/ProfileView'
 
 // import AdminView from 'modules/admin/views/Admin'
@@ -36,6 +37,7 @@ export const Navigation = () => {
         <PageRoute path={routes.profile} component={ProfileView} />
         <PageRoute path={routes.newCard} component={NewCardView} />
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
+        <PageRoute path={routes.editTransaction()} component={EditTransactionView} />
         {/* <PageRoute admin path={routes.admin.index} component={AdminView} /> */}
       </IonRouterOutlet>
 

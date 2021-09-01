@@ -106,12 +106,6 @@ export const useHomeViewStyles = createUseStyles(theme => ({
   rotateIcon: {
     transform: 'rotateZ(-180deg)',
     bottom: theme.spacing(3.5)
-  },
-  profileIcon: {
-    top: theme.spacing(2),
-    right: theme.spacing(2),
-    zIndex: 100,
-    position: 'absolute'
   }
 }))
 

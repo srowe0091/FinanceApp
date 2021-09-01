@@ -6,7 +6,7 @@ import { useIonViewWillLeave } from '@ionic/react'
 import { checkmark } from 'ionicons/icons'
 import map from 'lodash/fp/map'
 
-import { TransactionSchema, useNewTransactionViewStyles } from '../util'
+import { TransactionSchema, useTransactionViewStyles } from '../util'
 import { PageContainer } from 'template'
 import { currenyFormat } from 'utils'
 import { Fab, Input, Header, MaskedInput, Checkbox, Select, DatePicker, FieldController } from 'components'
@@ -14,7 +14,7 @@ import { useUser } from 'modules/authentication'
 import { useWallet } from 'modules/wallet'
 
 export const TransactionView = ({ header, onSubmit, defaultValues, edit }) => {
-  const classes = useNewTransactionViewStyles()
+  const classes = useTransactionViewStyles()
   const { inGroup } = useUser()
   const { cards } = useWallet({
     transform: map(card => ({ label: card.name, value: card.id }))
@@ -32,8 +32,8 @@ export const TransactionView = ({ header, onSubmit, defaultValues, edit }) => {
   useIonViewWillLeave(form.reset)
 
   return (
-    <PageContainer className={classes.container}>
-      <Header label={header} />
+    <PageContainer padding>
+      <Header goBack label={header} />
 
       <FormProvider {...form}>
         <form className={classes.form} autoComplete="off">

@@ -1,13 +1,12 @@
 import React, { useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
-import { IonItem, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react'
-import { useToggle, useClickAway } from 'react-use'
+import { IonItem, IonCheckbox, IonItemSliding, IonItemOptions, IonItemOption, useIonViewDidLeave } from '@ionic/react'
 import isFunction from 'lodash/fp/isFunction'
 
-import { EditTransaction } from '../views/EditTransactionView'
 import { formatDate, currency } from 'utils'
-import { Modal, Tag } from 'components'
+import { Tag } from 'components'
+import routes from 'routes'
 
 const useTransactionStyles = createUseStyles(theme => ({
   wrapper: {
@@ -32,19 +31,18 @@ const useTransactionStyles = createUseStyles(theme => ({
 }))
 
 export const TransactionEntry = ({
+  history,
+  disableEdit,
   id,
   amount,
   description,
   date,
   checked,
   group,
-  card,
-  onCheckboxClick,
-  disableEdit
+  onCheckboxClick
 }) => {
   const ref = useRef(null)
   const classes = useTransactionStyles()
-  const [modalState, toggleModal] = useToggle(false)
 
   const closeSlide = useCallback(() => {
     if (isFunction(ref?.current?.closeOpened)) ref.current.closeOpened()
@@ -52,12 +50,10 @@ export const TransactionEntry = ({
 
   const openEdit = useCallback(() => {
     closeSlide()
-    toggleModal(true)
-  }, [toggleModal, closeSlide])
+    history.push(routes.editTransaction(id))
+  }, [history, id, closeSlide])
 
-  useClickAway(ref, () => {
-    closeSlide()
-  })
+  useIonViewDidLeave(() => closeSlide())
 
   return (
     <div className={classes.wrapper}>
@@ -97,10 +93,6 @@ export const TransactionEntry = ({
           </IonItemOptions>
         )}
       </IonItemSliding>
-
-      <Modal isOpen={modalState} onClose={toggleModal}>
-        <EditTransaction {...{ id, amount, date, group, description, card: card.id }} />
-      </Modal>
     </div>
   )
 }
@@ -112,7 +104,7 @@ TransactionEntry.propTypes = {
   date: PropTypes.string,
   checked: PropTypes.bool,
   group: PropTypes.bool,
-  card: PropTypes.object,
   onCheckboxClick: PropTypes.func,
-  disableEdit: PropTypes.bool
+  disableEdit: PropTypes.bool,
+  history: PropTypes.object
 }

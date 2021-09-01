@@ -8,11 +8,7 @@ export const TransactionSchema = yup.object({
   group: yup.bool()
 })
 
-export const useNewTransactionViewStyles = createUseStyles(theme => ({
-  container: {
-    height: '100%',
-    padding: theme.spacing(2)
-  },
+export const useTransactionViewStyles = createUseStyles({
   moneyInput: {
     textAlign: 'center',
     fontSize: '70px'
@@ -22,4 +18,4 @@ export const useNewTransactionViewStyles = createUseStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'center'
   }
-}))
+})

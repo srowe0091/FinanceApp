@@ -9,7 +9,7 @@ import { useMutation } from '@apollo/client'
 import { SaveNewCard } from '../wallet.gql'
 import { NewCardSchema, initialNewCard, cards, useNewCardViewStyles } from '../util'
 import { PageContainer } from 'template'
-import { Card, Fab, Input, Select, FieldController } from 'components'
+import { Card, Fab, Input, Select, FieldController, Header } from 'components'
 import { daysInMonth } from 'utils'
 
 const NewCardView = ({ history }) => {
@@ -47,9 +47,11 @@ const NewCardView = ({ history }) => {
   } = form
 
   return (
-    <PageContainer>
+    <PageContainer padding>
+      <Header goBack label="Add a New Card" />
+
       <FormProvider {...form}>
-        <form className={classes.container}>
+        <form className={classes.form}>
           <Card className={classes.card} type={cardType} />
           <FieldController name="cardName" placeholder="Card Name" component={Input} />
 

@@ -1,35 +1,51 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { useMutation } from '@apollo/client'
+import { useMutation, useApolloClient } from '@apollo/client'
+import pick from 'lodash/fp/pick'
 
 import { TransactionView } from './TransactionView'
 
-import { UpdateTransaction } from '../transaction.gql'
+import { UpdateTransaction, TransactionFragment } from '../transaction.gql'
 import { toNumber } from 'utils'
 import Pubsub from 'modules/pubsub'
 
-export const EditTransaction = ({ dismissModal, ...defaultValues }) => {
+export const EditTransaction = ({ match, history }) => {
+  const client = useApolloClient()
   const [updateTransaction] = useMutation(UpdateTransaction)
 
+  const data = client.readFragment({
+    id: `Transaction:${match.params.id}`,
+    fragment: TransactionFragment
+  })
+
+  const _defaultValues = useMemo(() => {
+    const values = pick(['amount', 'card.id', 'date', 'description', 'group', 'id'])(data)
+    return { ...values, card: values.card?.id }
+  }, [data])
+
   const onSubmit = useCallback(
-    (values, { setSubmitting }) => {
+    (values, { setSubmitting }) =>
       updateTransaction({
         variables: {
           input: Object.assign(values, { amount: toNumber(values.amount) })
         }
       })
-        .then(() => dismissModal())
+        .then(history.goBack)
         .catch(err => {
           setSubmitting(false)
           Pubsub.emit('TOAST_NOTIFICATION', err)
-        })
-    },
-    [updateTransaction, dismissModal]
+        }),
+    [updateTransaction, history]
   )
 
-  return <TransactionView edit header="Edit Transaction" onSubmit={onSubmit} defaultValues={defaultValues} />
+  if (!data) return history.goBack()
+
+  return <TransactionView edit header="Edit Transaction" onSubmit={onSubmit} defaultValues={_defaultValues} />
 }
 
 EditTransaction.propTypes = {
-  dismissModal: PropTypes.func
+  match: PropTypes.object,
+  history: PropTypes.object
 }
+
+export default EditTransaction

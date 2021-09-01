@@ -18,3 +18,4 @@
 
 - [x] Remove Formik for react-hook-form
 - [x] Revist New/Edit transaction view, basically same look and style yet different everything
+- [x] Change Edit Transaction behavior to not be created for every transaction

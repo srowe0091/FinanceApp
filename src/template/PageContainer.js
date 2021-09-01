@@ -1,20 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { IonContent } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
 
-export const usePageContainerStyles = createUseStyles({
+export const usePageContainerStyles = createUseStyles(theme => ({
   content: {
     '--background': 'var(--pageBackground)'
+  },
+  childrenWrapper: {
+    padding: addPadding => theme.spacing(addPadding ? 2 : 0)
   }
-})
+}))
 
-export const PageContainer = ({ children, className, loading, ...rest }) => {
-  const classes = usePageContainerStyles()
+export const PageContainer = ({ children, className, loading, padding, ...rest }) => {
+  const classes = usePageContainerStyles(padding)
 
   return (
     <IonContent scrollY={!loading} className={classes.content} {...rest}>
-      <div className={className}>{children}</div>
+      <div className={clsx(padding && classes.childrenWrapper, className)}>{children}</div>
     </IonContent>
   )
 }
@@ -22,5 +26,6 @@ export const PageContainer = ({ children, className, loading, ...rest }) => {
 PageContainer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  padding: PropTypes.bool
 }

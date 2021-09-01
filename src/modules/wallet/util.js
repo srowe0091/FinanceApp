@@ -38,14 +38,13 @@ export const useWalletStyles = createUseStyles(theme => ({
 }))
 
 export const useNewCardViewStyles = createUseStyles(theme => ({
-  container: {
-    padding: theme.spacing(6, 2, 2),
+  form: {
     display: 'flex',
     flexDirection: 'column'
   },
   card: {
     width: '300px',
     alignSelf: 'center',
-    marginBottom: theme.spacing(8)
+    marginBottom: theme.spacing(4)
   }
 }))

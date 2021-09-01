@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { IonText, IonIcon } from '@ionic/react'
 import AnimateHeight from 'react-animate-height'
@@ -17,7 +18,7 @@ import { TransactionEntry } from 'modules/transaction'
 
 const DURATION = 1500
 
-const Home = () => {
+const Home = ({ history }) => {
   const [expand, updateExpansion] = useState(false)
   const { inGroup, amountLeft, percentage, groupSpent, creditCards, transactions, loading, onRefresh } = useHomeHooks()
   const classes = useHomeViewStyles({ cardsPresent: creditCards.length })
@@ -91,7 +92,7 @@ const Home = () => {
         )}
         {transactions.map((t, idx) => (
           <StaggeredList key={t.id} index={idx} delay={5}>
-            <TransactionEntry {...t} />
+            <TransactionEntry history={history} {...t} />
           </StaggeredList>
         ))}
       </div>
@@ -99,6 +100,10 @@ const Home = () => {
       <Fab routerLink={routes.newTransaction} />
     </PageContainer>
   )
+}
+
+Home.propTypes = {
+  history: PropTypes.object
 }
 
 export default Home

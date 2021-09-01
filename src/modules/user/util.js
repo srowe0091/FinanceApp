@@ -45,8 +45,7 @@ export const useUpdateUser = () => {
 
 export const useFinishUserProfileStyles = createUseStyles(theme => ({
   container: {
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(0, 4)
+    padding: theme.spacing(2)
   },
   divider: {
     marginBottom: theme.spacing(3)
