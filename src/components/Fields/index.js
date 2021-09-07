@@ -1,3 +1,4 @@
+export * from './Autocomplete'
 export * from './Checkbox'
 export * from './DatePicker'
 export * from './FieldController'
