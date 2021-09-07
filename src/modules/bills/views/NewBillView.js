@@ -1,25 +1,29 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { IonContent } from '@ionic/react'
 import { useMutation } from '@apollo/client'
+import { useIonViewWillLeave } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { checkmark } from 'ionicons/icons'
+import pick from 'lodash/fp/pick'
 
-import { useNewBillsStyles, initialNewBill, NewBillSchema } from '../util'
+import { initialNewBill, NewBillSchema } from '../util'
 import { SaveNewBill } from '../bills.gql'
-import { MaskedInput, Input, Select, Fab, FieldController } from 'components'
+import { MaskedInput, Input, Select, Fab, FieldController, Header, Autocomplete } from 'components'
 import { daysInMonth, currenyFormat, toNumber } from 'utils'
+import { PageContainer } from 'template'
+import { CompanySearch } from 'modules/search'
 
 const selectOptions = [
   { value: 'MORTGAGE_RENT', label: 'Mortgage/Rent' },
   { value: 'INSURANCE', label: 'Insurance' },
+  { value: 'SUBSCRIPTION', label: 'Subscription' },
   { value: 'UTILITIES', label: 'Utilities' },
   { value: 'VEHICLE', label: 'Vehicle' },
   { value: 'CREDIT_CARD', label: 'Credit Card' }
 ]
 
-const NewBillView = ({ dismissModal }) => {
-  const classes = useNewBillsStyles()
+const NewBillView = ({ history }) => {
   const [saveNewBill] = useMutation(SaveNewBill, {
     awaitRefetchQueries: true,
     refetchQueries: ['GetBills']
@@ -31,27 +35,37 @@ const NewBillView = ({ dismissModal }) => {
   })
 
   const onSubmit = useCallback(
-    values => {
+    values =>
       saveNewBill({
         variables: {
-          input: Object.assign(values, { amount: toNumber(values.amount), dueDate: parseInt(values.dueDate) })
+          input: Object.assign(
+            values,
+            {
+              amount: toNumber(values.amount),
+              dueDate: parseInt(values.dueDate)
+            },
+            pick(['name', 'logo'])(values.name)
+          )
         }
-      }).then(() => dismissModal())
-    },
-    [saveNewBill, dismissModal]
+      }).then(history.goBack),
+    [saveNewBill, history]
   )
+
+  useIonViewWillLeave(form.reset)
 
   const {
     formState: { isSubmitting }
   } = form
 
   return (
-    <IonContent>
-      <FormProvider {...form}>
-        <form className={classes.container}>
-          <FieldController name="name" placeholder="Bill" component={Input} />
+    <PageContainer padding>
+      <Header goBack label="Add a New Bill" />
 
-          <FieldController autoFocus type="tel" name="amount" format={currenyFormat} component={MaskedInput} />
+      <FormProvider {...form}>
+        <form>
+          <FieldController autoFocus name="name" placeholder="Bill" query={CompanySearch} component={Autocomplete} />
+
+          <FieldController type="tel" name="amount" format={currenyFormat} component={MaskedInput} />
 
           <FieldController name="dueDate" label="Due Date" options={daysInMonth} component={Select} />
 
@@ -59,15 +73,15 @@ const NewBillView = ({ dismissModal }) => {
 
           <FieldController name="notes" placeholder="Notes" component={Input} />
 
-          <Fab onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
+          <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
         </form>
       </FormProvider>
-    </IonContent>
+    </PageContainer>
   )
 }
 
 NewBillView.propTypes = {
-  dismissModal: PropTypes.func
+  history: PropTypes.object
 }
 
 export default NewBillView

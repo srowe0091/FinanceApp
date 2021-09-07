@@ -5,6 +5,7 @@ const routes = {
   bills: '/bills',
   profile: '/profile',
   newTransaction: '/new-transaction',
+  newBill: '/new-bill',
   editTransaction: (id = ':id') => `/edit-transaction/${id}`,
   newCard: '/new-card',
   lab: '/lab',

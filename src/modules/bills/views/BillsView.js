@@ -9,7 +9,6 @@ import groupBy from 'lodash/fp/groupBy'
 import { BillEntry } from '../components'
 import { useBillsStyles } from '../util'
 import { useBills } from '../hooks'
-import NewBillView from './NewBillsView'
 import CalendarView from './CalendarView'
 import routes from 'routes'
 import { currency } from 'utils'
@@ -19,7 +18,6 @@ import { PageContainer } from 'template'
 const Bills = () => {
   const classes = useBillsStyles()
   const { bills, loading, totalBills, income } = useBills()
-  const [addBillModal, toggleAddBill] = useToggle(false)
   const [calendarModal, toggleCalendarModal] = useToggle(false)
 
   const sortedBills = useMemo(() => {
@@ -30,7 +28,7 @@ const Bills = () => {
   if (loading) return null
 
   return (
-    <PageContainer>
+    <PageContainer padding>
       <div className={classes.panel}>
         <IonItem color="transparent" lines="none">
           <IonIcon icon={caretUp} color="danger" />
@@ -58,15 +56,11 @@ const Bills = () => {
       {!!sortedBills.PASSED && <p variant="body2">Passed</p>}
       {map(b => <BillEntry key={b.id} {...b} disabled />)(sortedBills.PASSED)}
 
-      <Modal isOpen={addBillModal} onClose={toggleAddBill}>
-        <NewBillView />
-      </Modal>
-
       <Modal isOpen={calendarModal} onClose={toggleCalendarModal}>
         <CalendarView />
       </Modal>
 
-      <Fab routerLink={routes.newTransaction} />
+      <Fab routerLink={routes.newBill} />
     </PageContainer>
   )
 }

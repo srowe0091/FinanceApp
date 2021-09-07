@@ -14,7 +14,7 @@ export const useBills = () => {
 
   return {
     totalBills,
-    bills: sortBy('dueDate')(data?.bills),
+    bills: sortBy('dueDate')(data),
     loading,
     income,
     ...props
