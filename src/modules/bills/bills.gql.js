@@ -4,6 +4,7 @@ const BillFragment = gql`
   fragment BillFragment on Bill {
     id
     name
+    logo
     amount
     dueDate
     type

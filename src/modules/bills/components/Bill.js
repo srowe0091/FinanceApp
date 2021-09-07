@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { createUseStyles } from 'react-jss'
 import { IonItem, IonIcon } from '@ionic/react'
 
-import { receipt, home, carSport, build, card, cash, shieldCheckmark } from 'ionicons/icons'
+import { receipt, home, carSport, build, card, cash, shieldCheckmark, refreshCircle } from 'ionicons/icons'
 
 import { currency } from 'utils'
 
@@ -12,6 +12,7 @@ const iconMap = {
   MORTGAGE_RENT: home,
   INSURANCE: shieldCheckmark,
   UTILITIES: build,
+  SUBSCRIPTION: refreshCircle,
   VEHICLE: carSport,
   CREDIT_CARD: card,
   LOAD: cash
@@ -37,14 +38,19 @@ const useTransactionStyles = createUseStyles(theme => ({
   }
 }))
 
-export const BillEntry = ({ name, dueDate, amount, type, notes, disabled }) => {
+export const BillEntry = ({ name, dueDate, amount, type, notes, logo, disabled }) => {
   const classes = useTransactionStyles()
   const _dueDate = useMemo(() => dayjs().date(dueDate).format('M/D'), [dueDate])
 
   return (
     <div className={classes.bill}>
       <IonItem lines="none" disabled={disabled}>
-        <IonIcon icon={iconMap[type] || receipt} size="large" />
+        {logo ? (
+          <img src={`data:image/png;base64,${logo}`} width="26" height="26" alt="" />
+        ) : (
+          <IonIcon icon={iconMap[type] || receipt} size="large" />
+        )}
+
         <span className={classes.label}>
           <span className={classes.textSpacing}>
             <p wrap="break">{name}</p>
@@ -61,6 +67,7 @@ export const BillEntry = ({ name, dueDate, amount, type, notes, disabled }) => {
 
 BillEntry.propTypes = {
   id: PropTypes.string,
+  logo: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
   notes: PropTypes.string,

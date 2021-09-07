@@ -2,7 +2,12 @@ import * as yup from 'yup'
 import { createUseStyles } from 'react-jss'
 
 export const NewBillSchema = yup.object().shape({
-  name: yup.string().required(),
+  name: yup
+    .object({
+      name: yup.string(),
+      logo: yup.string()
+    })
+    .required(),
   amount: yup.number().moreThan(0).required(),
   dueDate: yup.number().required(),
   type: yup.string(),
@@ -31,14 +36,6 @@ export const useBillsStyles = createUseStyles(theme => ({
   },
   icons: {
     fontSize: theme.spacing(3)
-  }
-}))
-
-export const useNewBillsStyles = createUseStyles(theme => ({
-  container: {
-    padding: theme.spacing(7, 2, 2),
-    display: 'flex',
-    flexDirection: 'column'
   }
 }))
 
