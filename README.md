@@ -4,6 +4,7 @@
 
 - [ ] Auto refresh user info when user added into a group
 - [ ] Add billing
+- [ ] Add Wallet
 - [ ] Implement Notifications
 - [ ] Add Routing Transitions
 
@@ -13,6 +14,7 @@
 - [x] Update summary section to show how much transaction are on per card
 - [x] Replace todays date with group spent
 - [ ] Replace react-animated-numbers with CSS (https://css-tricks.com/animating-number-counters/) // not ready to be used
+- [ ] Make app so others are able to use it
 
 #### Refactor
 
