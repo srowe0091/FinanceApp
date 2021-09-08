@@ -71,7 +71,7 @@ const NewBillView = ({ history }) => {
 
           <FieldController name="type" label="Bill Type" options={selectOptions} component={Select} />
 
-          <FieldController name="notes" placeholder="Notes" component={Input} />
+          {/* <FieldController name="notes" placeholder="Notes" component={Input} /> */}
 
           <Fab icon={checkmark} onClick={form.handleSubmit(onSubmit)} loading={isSubmitting} />
         </form>
