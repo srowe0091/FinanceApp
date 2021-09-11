@@ -33,3 +33,12 @@ export const useLoginViewStyle = createUseStyles(theme => ({
     marginTop: theme.spacing(3)
   }
 }))
+
+export const checkErrors = response => {
+  if (!response.ok) {
+    throw response
+  }
+  return response.text()
+}
+
+export const checkUser = user => Boolean(user.allowance && user.income && user.firstName && user.lastName)

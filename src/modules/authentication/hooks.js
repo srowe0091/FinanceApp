@@ -5,18 +5,12 @@ import { SplashScreen } from '@capacitor/splash-screen'
 import { useEffectOnce } from 'react-use'
 
 import { AuthContext } from './context'
+import { checkErrors, checkUser } from './util'
 import { useAuthReducer } from './reducer'
 import { StorageContainer } from 'lib/Capacitor'
 import { useQuery } from 'hooks'
 import routes from 'routes'
 import { GetUser } from 'modules/user'
-
-const checkErrors = response => {
-  if (!response.ok) {
-    throw response
-  }
-  return response.text()
-}
 
 const AppId = process.env.REACT_APP_ID
 
@@ -29,13 +23,15 @@ export const useInitializeAuth = () => {
     try {
       const response = await client.query({ query: GetUser })
       const user = response?.data?.me || {}
-      if ((!user.allowance || !user.income || !user.firstName || !user.lastName) && user.isAdmin) {
-        return dispatch({ type: 'COMPLETE_PROFILE', payload: user })
+      const accountIsValid = checkUser(user)
+      if (accountIsValid) {
+        if (process.env.NODE_ENV !== 'development') {
+          history.replace(routes.home)
+        }
+      } else {
+        history.replace(routes.updateAccount, { updateAccount: true })
       }
-      dispatch({ type: 'SUCCESSFUL_LOGIN', payload: user })
-      if (process.env.NODE_ENV !== 'development') {
-        history.replace(routes.home)
-      }
+      dispatch({ type: 'SUCCESSFUL_LOGIN' })
     } catch (err) {
       console.log(err)
     }
@@ -51,8 +47,8 @@ export const useInitializeAuth = () => {
         .then(handleGetUser)
         .catch(() => dispatch({ type: 'STOP_LOADING' }))
     } else {
-      dispatch({ type: 'STOP_LOADING' })
       history.replace(routes.login)
+      dispatch({ type: 'STOP_LOADING' })
     }
     SplashScreen.hide()
   }, [dispatch, handleGetUser, history])
@@ -95,24 +91,19 @@ export const useInitializeAuth = () => {
       .finally(() => client.clearStore())
   }, [client, dispatch])
 
-  const finishProfile = useCallback(data => dispatch({ type: 'FINISHED_PROFILE' }), [dispatch])
-
   return {
     ...state,
     handleLogin,
-    handleLogout,
-    finishProfile
+    handleLogout
   }
 }
 
 export const useAuthentication = () => {
-  const { isAuthenticated, handleLogin, handleLogout, finishProfile, requireProfileUpdate } = useContext(AuthContext)
+  const { isAuthenticated, handleLogin, handleLogout } = useContext(AuthContext)
   return {
     isAuthenticated,
     handleLogin,
-    handleLogout,
-    finishProfile,
-    requireProfileUpdate
+    handleLogout
   }
 }
 

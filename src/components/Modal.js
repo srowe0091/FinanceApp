@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { modalController } from '@ionic/core'
 import { IonModal, IonIcon } from '@ionic/react'
@@ -21,21 +21,30 @@ export const useModalStyles = createUseStyles(theme => ({
   }
 }))
 
-export const Modal = ({ isOpen, onClose, children }) => {
+export const Modal = ({ isOpen, onClose, disableClose, children }) => {
   const classes = useModalStyles()
+  const propsToPass = useMemo(
+    () => ({
+      ...(!disableClose && { dismissModal: modalController.dismiss })
+    }),
+    [disableClose]
+  )
 
   return (
     <IonModal isOpen={isOpen} onWillDismiss={onClose} className={classes.container}>
-      <Button shape="" color="dark" expand="block" className={classes.close} onClick={modalController.dismiss}>
-        <IonIcon slot="icon-only" icon={close} />
-      </Button>
-      {React.cloneElement(children, { dismissModal: modalController.dismiss })}
+      {!disableClose && (
+        <Button shape="" color="dark" expand="block" className={classes.close} onClick={modalController.dismiss}>
+          <IonIcon slot="icon-only" icon={close} />
+        </Button>
+      )}
+      {React.cloneElement(children, propsToPass)}
     </IonModal>
   )
 }
 
 Modal.propTypes = {
+  children: PropTypes.node,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  children: PropTypes.node
+  disableClose: PropTypes.bool
 }
