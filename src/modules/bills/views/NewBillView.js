@@ -9,7 +9,7 @@ import pick from 'lodash/fp/pick'
 
 import { initialNewBill, NewBillSchema } from '../util'
 import { SaveNewBill } from '../bills.gql'
-import { MaskedInput, Input, Select, Fab, FieldController, Header, Autocomplete } from 'components'
+import { MaskedInput /*, Input*/, Select, Fab, FieldController, Header, Autocomplete } from 'components'
 import { daysInMonth, currenyFormat, toNumber } from 'utils'
 import { PageContainer } from 'template'
 import { CompanySearch } from 'modules/search'
