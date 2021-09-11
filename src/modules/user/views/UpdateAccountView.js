@@ -1,19 +1,19 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
-import { IonContent, IonModal, IonItemDivider, IonLabel } from '@ionic/react'
+import { IonItemDivider, IonLabel } from '@ionic/react'
+import { Redirect } from 'react-router-dom'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useFinishUserProfileStyles } from '../util'
-import { Header, Button, Input, MaskedInput, FieldController } from 'components'
+import { Header, Button, Input, MaskedInput, FieldController, Modal, ConditionalWrapper } from 'components'
 import { currenyFormat } from 'utils'
 import routes from 'routes'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
+import { PageContainer } from 'template'
 
-export const CompleteAccountModal = ({ isOpen, closeModal }) => {
+const UpdateAccount = ({ history }) => {
   const classes = useFinishUserProfileStyles()
-  const history = useHistory()
   const [updateUser, { loading: saving }] = useUpdateUser()
 
   const form = useForm({
@@ -27,16 +27,17 @@ export const CompleteAccountModal = ({ isOpen, closeModal }) => {
   })
 
   const onSubmit = useCallback(
-    values =>
-      updateUser(values).then(() => {
-        closeModal(false)
-        history.go(routes.home)
-      }),
-    [closeModal, history, updateUser]
+    values => updateUser(values).then(() => history.replace(routes.home)),
+    [history, updateUser]
   )
+
+  if (!history.location.state?.updateAccount) {
+    return <Redirect to={routes.home} />
+  }
+
   return (
-    <IonModal isOpen={isOpen} backdropDismiss={false}>
-      <IonContent>
+    <ConditionalWrapper condition={true} wrapper={Modal} isOpen disableClose>
+      <PageContainer>
         <div className={classes.container}>
           <Header label="Complete Your Account" />
           <FormProvider {...form}>
@@ -77,12 +78,13 @@ export const CompleteAccountModal = ({ isOpen, closeModal }) => {
             </form>
           </FormProvider>
         </div>
-      </IonContent>
-    </IonModal>
+      </PageContainer>
+    </ConditionalWrapper>
   )
 }
 
-CompleteAccountModal.propTypes = {
-  isOpen: PropTypes.bool,
-  closeModal: PropTypes.func
+UpdateAccount.propTypes = {
+  history: PropTypes.object
 }
+
+export default UpdateAccount

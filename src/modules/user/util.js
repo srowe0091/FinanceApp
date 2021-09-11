@@ -5,7 +5,6 @@ import { createUseStyles } from 'react-jss'
 
 import { toNumber } from 'utils'
 import { SaveUser } from 'modules/user'
-import { useAuthentication } from 'modules/authentication'
 
 export const UserProfileSchema = yup.object().shape({
   firstName: yup.string().required(),
@@ -15,14 +14,7 @@ export const UserProfileSchema = yup.object().shape({
 })
 
 export const useUpdateUser = () => {
-  const { finishProfile } = useAuthentication()
-  const [_updatePreferences, props] = useMutation(SaveUser, {
-    onCompleted: data => {
-      if (data?.updateUser) {
-        finishProfile(data?.updateUser)
-      }
-    }
-  })
+  const [_updatePreferences, props] = useMutation(SaveUser)
 
   const handleUpdate = useCallback(
     ({ allowance, income, defaultCard, firstName, lastName }) =>

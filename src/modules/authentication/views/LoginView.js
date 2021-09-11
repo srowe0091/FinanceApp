@@ -1,10 +1,9 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState } from 'react'
 import { IonPage, IonContent, IonText } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useLoginViewStyle, LoginSchema } from '../util'
-import { CompleteAccountModal } from 'modules/user/views/CompleteAccount'
 import { Input, Button, Logo, FieldController } from 'components'
 import { textMappings } from 'utils'
 import { useAuthentication } from 'modules/authentication'
@@ -12,8 +11,7 @@ import { useAuthentication } from 'modules/authentication'
 const LoginView = () => {
   const classes = useLoginViewStyle()
   const [status, setStatus] = useState(null)
-  const [showModal, updateModalState] = useState(false)
-  const { handleLogin, requireProfileUpdate } = useAuthentication()
+  const { handleLogin } = useAuthentication()
 
   const form = useForm({
     resolver: yupResolver(LoginSchema),
@@ -30,12 +28,6 @@ const LoginView = () => {
     },
     [handleLogin]
   )
-
-  useEffect(() => {
-    if (requireProfileUpdate) {
-      updateModalState(true)
-    }
-  }, [requireProfileUpdate])
 
   const {
     formState: { isSubmitting }
@@ -64,7 +56,6 @@ const LoginView = () => {
             </form>
           </FormProvider>
         </div>
-        <CompleteAccountModal isOpen={showModal} closeModal={updateModalState} />
       </IonContent>
     </IonPage>
   )

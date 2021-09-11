@@ -1,5 +1,6 @@
 const routes = {
   login: '/login',
+  updateAccount: '/update-account',
   home: '/home',
   wallet: '/wallet',
   bills: '/bills',
