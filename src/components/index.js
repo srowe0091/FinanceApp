@@ -1,6 +1,7 @@
 export * from './AspectRatio'
 export * from './Button'
 export * from './Card'
+export * from './ConditionalWrapper'
 export * from './Fab'
 export * from './Fields'
 export * from './FullPageLoader'
