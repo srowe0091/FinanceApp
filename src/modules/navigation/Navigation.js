@@ -14,6 +14,7 @@ import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 import EditTransactionView from 'modules/transaction/views/EditTransactionView'
 import ProfileView from 'modules/user/views/ProfileView'
 import UpdateAccountView from 'modules/user/views/UpdateAccountView'
+import SetupAccountView from 'modules/user/views/SetupAccountView'
 
 // import AdminView from 'modules/admin/views/Admin'
 
@@ -33,12 +34,13 @@ export const Navigation = () => {
     <IonTabs>
       <IonRouterOutlet>
         {/* main view */}
-        <PageRoute path={routes.updateAccount} component={UpdateAccountView} />
+        <PageRoute path={routes.setupAccount} component={SetupAccountView} />
         <PageRoute path={routes.home} component={HomeView} />
         <PageRoute path={routes.wallet} component={WalletView} />
+        <PageRoute path={routes.newCard} component={NewCardView} />
         {/* <PageRoute path={routes.bills} component={BillsView} /> */}
         <PageRoute path={routes.profile} component={ProfileView} />
-        <PageRoute path={routes.newCard} component={NewCardView} />
+        <PageRoute path={routes.updateAccount} component={UpdateAccountView} />
         {/* <PageRoute path={routes.newBill} component={NewBillView} /> */}
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
         <PageRoute path={routes.editTransaction()} component={EditTransactionView} />

@@ -3,8 +3,10 @@ import { createUseStyles } from 'react-jss'
 import { IonAlert, IonItemDivider, IonItem, IonLabel, IonText, IonToggle } from '@ionic/react'
 
 import { useUser, useAuthentication } from 'modules/authentication'
-import { PageContainer } from 'template'
 import { ProfileIcon, Button } from 'components'
+import { PageContainer } from 'template'
+import routes from 'routes'
+import { SlideInLeft } from 'animation'
 
 export const useProfileViewStyles = createUseStyles(theme => ({
   container: {
@@ -62,7 +64,7 @@ const Profile = () => {
         <IonLabel>Your Information</IonLabel>
       </IonItemDivider>
 
-      <IonItem button onClick={() => {}} detail>
+      <IonItem button detail routerLink={routes.updateAccount} routerAnimation={SlideInLeft}>
         <IonLabel>Account</IonLabel>
       </IonItem>
 
