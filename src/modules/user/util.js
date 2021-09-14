@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import { useMutation } from '@apollo/client'
 import { useCallback } from 'react'
-import { createUseStyles } from 'react-jss'
 
 import { toNumber } from 'utils'
 import { SaveUser } from 'modules/user'
@@ -34,12 +33,3 @@ export const useUpdateUser = () => {
 
   return [handleUpdate, props]
 }
-
-export const useFinishUserProfileStyles = createUseStyles(theme => ({
-  container: {
-    padding: theme.spacing(2)
-  },
-  divider: {
-    marginBottom: theme.spacing(3)
-  }
-}))

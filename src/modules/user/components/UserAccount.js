@@ -4,8 +4,7 @@ import { IonItemDivider, IonLabel } from '@ionic/react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { useFinishUserProfileStyles } from '../util'
-import { Header, Button, Input, MaskedInput, FieldController } from 'components'
+import { Header, Button, Input, MaskedInput, FieldController, Padding } from 'components'
 import { UserProfileSchema, useUpdateUser } from 'modules/user'
 import routes from 'routes'
 import { currenyFormat } from 'utils'
@@ -19,7 +18,6 @@ const _defaultValues = {
 }
 
 export const UserAccount = ({ history, header, disableGoBack, defaultValues = _defaultValues }) => {
-  const classes = useFinishUserProfileStyles()
   const [updateUser, { loading: saving }] = useUpdateUser()
 
   const form = useForm({
@@ -34,22 +32,25 @@ export const UserAccount = ({ history, header, disableGoBack, defaultValues = _d
 
   return (
     <PageContainer>
-      <div className={classes.container}>
+      <Padding>
         <Header goBack={!disableGoBack} label={header} />
-        <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
-            <IonItemDivider className={classes.divider}>
-              <IonLabel>Your Information</IonLabel>
-            </IonItemDivider>
-
+      </Padding>
+      <FormProvider {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
+          <IonItemDivider>
+            <IonLabel>Your Information</IonLabel>
+          </IonItemDivider>
+          <Padding>
             <FieldController name="firstName" placeholder="First Name" component={Input} />
 
             <FieldController name="lastName" placeholder="Last Name" component={Input} />
+          </Padding>
 
-            <IonItemDivider className={classes.divider}>
-              <IonLabel>Financial Information</IonLabel>
-            </IonItemDivider>
+          <IonItemDivider>
+            <IonLabel>Financial Information</IonLabel>
+          </IonItemDivider>
 
+          <Padding>
             <FieldController
               type="tel"
               name="income"
@@ -71,9 +72,9 @@ export const UserAccount = ({ history, header, disableGoBack, defaultValues = _d
             <Button type="submit" loading={saving}>
               Save
             </Button>
-          </form>
-        </FormProvider>
-      </div>
+          </Padding>
+        </form>
+      </FormProvider>
     </PageContainer>
   )
 }

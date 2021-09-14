@@ -10,6 +10,7 @@ const routes = {
   updateAccount: '/update-account',
   newTransaction: '/new-transaction',
   editTransaction: (id = ':id') => `/edit-transaction/${id}`,
+  notifications: '/notifications',
   lab: '/lab',
   admin: {
     index: '/admin',

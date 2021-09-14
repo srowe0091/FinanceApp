@@ -15,6 +15,7 @@ import EditTransactionView from 'modules/transaction/views/EditTransactionView'
 import ProfileView from 'modules/user/views/ProfileView'
 import UpdateAccountView from 'modules/user/views/UpdateAccountView'
 import SetupAccountView from 'modules/user/views/SetupAccountView'
+import NotificationsView from 'modules/notification/views/NotificationsView'
 
 // import AdminView from 'modules/admin/views/Admin'
 
@@ -45,6 +46,7 @@ export const Navigation = () => {
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
         <PageRoute path={routes.editTransaction()} component={EditTransactionView} />
         {/* <PageRoute admin path={routes.admin.index} component={AdminView} /> */}
+        <PageRoute path={routes.notifactions} component={NotificationsView} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
