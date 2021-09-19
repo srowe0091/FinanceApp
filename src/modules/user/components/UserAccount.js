@@ -63,7 +63,7 @@ export const UserAccount = ({ history, header, disableGoBack, defaultValues = _d
             <FieldController
               type="tel"
               name="allowance"
-              inlineLabel="Bi-Weekly Budget"
+              inlineLabel="Monthly Budget"
               labelWidth={0.6}
               format={currenyFormat}
               component={MaskedInput}
