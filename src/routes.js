@@ -4,6 +4,7 @@ const routes = {
   home: '/home',
   wallet: '/wallet',
   newCard: '/new-card',
+  cardView: (id = ':id') => `/card-details/${id}`,
   bills: '/bills',
   newBill: '/new-bill',
   profile: '/profile',

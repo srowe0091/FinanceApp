@@ -4,7 +4,8 @@
 
 - [ ] Auto refresh user info when user added into a group
 - [ ] Add billing
-- [ ] Add Wallet
+- [x] Add Wallet
+- [ ] Add Card details
 - [ ] Implement Notifications
 - [ ] Add Routing Transitions
 

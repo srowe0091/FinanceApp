@@ -24,9 +24,11 @@ export const initialNewCard = {
 export const useWalletStyles = createUseStyles(theme => ({
   container: {
     marginTop: theme.spacing(2.5),
-    '& .swiper-container': {
-      overflow: 'visible'
-    }
+    paddingBottom: theme.spacing(10),
+    gap: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   icons: {
     fontSize: theme.spacing(3)

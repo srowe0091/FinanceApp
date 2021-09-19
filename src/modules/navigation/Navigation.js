@@ -8,6 +8,7 @@ import LoginView from 'modules/authentication/views/LoginView'
 import HomeView from 'modules/home/views/HomeView'
 import WalletView from 'modules/wallet/views/WalletView'
 import NewCardView from 'modules/wallet/views/NewCardView'
+import CardDetailsView from 'modules/wallet/views/CardDetailsView'
 // import BillsView from 'modules/bills/views/BillsView'
 // import NewBillView from 'modules/bills/views/NewBillView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
@@ -39,6 +40,7 @@ export const Navigation = () => {
         <PageRoute path={routes.home} component={HomeView} />
         <PageRoute path={routes.wallet} component={WalletView} />
         <PageRoute path={routes.newCard} component={NewCardView} />
+        <PageRoute path={routes.cardView()} component={CardDetailsView} />
         {/* <PageRoute path={routes.bills} component={BillsView} /> */}
         <PageRoute path={routes.profile} component={ProfileView} />
         <PageRoute path={routes.updateAccount} component={UpdateAccountView} />
