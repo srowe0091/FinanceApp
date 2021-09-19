@@ -5,6 +5,7 @@ import map from 'lodash/fp/map'
 import sortBy from 'lodash/fp/sortBy'
 import update from 'lodash/fp/update'
 import compose from 'lodash/fp/compose'
+import stubArray from 'lodash/fp/stubArray'
 
 import { useGroupStyles } from '../util'
 import { UsersInGroup } from '../admin.gql'
@@ -14,7 +15,7 @@ import { currency, calculateDays } from 'utils'
 
 const GroupUsers = props => {
   const classes = useGroupStyles()
-  const { data = [], loading } = useQuery(UsersInGroup, { path: 'admin.usersInGroup' })
+  const { data = stubArray, loading } = useQuery(UsersInGroup, { path: 'admin.usersInGroup' })
   const parsedUsers = useMemo(() => compose(map(update('cards')(sortBy('name'))))(data), [data])
 
   return (

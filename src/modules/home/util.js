@@ -7,6 +7,7 @@ import reduce from 'lodash/fp/reduce'
 import groupBy from 'lodash/fp/groupBy'
 import orderBy from 'lodash/fp/orderBy'
 import compose from 'lodash/fp/compose'
+import stubObject from 'lodash/fp/stubObject'
 
 import { calculateDays, currency } from 'utils'
 import { useQuery } from 'hooks'
@@ -112,7 +113,7 @@ export const useHomeViewStyles = createUseStyles(theme => ({
 export const useHomeHooks = () => {
   const { inGroup, allowance, profileImage } = useUser()
   const { cards, loading: walletLoading } = useWallet()
-  const { data = {}, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
+  const { data = stubObject, loading, refetch } = useQuery(UserTransactions, { variables: { inGroup } })
   const onRefresh = useCallback(e => refetch().then(e.detail.complete), [refetch])
 
   const { amountLeft, groupSpent, percentage, transactions } = useMemo(() => {

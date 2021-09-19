@@ -9,6 +9,7 @@ import groupBy from 'lodash/fp/groupBy'
 import isEqual from 'lodash/fp/isEqual'
 import includes from 'lodash/fp/includes'
 import mapValues from 'lodash/fp/mapValues'
+import stubArray from 'lodash/fp/stubArray'
 
 import { usePayTransactionStyles } from '../util'
 import { GroupTransactions, PayTransactions } from '../admin.gql'
@@ -23,7 +24,7 @@ import { TransactionEntry } from 'modules/transaction'
 const PayTransaction = props => {
   const classes = usePayTransactionStyles()
   const [transactionIds, updateSelectedIds] = useState([])
-  const { data = [], loading, refetch } = useQuery(GroupTransactions, { path: 'admin.groupTransactions' })
+  const { data = stubArray, loading, refetch } = useQuery(GroupTransactions, { path: 'admin.groupTransactions' })
   const [payTransaction, { loading: ptLoading }] = useMutation(PayTransactions, {
     variables: { transactionIds },
     awaitRefetchQueries: true,
