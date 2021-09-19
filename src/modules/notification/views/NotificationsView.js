@@ -1,50 +1,42 @@
-import React, { useState } from 'react'
-import { IonItemDivider, IonLabel, useIonViewDidEnter, IonItem, IonToggle } from '@ionic/react'
+import React, { useCallback } from 'react'
+import { IonItemDivider, IonLabel, IonItem, IonToggle } from '@ionic/react'
+import { useToggle } from 'react-use'
 import { LocalNotifications } from '@capacitor/local-notifications'
 
 import { PageContainer } from 'template'
 import { Header, Padding } from 'components'
+import { createNotifications } from 'lib/Capacitor'
+import { useWallet } from 'modules/wallet'
 
 const LocalNotificationsWrapper = () => {
-  const [hasPermission, setHasPermission] = useState('denied')
-  const ensurePermissions = async () => {
-    try {
-      let { display } = await LocalNotifications.checkPermissions()
-      console.log('LocalNotifications display permission:', display)
+  const { cards } = useWallet()
 
-      if (display === 'prompt') {
-        display = await LocalNotifications.requestPermissions()
+  const [blockCreditCards, toggleBlockingCreditCards] = useToggle()
+
+  const scheduleCreditCardNotifications = useCallback(
+    async event => {
+      toggleBlockingCreditCards()
+      if (event.target.checked) {
+        const notificationCards = cards.map(card => {
+          return {
+            id: card.dueDate,
+            title: `${card.name} Payment Due Today - ${card.dueDate}`,
+            schedule: {
+              every: 'minute'
+            }
+          }
+        })
+
+        return await createNotifications(notificationCards)
+      } else {
+        const cardIds = cards.map(card => ({ id: card.dueDate }))
+        await LocalNotifications.cancel({ notifications: cardIds })
       }
 
-      if (display !== 'granted') {
-        throw new Error('User denied permissions!')
-      }
-
-      return display
-    } catch (e) {
-      console.log('permissions error')
-      console.error(e)
-
-      return 'denied'
-    }
-  }
-
-  const scheduleBasic = async () => {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Reminder',
-          body: '"Credit Card name" is due tomorrow',
-          id: 1
-        }
-      ]
-    })
-  }
-
-  useIonViewDidEnter(async () => {
-    const permissions = await ensurePermissions()
-    setHasPermission(permissions)
-  })
+      toggleBlockingCreditCards()
+    },
+    [toggleBlockingCreditCards, cards]
+  )
 
   return (
     <PageContainer>
@@ -56,9 +48,9 @@ const LocalNotificationsWrapper = () => {
         <IonLabel>Reminders</IonLabel>
       </IonItemDivider>
 
-      <IonItem lines="full">
+      <IonItem lines="full" disabled={blockCreditCards}>
         <IonLabel>Credit Card Due Dates</IonLabel>
-        <IonToggle slot="end"></IonToggle>
+        <IonToggle slot="end" onIonChange={scheduleCreditCardNotifications}></IonToggle>
       </IonItem>
 
       <IonItem lines="full">
