@@ -3,7 +3,6 @@ import { useApolloClient } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { useEffectOnce } from 'react-use'
-import stubObject from 'lodash/fp/stubObject'
 
 import { AuthContext } from './context'
 import { checkErrors, checkUser } from './util'
@@ -109,6 +108,6 @@ export const useAuthentication = () => {
 }
 
 export const useUser = () => {
-  const { data = stubObject } = useQuery(GetUser, { path: 'me', fetchPolicy: 'cache-only' })
+  const { data = {} } = useQuery(GetUser, { path: 'me', fetchPolicy: 'cache-only' })
   return data
 }
