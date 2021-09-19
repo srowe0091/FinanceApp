@@ -46,7 +46,7 @@ export const Navigation = () => {
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
         <PageRoute path={routes.editTransaction()} component={EditTransactionView} />
         {/* <PageRoute admin path={routes.admin.index} component={AdminView} /> */}
-        <PageRoute path={routes.notifactions} component={NotificationsView} />
+        <PageRoute path={routes.notifications} component={NotificationsView} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
