@@ -25,7 +25,7 @@ export const Header = ({ label, goBack }) => {
   return (
     <div className={classes.container}>
       {goBack && (
-        <Button color="dark" size="small" onClick={history.goBack} className={classes.goBack}>
+        <Button color="dark" onClick={history.goBack} className={classes.goBack}>
           <IonIcon slot="icon-only" icon={arrowBack} />
         </Button>
       )}

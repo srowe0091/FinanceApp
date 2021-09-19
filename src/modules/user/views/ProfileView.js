@@ -72,9 +72,9 @@ const Profile = () => {
         <IonLabel>Preferences</IonLabel>
       </IonItemDivider>
 
-      <IonItem button detail routerLink={routes.notifications} routerAnimation={SlideInLeft}>
+      {/* <IonItem button detail routerLink={routes.notifications} routerAnimation={SlideInLeft}>
         <IonLabel>Notifications</IonLabel>
-      </IonItem>
+      </IonItem> */}
 
       <IonItem lines="full">
         <IonLabel>Dark Mode</IonLabel>
