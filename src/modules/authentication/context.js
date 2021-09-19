@@ -8,7 +8,6 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const { isLoading, isLoggingOut, ...state } = useInitializeAuth()
-  console.log(state)
 
   if (isLoading) return null
 
