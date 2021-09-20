@@ -63,7 +63,7 @@ export const DrawerMenu = () => {
   }
 
   return (
-    <IonMenu contentId={PAGE_ID}>
+    <IonMenu contentId={PAGE_ID} maxEdgeStart={75}>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
