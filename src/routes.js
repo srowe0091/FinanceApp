@@ -5,8 +5,6 @@ const routes = {
   wallet: '/wallet',
   newCard: '/new-card',
   cardView: (id = ':id') => `/card-details/${id}`,
-  bills: '/bills',
-  newBill: '/new-bill',
   profile: '/profile',
   updateAccount: '/update-account',
   newTransaction: '/new-transaction',
@@ -14,7 +12,8 @@ const routes = {
   notifications: '/notifications',
   lab: '/lab',
   admin: {
-    index: '/admin',
+    bills: '/admin/bills',
+    newBill: '/admin/new-bill',
     group: '/admin/group',
     payTransaction: '/admin/pay-transaction'
   }

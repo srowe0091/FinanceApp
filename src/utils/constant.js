@@ -1,3 +1,5 @@
+export const PAGE_ID = 'main'
+
 export const daysInMonth = [
   '1',
   '2',

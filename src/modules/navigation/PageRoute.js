@@ -4,6 +4,7 @@ import { IonPage } from '@ionic/react'
 import { Route, Redirect } from 'react-router-dom'
 
 import routes from 'routes'
+import { PAGE_ID } from 'utils'
 import { useUser } from 'modules/authentication'
 
 export const PageRoute = ({ admin, component, ...props }) => {
@@ -13,7 +14,7 @@ export const PageRoute = ({ admin, component, ...props }) => {
     return <Redirect to={routes.home} />
   }
 
-  return <Route {...props}>{_props => <IonPage>{createElement(component, _props)}</IonPage>}</Route>
+  return <Route {...props}>{_props => <IonPage id={PAGE_ID}>{createElement(component, _props)}</IonPage>}</Route>
 }
 
 PageRoute.propTypes = {

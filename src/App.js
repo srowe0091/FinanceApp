@@ -7,6 +7,7 @@ import { ThemeProvider } from 'react-jss'
 import './lib/Capacitor/App'
 import { client } from './lib/Apollo'
 import theme from './styles/theme'
+import { DrawerMenu } from 'modules/admin/views/DrawerMenu'
 import { ToastNotification } from 'modules/notification'
 import { AuthProvider } from 'modules/authentication'
 import { Navigation } from 'modules/navigation'
@@ -18,6 +19,7 @@ const App = () => (
         <IonReactRouter>
           <AuthProvider>
             <ToastNotification />
+            <DrawerMenu />
             <Navigation />
           </AuthProvider>
         </IonReactRouter>

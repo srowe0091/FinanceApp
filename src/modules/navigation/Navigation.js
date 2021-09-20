@@ -9,8 +9,6 @@ import HomeView from 'modules/home/views/HomeView'
 import WalletView from 'modules/wallet/views/WalletView'
 import NewCardView from 'modules/wallet/views/NewCardView'
 import CardDetailsView from 'modules/wallet/views/CardDetailsView'
-// import BillsView from 'modules/bills/views/BillsView'
-// import NewBillView from 'modules/bills/views/NewBillView'
 import NewTransactionView from 'modules/transaction/views/NewTransactionView'
 import EditTransactionView from 'modules/transaction/views/EditTransactionView'
 import ProfileView from 'modules/user/views/ProfileView'
@@ -18,7 +16,11 @@ import UpdateAccountView from 'modules/user/views/UpdateAccountView'
 import SetupAccountView from 'modules/user/views/SetupAccountView'
 import NotificationsView from 'modules/notification/views/NotificationsView'
 
-// import AdminView from 'modules/admin/views/Admin'
+// Admin views
+import BillsView from 'modules/bills/views/BillsView'
+import NewBillView from 'modules/bills/views/NewBillView'
+import GroupView from 'modules/admin/views/GroupView'
+import PayTransactionsView from 'modules/admin/views/PayTransactionsView'
 
 import { PageRoute } from './PageRoute'
 
@@ -41,14 +43,17 @@ export const Navigation = () => {
         <PageRoute path={routes.wallet} component={WalletView} />
         <PageRoute path={routes.newCard} component={NewCardView} />
         <PageRoute path={routes.cardView()} component={CardDetailsView} />
-        {/* <PageRoute path={routes.bills} component={BillsView} /> */}
         <PageRoute path={routes.profile} component={ProfileView} />
         <PageRoute path={routes.updateAccount} component={UpdateAccountView} />
-        {/* <PageRoute path={routes.newBill} component={NewBillView} /> */}
         <PageRoute path={routes.newTransaction} component={NewTransactionView} />
         <PageRoute path={routes.editTransaction()} component={EditTransactionView} />
-        {/* <PageRoute admin path={routes.admin.index} component={AdminView} /> */}
         <PageRoute path={routes.notifications} component={NotificationsView} />
+
+        {/* admin views */}
+        <PageRoute admin path={routes.admin.bills} component={BillsView} />
+        <PageRoute admin path={routes.admin.newBill} component={NewBillView} />
+        <PageRoute admin path={routes.admin.payTransaction} component={PayTransactionsView} />
+        <PageRoute admin path={routes.admin.group} component={GroupView} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
